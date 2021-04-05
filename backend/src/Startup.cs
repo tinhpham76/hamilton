@@ -61,6 +61,7 @@ namespace Hamilton.Backend
 
 
             // Configuration API Version
+            services.RegisterApiVersioning();
 
             // Configuration swagger with multi version
             services.RegisterSwagger(Configuration);
