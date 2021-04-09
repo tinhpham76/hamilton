@@ -5,6 +5,7 @@ namespace Core.Libs.Integration.GoogleMap
     public interface IGoogleMapClient
     {
         IGoogleMapDistanceMatrix DistanceMatrix { get; }
+        IGoogleMapDirection Direction { get; }
     }
 
     public class GoogleMapClient : IGoogleMapClient
@@ -19,8 +20,10 @@ namespace Core.Libs.Integration.GoogleMap
             this.config = config.GoogleMap;
 
             this.DistanceMatrix = new GoogleMapDistanceMatrix(this.httpClient, this.config);
+            this.Direction = new GoogleMapDirection(this.httpClient, this.config);
         }
-        
+
         public IGoogleMapDistanceMatrix DistanceMatrix { get; }
+        public IGoogleMapDirection Direction { get; }
     }
 }

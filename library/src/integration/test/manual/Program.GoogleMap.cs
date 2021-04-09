@@ -14,7 +14,7 @@ namespace Core.Libs.Integration.Test.Manual
                 {
                     GoogleMap = new GoogleMapConfig()
                     {
-                        Key = "AIzaSyB0OTBpLqOJS0EfYaU-FN4u95OLVagi-ck"
+                        Key = ""
                     }
                 });
 
@@ -25,7 +25,17 @@ namespace Core.Libs.Integration.Test.Manual
                 language = "vi"
             };
 
-            TestGetDistanceMatrix(googleMapClient, distanceMatrixRequest);
+            var directionRequest = new GoogleMap.Models.Direction.DirectionRequest()
+            {
+                origin = "Thành phố Quảng Ngãi",
+                destination = "Thành phố Hồ Chí Minh",
+                language = "vi"
+            };
+
+
+            // TestGetDistanceMatrix(googleMapClient, distanceMatrixRequest);
+
+            TestGetDirection(googleMapClient, directionRequest);
         }
 
         static void TestGetDistanceMatrix(
@@ -34,6 +44,17 @@ namespace Core.Libs.Integration.Test.Manual
         {
             var result = googleMapClient.DistanceMatrix
                         .GetDistanceMatrix(request)
+                        .Result;
+
+            var data = result.Data;
+        }
+
+        static void TestGetDirection(
+            IGoogleMapClient googleMapClient,
+            GoogleMap.Models.Direction.DirectionRequest request)
+        {
+            var result = googleMapClient.Direction
+                        .GetDirection(request)
                         .Result;
 
             var data = result.Data;

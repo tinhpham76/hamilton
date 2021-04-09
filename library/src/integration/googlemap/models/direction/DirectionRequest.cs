@@ -5,8 +5,8 @@ namespace Core.Libs.Integration.GoogleMap.Models.Direction
 {
     public class DirectionRequest
     {
-        public string origins { get; set; }
-        public string destinations { get; set; }
+        public string origin { get; set; }
+        public string destination { get; set; }
         public string mode { get; set; }
         public List<string> waypoints { get; set; }
         public bool? alternatives { get; set; }
