@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using Core.Libs.Integration.GoogleMap;
+using Core.Libs.Integration.GoogleMap.Models.Routes.Directions;
 
 namespace Core.Libs.Integration.Test.Manual
 {
@@ -25,11 +26,14 @@ namespace Core.Libs.Integration.Test.Manual
                 language = "vi"
             };
 
-            var directionRequest = new GoogleMap.Models.Direction.DirectionRequest()
+            var directionRequest = new DirectionRequest()
             {
                 origin = "Thành phố Quảng Ngãi",
                 destination = "Thành phố Hồ Chí Minh",
-                language = "vi"
+                language = "vi",
+                waypoints = new string[]{"Thành phố Đà Lạt", "Thành phố Vũng Tàu"},
+                mode = GoogleMap.Models.Enum.Routes.Direction.TravelMode.Driving,
+                units = GoogleMap.Models.Enum.Routes.Direction.Unit.Imperial
             };
 
 
@@ -51,7 +55,7 @@ namespace Core.Libs.Integration.Test.Manual
 
         static void TestGetDirection(
             IGoogleMapClient googleMapClient,
-            GoogleMap.Models.Direction.DirectionRequest request)
+            DirectionRequest request)
         {
             var result = googleMapClient.Direction
                         .GetDirection(request)
