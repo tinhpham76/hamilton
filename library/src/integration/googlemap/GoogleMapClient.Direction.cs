@@ -34,6 +34,9 @@ namespace Core.Libs.Integration.GoogleMap
         {
             var @params = new List<(string, object)>();
 
+            if (string.IsNullOrEmpty(config.Key))
+                throw new ArgumentNullException(nameof(config.Key));
+
             if (!string.IsNullOrEmpty(request.origin))
                 @params.Add(("origin", request.origin));
 
@@ -45,27 +48,27 @@ namespace Core.Libs.Integration.GoogleMap
 
             if (request.waypoints != null
                 && request.waypoints.Length > 0)
-                @params.Add(("waypoints", string.Join("|", request.waypoints.Select(a => $"{a.ToString()}"))));
+                @params.Add(("waypoints", string.Join("|", request.waypoints.Select(a => a.ToString()))));
 
-            if(request.alternatives.HasValue)
+            if (request.alternatives.HasValue)
                 @params.Add(("alternatives", request.alternatives.Value));
 
-            if(request.avoid.HasValue)
+            if (request.avoid.HasValue)
                 @params.Add(("avoid", Enum.GetName(typeof(Avoid), (int)request.avoid.Value).ToLower()));
 
-            if(!string.IsNullOrEmpty(request.language))
+            if (!string.IsNullOrEmpty(request.language))
                 @params.Add(("language", request.language));
 
-            if(request.units.HasValue)
+            if (request.units.HasValue)
                 @params.Add(("units", Enum.GetName(typeof(Unit), request.units.Value).ToLower()));
 
-            if(!string.IsNullOrEmpty(request.region))
+            if (!string.IsNullOrEmpty(request.region))
                 @params.Add(("region", request.region));
 
-            if(request.arrival_time.HasValue)
+            if (request.arrival_time.HasValue)
                 @params.Add(("arrival_time", request.arrival_time.Value));
-            
-            if(request.departure_time.HasValue)
+
+            if (request.departure_time.HasValue)
                 @params.Add(("departure_time", request.departure_time.Value));
 
             return this.httpClient.ExecuteGet<Direction>(
@@ -74,6 +77,5 @@ namespace Core.Libs.Integration.GoogleMap
                     config.Key,
                     @params));
         }
-
     }
 }

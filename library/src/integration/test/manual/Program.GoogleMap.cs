@@ -15,14 +15,14 @@ namespace Core.Libs.Integration.Test.Manual
                 {
                     GoogleMap = new GoogleMapConfig()
                     {
-                        Key = ""
+                        Key = "AIzaSyB0OTBpLqOJS0EfYaU-FN4u95OLVagi-ck"
                     }
                 });
 
-            var distanceMatrixRequest = new GoogleMap.Models.DistanceMatrix.DistanceMatrixRequest()
+            var distanceMatrixRequest = new GoogleMap.Models.Routes.DistanceMatrix.DistanceMatrixRequest()
             {
-                origins = new List<string>() { "Bệnh viện Thủ Đức" },
-                destinations = new List<string>() { "Bệnh viện Quân Dân Y Miền Đông" },
+                origins = new string[] { "Bệnh viện Thủ Đức" },
+                destinations = new string[] { "Bệnh viện Quân Dân Y Miền Đông" },
                 language = "vi"
             };
 
@@ -37,14 +37,14 @@ namespace Core.Libs.Integration.Test.Manual
             };
 
 
-            // TestGetDistanceMatrix(googleMapClient, distanceMatrixRequest);
+            TestGetDistanceMatrix(googleMapClient, distanceMatrixRequest);
 
-            TestGetDirection(googleMapClient, directionRequest);
+            // TestGetDirection(googleMapClient, directionRequest);
         }
 
         static void TestGetDistanceMatrix(
             IGoogleMapClient googleMapClient,
-            GoogleMap.Models.DistanceMatrix.DistanceMatrixRequest request)
+            GoogleMap.Models.Routes.DistanceMatrix.DistanceMatrixRequest request)
         {
             var result = googleMapClient.DistanceMatrix
                         .GetDistanceMatrix(request)

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Core.Libs.Integration.GoogleMap.Models.DistanceMatrix
+namespace Core.Libs.Integration.GoogleMap.Models.Routes.DistanceMatrix
 {
     public class DistanceMatrix
     {
