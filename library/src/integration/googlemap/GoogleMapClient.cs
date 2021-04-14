@@ -6,6 +6,7 @@ namespace Core.Libs.Integration.GoogleMap
     {
         IGoogleMapDistanceMatrix DistanceMatrix { get; }
         IGoogleMapDirection Direction { get; }
+        IGoogleMapGeocoding Geocoding { get; }
     }
 
     public class GoogleMapClient : IGoogleMapClient
@@ -21,9 +22,11 @@ namespace Core.Libs.Integration.GoogleMap
 
             this.DistanceMatrix = new GoogleMapDistanceMatrix(this.httpClient, this.config);
             this.Direction = new GoogleMapDirection(this.httpClient, this.config);
+            this.Geocoding = new GoogleMapGeocoding(this.httpClient, this.config);
         }
 
         public IGoogleMapDistanceMatrix DistanceMatrix { get; }
         public IGoogleMapDirection Direction { get; }
+        public IGoogleMapGeocoding Geocoding { get; }
     }
 }
