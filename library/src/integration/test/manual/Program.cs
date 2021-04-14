@@ -5,6 +5,8 @@ namespace Core.Libs.Integration.Test.Manual
         static void Main(string[] args)
         {
             TestGoogleMap();
+
+            TestHamilton();
         }
     }
 }
