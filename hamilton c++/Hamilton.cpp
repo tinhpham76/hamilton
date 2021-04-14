@@ -10,22 +10,22 @@ using namespace std;
 
 #define FALSE 0
 
-int A[MAX][MAX]; //ma trận kề của đồ thị.
+int A[MAX][MAX]; //ma trận liền kề.
 
-int C[MAX], B[MAX]; //mảng đánh dấu.
+int C[MAX], B[MAX];
 
 int n; //số đỉnh của đồ thị.
 
-int d; //đếm số đường đi Hamilton.
+int d; //đếm số lượng chu trình hamilton.
 
 void Init(void)
 {
 
-    freopen("DDHMTON.IN", "r", stdin);
+    freopen("CCHMTON.IN", "r", stdin);
 
     cin >> n;
 
-    //nhập ma trận liền kề.
+    //nhập ma trận kề
 
     for (int i = 1; i <= n; i++)
     {
@@ -45,9 +45,9 @@ void Init(void)
 void Result(void)
 {
 
-    cout << "Duong di Hamilton: ";
+    cout << "Chu trinh Hamilton: ";
 
-    for (int i = n; i > 0; i--)
+    for (int i = n; i >= 0; i--)
 
         cout << B[i] << " ";
 
@@ -74,6 +74,8 @@ void Hamilton(int *B, int *C, int i)
                 Hamilton(B, C, i + 1);
 
             else
+
+                if (B[i] == B[0])
                 Result();
 
             C[j] = 0;
@@ -96,7 +98,7 @@ int main()
 
     if (d == 0)
 
-        cout << "Khong co duong di Hamilton";
+        cout << "Khong co chu trinh Hamilton";
 
     getch();
 }
