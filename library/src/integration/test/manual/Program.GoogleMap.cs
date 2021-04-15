@@ -37,12 +37,26 @@ namespace Core.Libs.Integration.Test.Manual
                 units = GoogleMap.Models.Enum.Routes.Direction.Unit.Imperial
             };
 
+            var cities = new List<string>
+            {
+                "Thành phố Hồ Chí Minh",
+                "Thành phố Vũng Tàu",
+                "Thành phố Bà Rịa",
+                "Thành phố Biên Hòa",
+                "Thành phố Phan Thiết",
+                "Thành phố Bảo Lộc",
+                "Thành phố Đà Lạt",
+                "Thành phố Phan Rang - Tháp Chàm",
+                "Thành phố Tây Ninh"
+            };
 
             // TestGetDistanceMatrix(googleMapClient, distanceMatrixRequest);
 
             // TestGetDirection(googleMapClient, directionRequest);
 
-            TestInitMatrix(googleMapClient);
+            // TestInitMatrix1(googleMapClient, cities);
+
+            TestInitMatrix2(googleMapClient, cities);
         }
 
         static void TestGetDistanceMatrix(
@@ -67,25 +81,11 @@ namespace Core.Libs.Integration.Test.Manual
             var data = result.Data;
         }
 
-        static void TestInitMatrix(
-            IGoogleMapClient googleMapClient)
+        static void TestInitMatrix1(
+            IGoogleMapClient googleMapClient,
+            List<string> cities)
         {
             int[,] matrix = new int[9, 9];
-
-            var directions = new List<Direction>();
-
-            var cities = new List<string>
-            {
-                "Thành phố Hồ Chí Minh",
-                "Thành phố Vũng Tàu",
-                "Thành phố Bà Rịa",
-                "Thành phố Biên Hòa",
-                "Thành phố Phan Thiết",
-                "Thành phố Bảo Lộc",
-                "Thành phố Đà Lạt",
-                "Thành phố Phan Rang - Tháp Chàm",
-                "Thành phố Tây Ninh"
-            };
 
             for (int i = 0; i < cities.Count; i++)
             {
@@ -163,6 +163,72 @@ namespace Core.Libs.Integration.Test.Manual
                     }
                 }
             }
+        }
+
+        static void TestInitMatrix2(
+            IGoogleMapClient googleMapClient,
+            List<string> cities)
+        {
+            var range = 10000;
+
+            int[,] matrix = new int[9, 9];
+
+            for (int i = 0; i < cities.Count; i++)
+            {
+                for (int j = 0; j < cities.Count; j++)
+                {
+                    // if (i == j)
+                    //     continue;
+
+                    var directions = googleMapClient.Direction
+                               .GetDirection(new DirectionRequest()
+                               {
+                                   origin = cities[i],
+                                   destination = cities[j]
+                               }).Result;
+
+                    var distanceDefault = GetDistance(directions.Data);
+
+                    if (distanceDefault > 0 || i == j)
+                        matrix[i, j] = 1;
+
+                    for (int k = 0; k < cities.Count; k++)
+                    {
+                        var distanceCheck = 0L;
+
+                        if (k == i || k == j)
+                            continue;
+
+                        var checkDirections = googleMapClient.Direction
+                                        .GetDirection(new DirectionRequest()
+                                        {
+                                            origin = cities[i],
+                                            destination = cities[j],
+                                            waypoints = new string[] { cities[k] }
+                                        }).Result;
+
+                        distanceCheck = GetDistance(checkDirections.Data);
+
+                        if ((distanceCheck - distanceDefault) < range)
+                            matrix[i, j] = 0;
+                    }
+                }
+            }
+        }
+
+        static long GetDistance(Direction direction)
+        {
+            var distance = 0L;
+
+            for (int i = 0; i < direction.routes.Count; i++)
+            {
+                for (int j = 0; j < direction.routes[i].legs.Count; j++)
+                {
+                    distance += direction.routes[i].legs[j].distance.value.Value;
+                }
+            }
+
+            return distance;
         }
     }
 }
