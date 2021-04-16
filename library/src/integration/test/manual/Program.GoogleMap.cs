@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Net.Http;
 using Core.Libs.Integration.GoogleMap;
 using Core.Libs.Integration.GoogleMap.Models.Routes.Directions;
-using Newtonsoft.Json;
 
 namespace Core.Libs.Integration.Test.Manual
 {

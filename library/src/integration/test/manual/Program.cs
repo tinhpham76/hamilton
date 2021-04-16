@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Text;
 using Core.Libs.Integration.GoogleMap.Models.Places.Geocoding;
-using PolylinerNet;
 
 namespace Core.Libs.Integration.Test.Manual
 {
@@ -11,9 +9,9 @@ namespace Core.Libs.Integration.Test.Manual
     {
         static void Main(string[] args)
         {
-            TestGoogleMap();
+            // TestGoogleMap();
 
-            // TestHamilton();
+            TestHamilton();
 
             // StringTest();
 
