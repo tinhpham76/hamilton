@@ -1,54 +1,46 @@
 using System.Collections.Generic;
 
-namespace Core.Libs.Integration.Hamilton
+namespace Core.Libs.Integration
 {
-    public interface IHamilton
+    public class Hamilton
     {
-        List<int[]> Check(
-            int start,
-            int[,] matrix,
-            int point);
-    }
-
-    public class Hamilton : IHamilton
-    {
-        private int n = 0;
-        private int[,] A = new int[50, 50];
-        private int[] B = new int[50];
-        private int[] C = new int[50];
-        private List<int[]> D = new List<int[]>();
-        public Hamilton()
+        private int n = 0; // Total Point
+        private int[,] A; // Matrix
+        private int[] B; // Array Out Put
+        private int[] C; // Array Temp
+        private List<int[]> D = new List<int[]>(); // List Array Out Put
+        public Hamilton(
+            int SizeMemory = 100)
         {
+            A = new int[SizeMemory, SizeMemory];
+            B = new int[SizeMemory];
+            C = new int[SizeMemory];
         }
 
         public List<int[]> Check(
-            int start,
-            int[,] matrix,
-            int point)
+            int[,] Matrix,
+            int TotalPoint,
+            int StartPoint = 0)
         {
-            Init(point, matrix);
+            Init(Matrix, TotalPoint, StartPoint);
 
-            B[0] = start;
-
-            int i = 1;
-
-            CheckHamilton(i);
+            CheckHamilton(1);
 
             return D;
         }
 
-        public void Init(int point, int[,] matrix)
+        private void Init(int[,] Matrix, int TotalPoint, int StartPoint)
         {
-            A = matrix;
-            n = point;
+            A = Matrix;
+            n = TotalPoint;
+            B[0] = StartPoint;
         }
 
-        public void CheckHamilton(
+        private void CheckHamilton(
             int i)
         {
-            for (int j = 1; j <= n; j++)
+            for (int j = 0; j < n; j++)
             {
-
                 if (A[B[i - 1], j] == 1 && C[j] == 0)
                 {
                     B[i] = j;
@@ -58,13 +50,21 @@ namespace Core.Libs.Integration.Hamilton
                         CheckHamilton(i + 1);
 
                     else if (B[i] == B[0])
-                    {
-                        D.Add(B);
-                    }
+                        Result(B, n);
 
                     C[j] = 0;
                 }
             }
+        }
+
+        private void Result(int[] B, int n)
+        {
+            var result = new int[n + 1];
+
+            for (int i = 0; i < n + 1; i++)
+                result[i] = B[i];
+
+            D.Add(result);
         }
     }
 }

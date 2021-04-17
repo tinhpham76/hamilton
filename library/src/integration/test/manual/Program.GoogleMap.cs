@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Text;
 using Core.Libs.Integration.GoogleMap;
 using Core.Libs.Integration.GoogleMap.Models.Routes.Directions;
 
@@ -40,22 +42,19 @@ namespace Core.Libs.Integration.Test.Manual
             {
                 "Thành phố Hồ Chí Minh",
                 "Thành phố Vũng Tàu",
-                "Thành phố Bà Rịa",
                 "Thành phố Biên Hòa",
                 "Thành phố Phan Thiết",
                 "Thành phố Bảo Lộc",
                 "Thành phố Đà Lạt",
-                "Thành phố Phan Rang - Tháp Chàm",
-                "Thành phố Tây Ninh"
             };
 
             // TestGetDistanceMatrix(googleMapClient, distanceMatrixRequest);
 
             // TestGetDirection(googleMapClient, directionRequest);
 
-            // TestInitMatrix1(googleMapClient, cities);
+            TestInitMatrix(googleMapClient, cities);
 
-            TestInitMatrix2(googleMapClient, cities);
+            // var result = polyliner.Decode(polyline);
         }
 
         static void TestGetDistanceMatrix(
@@ -80,91 +79,7 @@ namespace Core.Libs.Integration.Test.Manual
             var data = result.Data;
         }
 
-        static void TestInitMatrix1(
-            IGoogleMapClient googleMapClient,
-            List<string> cities)
-        {
-            int[,] matrix = new int[9, 9];
-
-            for (int i = 0; i < cities.Count; i++)
-            {
-                for (int j = 0; j < cities.Count; j++)
-                {
-                    // if (i == j)
-                    //     continue;
-
-                    var direction = googleMapClient.Direction
-                                    .GetDirection(new DirectionRequest()
-                                    {
-                                        origin = cities[i],
-                                        destination = cities[j]
-                                    }).Result;
-
-                    if (direction.Data.status.Equals("OK"))
-                    {
-                        matrix[i, j] = 1;
-                    }
-                    else
-                    {
-                        matrix[i, j] = 0;
-                        continue;
-                    }
-
-                    var routes = direction.Data.routes;
-
-                    foreach (var route in routes)
-                    {
-                        var legs = route.legs;
-
-                        foreach (var leg in legs)
-                        {
-                            var steps = leg.steps;
-
-                            foreach (var step in steps)
-                            {
-
-                                var geocodeDetails = googleMapClient.Geocoding
-                                                .GetGeocoding(new GoogleMap.Models.Places.Geocoding.GeocodingRequest
-                                                {
-                                                    address = $"{step.end_location.lat},{step.end_location.lng}"
-                                                }).Result;
-
-                                var details = geocodeDetails.Data.results;
-
-                                foreach (var detail in details)
-                                {
-                                    var addressComponents = detail.address_components;
-
-                                    foreach (var addressComponent in addressComponents)
-                                    {
-                                        for (int k = 0; k < cities.Count; k++)
-                                        {
-                                            if (string.Compare(cities[k], addressComponent.long_name, true) == 0
-                                                && !(string.Compare(cities[i], addressComponent.long_name, true) == 0)
-                                                && !(string.Compare(cities[j], addressComponent.long_name, true) == 0))
-                                            {
-                                                matrix[i, j] = 0;
-                                                continue;
-                                            }
-
-                                            if (string.Compare(cities[k], addressComponent.short_name, true) == 0
-                                                && !(string.Compare(cities[i], addressComponent.short_name, true) == 0)
-                                                && !(string.Compare(cities[j], addressComponent.short_name, true) == 0))
-                                            {
-                                                matrix[i, j] = 0;
-                                                continue;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        static void TestInitMatrix2(
+        static void TestInitMatrix(
             IGoogleMapClient googleMapClient,
             List<string> cities)
         {
@@ -173,18 +88,14 @@ namespace Core.Libs.Integration.Test.Manual
             int[,] matrix = new int[9, 9];
 
             for (int i = 0; i < cities.Count; i++)
-            {
                 for (int j = 0; j < cities.Count; j++)
                 {
-                    // if (i == j)
-                    //     continue;
-
                     var directions = googleMapClient.Direction
-                               .GetDirection(new DirectionRequest()
-                               {
-                                   origin = cities[i],
-                                   destination = cities[j]
-                               }).Result;
+                                .GetDirection(new DirectionRequest()
+                                {
+                                    origin = cities[i],
+                                    destination = cities[j]
+                                }).Result;
 
                     var distanceDefault = GetDistance(directions.Data);
 
@@ -212,7 +123,8 @@ namespace Core.Libs.Integration.Test.Manual
                             matrix[i, j] = 0;
                     }
                 }
-            }
+                var hamilton = new Hamilton(10);
+                var arrayHamilton = hamilton.Check(matrix, cities.Count);
         }
 
         static long GetDistance(Direction direction)
@@ -220,14 +132,105 @@ namespace Core.Libs.Integration.Test.Manual
             var distance = 0L;
 
             for (int i = 0; i < direction.routes.Count; i++)
-            {
                 for (int j = 0; j < direction.routes[i].legs.Count; j++)
-                {
                     distance += direction.routes[i].legs[j].distance.value.Value;
-                }
-            }
 
             return distance;
         }
+
+        #region Google Direction PolyLine
+        static IEnumerable<Location> Decode(string polylineString)
+        {
+            if (string.IsNullOrEmpty(polylineString))
+                throw new ArgumentNullException(nameof(polylineString));
+
+            var polylineChars = polylineString.ToCharArray();
+            var index = 0;
+
+            var currentLat = 0;
+            var currentLng = 0;
+
+            while (index < polylineChars.Length)
+            {
+                // Next lat
+                var sum = 0;
+                var shifter = 0;
+                int nextFiveBits;
+                do
+                {
+                    nextFiveBits = polylineChars[index++] - 63;
+                    sum |= (nextFiveBits & 31) << shifter;
+                    shifter += 5;
+                } while (nextFiveBits >= 32 && index < polylineChars.Length);
+
+                if (index >= polylineChars.Length)
+                    break;
+
+                currentLat += (sum & 1) == 1 ? ~(sum >> 1) : (sum >> 1);
+
+                // Next lng
+                sum = 0;
+                shifter = 0;
+                do
+                {
+                    nextFiveBits = polylineChars[index++] - 63;
+                    sum |= (nextFiveBits & 31) << shifter;
+                    shifter += 5;
+                } while (nextFiveBits >= 32 && index < polylineChars.Length);
+
+                if (index >= polylineChars.Length && nextFiveBits >= 32)
+                    break;
+
+                currentLng += (sum & 1) == 1 ? ~(sum >> 1) : (sum >> 1);
+
+                yield return new Location
+                {
+                    lat = Convert.ToDouble(currentLat) / 1E5,
+                    lng = Convert.ToDouble(currentLng) / 1E5
+                };
+            }
+        }
+
+        static string Encode(IEnumerable<Location> locations)
+        {
+            var str = new StringBuilder();
+
+            var encodeDiff = (Action<int>)(diff =>
+            {
+                var shifted = diff << 1;
+                if (diff < 0)
+                    shifted = ~shifted;
+
+                var rem = shifted;
+
+                while (rem >= 0x20)
+                {
+                    str.Append((char)((0x20 | (rem & 0x1f)) + 63));
+
+                    rem >>= 5;
+                }
+
+                str.Append((char)(rem + 63));
+            });
+
+            var lastLat = 0;
+            var lastLng = 0;
+
+            foreach (var point in locations)
+            {
+                var lat = (int)Math.Round(point.lat.Value * 1E5);
+                var lng = (int)Math.Round(point.lng.Value * 1E5);
+
+                encodeDiff(lat - lastLat);
+                encodeDiff(lng - lastLng);
+
+                lastLat = lat;
+                lastLng = lng;
+            }
+
+            return str.ToString();
+        }
+
+        #endregion
     }
 }
