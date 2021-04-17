@@ -48,13 +48,79 @@ namespace Core.Libs.Integration.Test.Manual
                 "Thành phố Đà Lạt",
             };
 
+            var locations = new List<Location>()
+                {   
+                    // Thành phố Hồ Chí Minh
+                    new Location()
+                    {
+                        lat = 10.8230989,
+                        lng = 106.6296638
+                    },
+                    // Thành phố Vũng Tàu
+                    new Location()
+                    {
+                        lat = 10.4113797,
+                        lng = 107.136224
+                    },
+                    // Thành phố Biên Hòa
+                    new Location()
+                    {
+                        lat = 10.9574128,
+                        lng = 106.8426871
+                    },
+                    // Thành phố Phan Thiết
+                    new Location()
+                    {
+                        lat = 10.9804603,
+                        lng = 108.2614775
+                    },
+                    // Thành phố Bảo Lộc
+                    new Location()
+                    {
+                        lat = 11.5731051,
+                        lng = 107.8346924
+                    },
+                    // Thành phố Đà Lạt
+                    new Location()
+                    {
+                        lat = 11.9404192,
+                        lng = 108.4583132
+                    },
+                };
+
             // TestGetDistanceMatrix(googleMapClient, distanceMatrixRequest);
 
             // TestGetDirection(googleMapClient, directionRequest);
 
-            TestInitMatrix(googleMapClient, cities);
+            // TestInitMatrix(googleMapClient, cities);
 
             // var result = polyliner.Decode(polyline);
+
+            // TestInitMatrixAsync(googleMapClient, locations);
+
+            TestInitMatrixAsync(googleMapClient, cities);
+        }
+
+        static void TestInitMatrixAsync(
+           IGoogleMapClient googleMapClient,
+           List<string> locations)
+        {
+            var result = googleMapClient.Matrix
+                .GetMatrix(locations, 10000).Result;
+
+            var hamilton = new Hamilton(10);
+            var arrayHamilton = hamilton.Check(result, locations.Count);
+        }
+
+        static void TestInitMatrixAsync(
+            IGoogleMapClient googleMapClient,
+            List<Location> locations)
+        {
+            var result = googleMapClient.Matrix
+                .GetMatrix(locations, 10000).Result;
+
+            var hamilton = new Hamilton(10);
+            var arrayHamilton = hamilton.Check(result, locations.Count);
         }
 
         static void TestGetDistanceMatrix(
@@ -123,8 +189,8 @@ namespace Core.Libs.Integration.Test.Manual
                             matrix[i, j] = 0;
                     }
                 }
-                var hamilton = new Hamilton(10);
-                var arrayHamilton = hamilton.Check(matrix, cities.Count);
+            var hamilton = new Hamilton(10);
+            var arrayHamilton = hamilton.Check(matrix, cities.Count);
         }
 
         static long GetDistance(Direction direction)

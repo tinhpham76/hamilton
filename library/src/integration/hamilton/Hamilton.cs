@@ -12,9 +12,9 @@ namespace Core.Libs.Integration
         public Hamilton(
             int SizeMemory = 100)
         {
-            A = new int[SizeMemory, SizeMemory];
-            B = new int[SizeMemory];
-            C = new int[SizeMemory];
+            this.A = new int[SizeMemory, SizeMemory];
+            this.B = new int[SizeMemory];
+            this.C = new int[SizeMemory];
         }
 
         public List<int[]> Check(
