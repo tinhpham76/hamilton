@@ -98,7 +98,25 @@ namespace Core.Libs.Integration.Test.Manual
 
             // TestInitMatrixAsync(googleMapClient, locations);
 
-            TestInitMatrixAsync(googleMapClient, cities);
+            // TestInitMatrixAsync(googleMapClient, cities);
+
+            TestPlaceSearch(googleMapClient);
+        }
+
+        static void TestPlaceSearch(
+            IGoogleMapClient googleMapClient)
+        {
+            var result = googleMapClient.Place
+                        .PlaceSearch(new GoogleMap.Models.Places.PlaceSearchRequest()
+                        {
+                            input = "Thành phố Hồ Chí Minh",
+                            inputtype = GoogleMap.Models.Enum.Places.InputType.TextQuery,
+                            fields = new GoogleMap.Models.Enum.Places.Field[]
+                            {
+                                GoogleMap.Models.Enum.Places.Field.PHOTOS,
+                                GoogleMap.Models.Enum.Places.Field.NAME
+                            }
+                        }).Result;
         }
 
         static void TestInitMatrixAsync(
