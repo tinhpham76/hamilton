@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Core.Libs.Integration.GoogleMap.Models.Enum.Routes.Direction;
 using Core.Libs.Integration.GoogleMap.Models.Places.Geocoding;
-using Core.Libs.Integration.GoogleMap.Models.Routes.Directions;
 using Core.Libs.Utils.Helpers;
 using Core.Libs.Utils.Models;
 

@@ -127,7 +127,10 @@ namespace Core.Libs.Integration.GoogleMap
                         distanceCheck = GetDistance(checkDirections.Data);
 
                         if ((distanceCheck - distanceDefault) < range)
+                        {
                             matrix[i, j] = 0;
+                            break;
+                        }
                     }
                 }
 
