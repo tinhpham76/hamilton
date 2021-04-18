@@ -8,6 +8,7 @@ namespace Core.Libs.Integration.GoogleMap
 
     public class GoogleMapConfig
     {
+        public const string ConfigName = "GoogleMap";
         public string Key { get; set; }
     }
 }
