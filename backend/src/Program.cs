@@ -15,6 +15,7 @@ namespace Hamilton
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                    webBuilder.UseUrls("https://localhost:5001", "http://localhost:5000");
                 });
 
         public const string FIND_HAMILTON_FROM_ADDRESS_NAME = "findhamiltonfromaddressname";
