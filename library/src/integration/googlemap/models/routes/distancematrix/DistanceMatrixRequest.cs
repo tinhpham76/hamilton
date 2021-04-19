@@ -1,5 +1,5 @@
 using System;
-using Core.Libs.Integration.GoogleMap.Models.Enum.Routes.DistanceMatrix;
+using Core.Libs.Integration.GoogleMap.Models.Enum.Routes;
 
 namespace Core.Libs.Integration.GoogleMap.Models.Routes.DistanceMatrix
 {

@@ -34,7 +34,7 @@ namespace Core.Libs.Integration.Test.Manual
             A[4, 3] = 1;
             A[4, 4] = 0;
 
-            var arrayHamilton = hamilton.Check(A, 5);
+            var arrayHamilton = hamilton.FindHamilton(A, 5);
         }
     }
 }

@@ -1,4 +1,4 @@
-namespace Core.Libs.Integration.GoogleMap.Models.Enum.Routes.DistanceMatrix
+namespace Core.Libs.Integration.GoogleMap.Models.Enum.Routes
 {
     public enum Unit
     {

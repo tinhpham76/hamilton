@@ -1,4 +1,4 @@
-namespace Core.Libs.Integration.GoogleMap.Models.Enum.Routes.Direction
+namespace Core.Libs.Integration.GoogleMap.Models.Enum.Routes
 {
     public enum TravelMode
     {

@@ -34,8 +34,8 @@ namespace Core.Libs.Integration.Test.Manual
                 destination = "Thành phố Hồ Chí Minh",
                 language = "vi",
                 waypoints = new string[] { "Thành phố Đà Lạt", "Thành phố Vũng Tàu" },
-                mode = GoogleMap.Models.Enum.Routes.Direction.TravelMode.Driving,
-                units = GoogleMap.Models.Enum.Routes.Direction.Unit.Imperial
+                mode = GoogleMap.Models.Enum.Routes.TravelMode.Driving,
+                units = GoogleMap.Models.Enum.Routes.Unit.Imperial
             };
 
             var cities = new List<string>
@@ -96,17 +96,15 @@ namespace Core.Libs.Integration.Test.Manual
 
             // var result = polyliner.Decode(polyline);
 
-            // TestInitMatrixAsync(googleMapClient, locations);
+            TestInitMatrixAsync(googleMapClient, cities);
 
-            // TestInitMatrixAsync(googleMapClient, cities);
-
-            TestPlaceSearch(googleMapClient);
+            // TestPlaceSearch(googleMapClient);
         }
 
         static void TestPlaceSearch(
             IGoogleMapClient googleMapClient)
         {
-            var result = googleMapClient.Place
+            var result = googleMapClient.Places
                         .PlaceSearch(new GoogleMap.Models.Places.PlaceSearchRequest()
                         {
                             input = "Thành phố Hồ Chí Minh",
@@ -123,29 +121,15 @@ namespace Core.Libs.Integration.Test.Manual
            IGoogleMapClient googleMapClient,
            List<string> locations)
         {
-            var result = googleMapClient.Matrix
-                .GetMatrix(locations, 10000).Result;
-
-            var hamilton = new Hamilton(10);
-            var arrayHamilton = hamilton.Check(result, locations.Count);
-        }
-
-        static void TestInitMatrixAsync(
-            IGoogleMapClient googleMapClient,
-            List<Location> locations)
-        {
-            var result = googleMapClient.Matrix
-                .GetMatrix(locations, 10000).Result;
-
-            var hamilton = new Hamilton(10);
-            var arrayHamilton = hamilton.Check(result, locations.Count);
+            var result = googleMapClient.Hamilton
+                .Find(locations, 10000).Result;
         }
 
         static void TestGetDistanceMatrix(
             IGoogleMapClient googleMapClient,
             GoogleMap.Models.Routes.DistanceMatrix.DistanceMatrixRequest request)
         {
-            var result = googleMapClient.DistanceMatrix
+            var result = googleMapClient.Routes
                         .GetDistanceMatrix(request)
                         .Result;
 
@@ -156,7 +140,7 @@ namespace Core.Libs.Integration.Test.Manual
             IGoogleMapClient googleMapClient,
             DirectionRequest request)
         {
-            var result = googleMapClient.Direction
+            var result = googleMapClient.Routes
                         .GetDirection(request)
                         .Result;
 
@@ -174,7 +158,7 @@ namespace Core.Libs.Integration.Test.Manual
             for (int i = 0; i < cities.Count; i++)
                 for (int j = 0; j < cities.Count; j++)
                 {
-                    var directions = googleMapClient.Direction
+                    var directions = googleMapClient.Routes
                                 .GetDirection(new DirectionRequest()
                                 {
                                     origin = cities[i],
@@ -193,7 +177,7 @@ namespace Core.Libs.Integration.Test.Manual
                         if (k == i || k == j)
                             continue;
 
-                        var checkDirections = googleMapClient.Direction
+                        var checkDirections = googleMapClient.Routes
                                         .GetDirection(new DirectionRequest()
                                         {
                                             origin = cities[i],
@@ -208,7 +192,7 @@ namespace Core.Libs.Integration.Test.Manual
                     }
                 }
             var hamilton = new Hamilton(10);
-            var arrayHamilton = hamilton.Check(matrix, cities.Count);
+            var arrayHamilton = hamilton.FindHamilton(matrix, cities.Count);
         }
 
         static long GetDistance(Direction direction)

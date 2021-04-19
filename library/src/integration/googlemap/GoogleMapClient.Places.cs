@@ -5,23 +5,28 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Core.Libs.Integration.GoogleMap.Models.Enum.Places;
 using Core.Libs.Integration.GoogleMap.Models.Places;
+using Core.Libs.Integration.GoogleMap.Models.Places.Geocoding;
 using Core.Libs.Utils.Helpers;
 using Core.Libs.Utils.Models;
 
 namespace Core.Libs.Integration.GoogleMap
 {
-    public interface IGoogleMapPlace
+    public interface IGoogleMapPlaces
     {
         Task<FetchResponse<PlaceSearch>> PlaceSearch(
             PlaceSearchRequest request);
+
+        Task<FetchResponse<Result<List<AddressComponents>>>> GetGeocoding(
+            GeocodingRequest request);
     }
 
-    public class GoogleMapPlace : IGoogleMapPlace
+    public class GoogleMapPlaces : IGoogleMapPlaces
     {
         private readonly HttpClient httpClient;
         private readonly GoogleMapConfig config;
         private const string PLACE_SEARCH_URL = "place/findplacefromtext";
-        public GoogleMapPlace(
+        private const string GECODING_URLS = "geocode";
+        public GoogleMapPlaces(
             HttpClient httpClient,
             GoogleMapConfig config)
         {
@@ -51,7 +56,7 @@ namespace Core.Libs.Integration.GoogleMap
 
             if (request.fields != null
                 && request.fields.Length > 0)
-                @params.Add(("fields", string.Join(",", request.fields.Select( x => Enum.GetName(typeof(Field), x).ToLower()))));
+                @params.Add(("fields", string.Join(",", request.fields.Select(x => Enum.GetName(typeof(Field), x).ToLower()))));
 
             if (!string.IsNullOrEmpty(request.locationbias))
                 @params.Add(("locationbias", request.locationbias));
@@ -59,6 +64,38 @@ namespace Core.Libs.Integration.GoogleMap
             return this.httpClient.ExecuteGet<PlaceSearch>(
                 Utils.GetApiUrl(
                     PLACE_SEARCH_URL,
+                    config.Key,
+                    @params));
+        }
+
+        public Task<FetchResponse<Result<List<AddressComponents>>>> GetGeocoding(
+            GeocodingRequest request)
+        {
+            var @params = new List<(string, object)>();
+
+            if (string.IsNullOrEmpty(config.Key))
+                throw new ArgumentNullException(nameof(config.Key));
+
+            if (!string.IsNullOrEmpty(request.address))
+                @params.Add(("address", request.address));
+
+            if (request.components != null
+                && request.components.Length > 0)
+                @params.Add(("components", string.Join("|", request.components.Select(a => a.ToString()))));
+
+            if (request.bounds != null
+                && request.bounds.Length > 0)
+                @params.Add(("bounds", string.Join("|", request.bounds.Select(a => a.ToString()))));
+
+            if (!string.IsNullOrEmpty(request.language))
+                @params.Add(("language", request.language));
+
+            if (!string.IsNullOrEmpty(request.region))
+                @params.Add(("region", request.region));
+
+            return this.httpClient.ExecuteGet<Result<List<AddressComponents>>>(
+                Utils.GetApiUrl(
+                    GECODING_URLS,
                     config.Key,
                     @params));
         }

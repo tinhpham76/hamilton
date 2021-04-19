@@ -4,11 +4,10 @@ namespace Core.Libs.Integration.GoogleMap
 {
     public interface IGoogleMapClient
     {
-        IGoogleMapDistanceMatrix DistanceMatrix { get; }
-        IGoogleMapDirection Direction { get; }
-        IGoogleMapGeocoding Geocoding { get; }
-        IGoogleMapMatrix Matrix { get; }
-        IGoogleMapPlace Place { get; }
+        IGoogleMapRoutes Routes { get; }
+        IGoogleMapPlaces Places { get; }
+        IGoogleMapHamilton Hamilton { get; }
+
     }
 
     public class GoogleMapClient : IGoogleMapClient
@@ -22,17 +21,14 @@ namespace Core.Libs.Integration.GoogleMap
             this.httpClient = httpClient;
             this.config = config.GoogleMap;
 
-            this.DistanceMatrix = new GoogleMapDistanceMatrix(this.httpClient, this.config);
-            this.Direction = new GoogleMapDirection(this.httpClient, this.config);
-            this.Geocoding = new GoogleMapGeocoding(this.httpClient, this.config);
-            this.Matrix = new GoogleMapMatrix(new GoogleMapDirection(this.httpClient, this.config));
-            this.Place = new GoogleMapPlace(this.httpClient, this.config);
+            this.Routes = new GoogleMapRoutes(this.httpClient, this.config);
+            this.Places = new GoogleMapPlaces(this.httpClient, this.config);
+            this.Hamilton = new GoogleMapHamilton(new GoogleMapRoutes(this.httpClient, this.config));
+            
         }
 
-        public IGoogleMapDistanceMatrix DistanceMatrix { get; }
-        public IGoogleMapDirection Direction { get; }
-        public IGoogleMapGeocoding Geocoding { get; }
-        public IGoogleMapMatrix Matrix { get; }
-        public IGoogleMapPlace Place { get; }
+        public IGoogleMapRoutes Routes { get; }
+        public IGoogleMapPlaces Places { get; }
+        public IGoogleMapHamilton Hamilton { get; }
     }
 }

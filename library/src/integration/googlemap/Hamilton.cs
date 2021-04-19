@@ -17,7 +17,7 @@ namespace Core.Libs.Integration
             this.C = new int[SizeMemory];
         }
 
-        public List<int[]> Check(
+        public List<int[]> FindHamilton(
             int[,] Matrix,
             int TotalPoint,
             int StartPoint = 0)

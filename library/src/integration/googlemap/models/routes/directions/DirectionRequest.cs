@@ -1,5 +1,5 @@
 using System;
-using Core.Libs.Integration.GoogleMap.Models.Enum.Routes.Direction;
+using Core.Libs.Integration.GoogleMap.Models.Enum.Routes;
 
 namespace Core.Libs.Integration.GoogleMap.Models.Routes.Directions
 {
