@@ -7,7 +7,7 @@ namespace Hamilton.Business
 {
     public interface IHamiltonBusiness
     {
-        Task<List<string[]>> Check(
+        Task<List<Core.Libs.Integration.GoogleMap.Models.Hamilton.Hamilton>> Check(
             List<string> locations,
             long range);
     }
@@ -21,20 +21,11 @@ namespace Hamilton.Business
             this.client = client;
         }
 
-        public async Task<List<string[]>> Check(
+        public async Task<List<Core.Libs.Integration.GoogleMap.Models.Hamilton.Hamilton>> Check(
             List<string> locations,
             long range)
         {
-            var response = new List<string[]>();
-            
-            var matrix = await client.Matrix.GetMatrix(locations, range);
-
-            var hamilton = new Core.Libs.Integration.Hamilton(locations.Count + 1);
-
-            var result = hamilton.Check(matrix, locations.Count);
-
-            for (int i = 0; i < result.Count; i++)              
-                response.Add(result[i].Select(a => locations[a]).ToArray());
+            var response = await client.Hamilton.Find(locations, range);
 
             return response;
         }

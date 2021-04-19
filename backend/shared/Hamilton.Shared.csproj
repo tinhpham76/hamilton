@@ -8,8 +8,7 @@
     <PackageReference Include="Core.Libs.Client" Version="1.0.0" />
     <PackageReference Include="Core.Libs.Service" Version="1.0.0" />
     <PackageReference Include="Core.Libs.Utils" Version="1.0.0" />
-    <PackageReference Include="Core.Libs.Integration.GoogleMap" Version="1.0.0" />
-     <PackageReference Include="Core.Libs.Integration.Hamilton" Version="1.0.0" />
+    <PackageReference Include="Core.Libs.Integration.GoogleMap" Version="1.0.2" />
   </ItemGroup>
   
 </Project>
