@@ -25,7 +25,7 @@ namespace Hamilton.Controllers
         }
 
         [HttpGet]
-        [Route("findhamiltonfromaddressname")]
+        [Route(Program.FIND_HAMILTON_FROM_ADDRESS_NAME)]
         public async Task<IActionResult> Hamilton([FromQuery] string locations, [FromQuery] long range)
         {
             var arrayLocations = locations.Split("|");
