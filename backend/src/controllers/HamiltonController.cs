@@ -1,9 +1,7 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Core.Libs.Client;
-using Core.Libs.Integration.GoogleMap;
+using Core.Libs.Client.Models.Json;
 using Hamilton.Business;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -25,7 +23,7 @@ namespace Hamilton.Controllers
         }
 
         [HttpGet]
-        [Route(Program.FIND_HAMILTON_FROM_ADDRESS_NAME)]
+        [Route(Program.FIND_HAMILTON)]
         public async Task<IActionResult> Hamilton([FromQuery] string locations, [FromQuery] long range)
         {
             var arrayLocations = locations.Split("|");
@@ -33,7 +31,7 @@ namespace Hamilton.Controllers
             var input = new List<string>();
 
             foreach (var location in arrayLocations)
-                input.Add(location);
+                input.Add(location.Trim());
 
             var response = await hamilton.Check(input, range);
 
@@ -41,7 +39,7 @@ namespace Hamilton.Controllers
                 return ToResponse(response);
             return ToResponse(
                 response,
-                new Core.Libs.Client.Models.Json.ErrorJsonModel()
+                new ErrorJsonModel()
                 {
                     message = "Không tìm thấy đường đi Hamilton.",
                     code = "404",

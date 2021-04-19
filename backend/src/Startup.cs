@@ -64,8 +64,9 @@ namespace Hamilton
 
             services.RegisterIntegrationGoogleMap(Configuration);
 
-             services
-                .AddTransient<IHamiltonBusiness, HamiltonBusiness>();
+            services
+                .AddTransient<IHamiltonBusiness, HamiltonBusiness>()
+                .AddTransient<IGoogleMapBusiness, GoogleMapBusiness>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

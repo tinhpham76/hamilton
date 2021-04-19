@@ -17,7 +17,12 @@ namespace Hamilton
                     webBuilder.UseStartup<Startup>();
                     webBuilder.UseUrls("https://localhost:5001", "http://localhost:5000");
                 });
+        
+        // Hamilton
+        public const string FIND_HAMILTON = "findhamilton";
 
-        public const string FIND_HAMILTON_FROM_ADDRESS_NAME = "findhamiltonfromaddressname";
+        // Routes
+        public const string ROUTES_DIRECTIONS = "routes/directions"; 
+
     }
 }
