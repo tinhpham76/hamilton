@@ -113,7 +113,7 @@ namespace Core.Libs.Integration.GoogleMap
                 @params.Add(("units", Enum.GetName(typeof(Unit), (int)request.units.Value).ToLower()));
 
             if (request.arrival_time.HasValue)
-                @params.Add(("arrival_time", request.arrival_time));
+                @params.Add(("arrival_time", request.arrival_time.Value));
 
             if (request.departure_time.HasValue)
                 @params.Add(("departure_time", request.departure_time));

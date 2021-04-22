@@ -25,6 +25,9 @@ namespace Core.Libs.Integration.GoogleMap
         Task<FetchResponse<Result<PlaceDetail>>> PlaceDetail(
             PlaceDetailRequest request);
 
+        Task<FetchResponse<Prediction<List<PlaceAutocomplete>>>> PlaceAutocomplete(
+            PlaceAutocompleteRequest request);
+
         Task<FetchResponse<Result<List<Geocoding>>>> GetGeocoding(
             GeocodingRequest request);
     }
@@ -37,6 +40,7 @@ namespace Core.Libs.Integration.GoogleMap
         private const string NEARBY_SEARCH_URL = "place/nearbysearch";
         private const string TEXT_SEARCH_URL = "place/textsearch";
         private const string PLACE_DETAIL_URL = "place/details";
+        private const string PLACE_AUTOCOMPLETE_URL = "place/autocomplete";
         private const string GECODING_URLS = "geocode";
         public GoogleMapPlaces(
             HttpClient httpClient,
@@ -134,10 +138,10 @@ namespace Core.Libs.Integration.GoogleMap
                 @params.Add(("language", request.language));
 
             if (request.minprice.HasValue)
-                @params.Add(("minprice", request.minprice));
+                @params.Add(("minprice", request.minprice.Value));
 
             if (request.maxprice.HasValue)
-                @params.Add(("maxprice", request.maxprice));
+                @params.Add(("maxprice", request.maxprice.Value));
 
             if (!string.IsNullOrEmpty(request.name))
                 @params.Add(("name", request.name));
@@ -182,13 +186,13 @@ namespace Core.Libs.Integration.GoogleMap
                 @params.Add(("language", request.language));
 
             if (request.radius.HasValue)
-                @params.Add(("radius", request.radius));
+                @params.Add(("radius", request.radius.Value));
 
             if (request.minprice.HasValue)
-                @params.Add(("minprice", request.minprice));
+                @params.Add(("minprice", request.minprice.Value));
 
             if (request.maxprice.HasValue)
-                @params.Add(("maxprice", request.maxprice));
+                @params.Add(("maxprice", request.maxprice.Value));
 
             if (!string.IsNullOrEmpty(request.opennow))
                 @params.Add(("opennow", request.opennow));
@@ -233,6 +237,51 @@ namespace Core.Libs.Integration.GoogleMap
             return this.httpClient.ExecuteGet<Result<PlaceDetail>>(
                 Utils.GetApiUrl(
                     PLACE_DETAIL_URL,
+                    config.Key,
+                    @params));
+        }
+
+        public Task<FetchResponse<Prediction<List<PlaceAutocomplete>>>> PlaceAutocomplete(
+            PlaceAutocompleteRequest request)
+        {
+            var @params = new List<(string, object)>();
+
+            if (string.IsNullOrEmpty(config.Key))
+                throw new ArgumentNullException(nameof(config.Key));
+
+            if (!string.IsNullOrEmpty(request.input))
+                @params.Add(("input", request.input));
+
+            if (!string.IsNullOrEmpty(request.sessiontoken))
+                @params.Add(("sessiontoken", request.sessiontoken));
+
+            if (request.offset.HasValue)
+                @params.Add(("offset", request.offset.Value));
+
+            if (!string.IsNullOrEmpty(request.origin))
+                @params.Add(("origin", request.origin));
+
+            if (!string.IsNullOrEmpty(request.location))
+                @params.Add(("location", request.location));
+
+            if (request.radius.HasValue)
+                @params.Add(("radius", request.radius.Value));
+
+            if (!string.IsNullOrEmpty(request.language))
+                @params.Add(("language", request.language));
+
+            if (!string.IsNullOrEmpty(request.types))
+                @params.Add(("types", request.types));
+
+            if (!string.IsNullOrEmpty(request.components))
+                @params.Add(("components", request.components));
+
+            if (!string.IsNullOrEmpty(request.strictbounds))
+                @params.Add(("strictbounds", request.strictbounds));
+
+            return this.httpClient.ExecuteGet<Prediction<List<PlaceAutocomplete>>>(
+                Utils.GetApiUrl(
+                    PLACE_AUTOCOMPLETE_URL,
                     config.Key,
                     @params));
         }

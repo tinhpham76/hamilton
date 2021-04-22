@@ -106,12 +106,24 @@ namespace Core.Libs.Integration.Test.Manual
 
             // TestGetGeocoding(googleMapClient);
 
-            TestGetPlaceDetail(googleMapClient);
+            // TestGetPlaceDetail(googleMapClient);
+
+            TestGetPlaceAutocomplete(googleMapClient);
+        }
+
+        static void TestGetPlaceAutocomplete(
+            IGoogleMapClient googleMapClient)
+        {
+            var result = googleMapClient.Places
+                        .PlaceAutocomplete(new GoogleMap.Models.Places.PlaceAutocompleteRequest()
+                        {
+                            input = "Bến Thành"
+                        }).Result;
         }
 
         static void TestGetPlaceDetail(
             IGoogleMapClient googleMapClient)
-        { 
+        {
             var result = googleMapClient.Places
                         .PlaceDetail(new GoogleMap.Models.Places.PlaceDetailRequest()
                         {
