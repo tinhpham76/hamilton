@@ -22,6 +22,9 @@ namespace Core.Libs.Integration.GoogleMap
         Task<FetchResponse<Result<List<TextSearch>>>> TextSearch(
             TextSearchRequest request);
 
+        Task<FetchResponse<Result<PlaceDetail>>> PlaceDetail(
+            PlaceDetailRequest request);
+
         Task<FetchResponse<Result<List<Geocoding>>>> GetGeocoding(
             GeocodingRequest request);
     }
@@ -33,6 +36,7 @@ namespace Core.Libs.Integration.GoogleMap
         private const string PLACE_SEARCH_URL = "place/findplacefromtext";
         private const string NEARBY_SEARCH_URL = "place/nearbysearch";
         private const string TEXT_SEARCH_URL = "place/textsearch";
+        private const string PLACE_DETAIL_URL = "place/details";
         private const string GECODING_URLS = "geocode";
         public GoogleMapPlaces(
             HttpClient httpClient,
@@ -198,6 +202,37 @@ namespace Core.Libs.Integration.GoogleMap
             return this.httpClient.ExecuteGet<Result<List<TextSearch>>>(
                 Utils.GetApiUrl(
                     TEXT_SEARCH_URL,
+                    config.Key,
+                    @params));
+        }
+
+        public Task<FetchResponse<Result<PlaceDetail>>> PlaceDetail(
+            PlaceDetailRequest request)
+        {
+            var @params = new List<(string, object)>();
+
+            if (string.IsNullOrEmpty(config.Key))
+                throw new ArgumentNullException(nameof(config.Key));
+
+            if (!string.IsNullOrEmpty(request.place_id))
+                @params.Add(("place_id", request.place_id));
+
+            if (!string.IsNullOrEmpty(request.language))
+                @params.Add(("language", request.language));
+
+            if (!string.IsNullOrEmpty(request.region))
+                @params.Add(("region", request.region));
+
+            if (!string.IsNullOrEmpty(request.sessiontoken))
+                @params.Add(("sessiontoken", request.sessiontoken));
+
+            if (request.fields != null
+               && request.fields.Length > 0)
+                @params.Add(("fields", string.Join(",", request.fields.Select(x => Enum.GetName(typeof(Field), x).ToLower()))));
+
+            return this.httpClient.ExecuteGet<Result<PlaceDetail>>(
+                Utils.GetApiUrl(
+                    PLACE_DETAIL_URL,
                     config.Key,
                     @params));
         }

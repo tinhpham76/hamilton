@@ -104,28 +104,40 @@ namespace Core.Libs.Integration.Test.Manual
 
             // TestTextSearch(googleMapClient);
 
-            TestGetGeocoding(googleMapClient);
+            // TestGetGeocoding(googleMapClient);
+
+            TestGetPlaceDetail(googleMapClient);
+        }
+
+        static void TestGetPlaceDetail(
+            IGoogleMapClient googleMapClient)
+        { 
+            var result = googleMapClient.Places
+                        .PlaceDetail(new GoogleMap.Models.Places.PlaceDetailRequest()
+                        {
+                            place_id = "ChIJN1t_tDeuEmsRUsoyG83frY4"
+                        }).Result;
         }
 
         static void TestGetGeocoding(
             IGoogleMapClient googleMapClient)
-            {
-                var result = googleMapClient.Places
-                            .GetGeocoding(new GoogleMap.Models.Places.Geocoding.GeocodingRequest()
-                            {
-                                address = "Thành phố Hồ Chí Minh"
-                            }).Result;
-            }
+        {
+            var result = googleMapClient.Places
+                        .GetGeocoding(new GoogleMap.Models.Places.Geocoding.GeocodingRequest()
+                        {
+                            address = "Thành phố Hồ Chí Minh"
+                        }).Result;
+        }
 
         static void TestTextSearch(
             IGoogleMapClient googleMapClient)
-            {
-                var result = googleMapClient.Places
-                            .TextSearch(new GoogleMap.Models.Places.TextSearchRequest()
-                            {
-                                query = "Bến Thành"
-                            }).Result;   
-            }
+        {
+            var result = googleMapClient.Places
+                        .TextSearch(new GoogleMap.Models.Places.TextSearchRequest()
+                        {
+                            query = "Bến Thành"
+                        }).Result;
+        }
 
         static void TestNearbySearch(
             IGoogleMapClient googleMapClient)
