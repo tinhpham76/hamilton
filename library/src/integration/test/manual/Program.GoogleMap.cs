@@ -100,8 +100,20 @@ namespace Core.Libs.Integration.Test.Manual
 
             // TestPlaceSearch(googleMapClient);
 
-            TestNearbySearch(googleMapClient);
+            // TestNearbySearch(googleMapClient);
+
+            TestTextSearch(googleMapClient);
         }
+
+        static void TestTextSearch(
+            IGoogleMapClient googleMapClient)
+            {
+                var result = googleMapClient.Places
+                            .TextSearch(new GoogleMap.Models.Places.TextSearchRequest()
+                            {
+                                query = "Bến Thành"
+                            }).Result;   
+            }
 
         static void TestNearbySearch(
             IGoogleMapClient googleMapClient)

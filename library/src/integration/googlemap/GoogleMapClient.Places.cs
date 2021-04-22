@@ -19,6 +19,9 @@ namespace Core.Libs.Integration.GoogleMap
         Task<FetchResponse<Result<List<NearbySearch>>>> NearbySearch(
             NearbySearchRequest request);
 
+        Task<FetchResponse<Result<List<TextSearch>>>> TextSearch(
+            TextSearchRequest request);
+
         Task<FetchResponse<Result<List<AddressComponents>>>> GetGeocoding(
             GeocodingRequest request);
     }
@@ -29,6 +32,7 @@ namespace Core.Libs.Integration.GoogleMap
         private readonly GoogleMapConfig config;
         private const string PLACE_SEARCH_URL = "place/findplacefromtext";
         private const string NEARBY_SEARCH_URL = "place/nearbysearch";
+        private const string TEXT_SEARCH_URL = "place/textsearch";
         private const string GECODING_URLS = "geocode";
         public GoogleMapPlaces(
             HttpClient httpClient,
@@ -151,6 +155,51 @@ namespace Core.Libs.Integration.GoogleMap
             return this.httpClient.ExecuteGet<Result<List<NearbySearch>>>(
                 Utils.GetApiUrl(
                     NEARBY_SEARCH_URL,
+                    config.Key,
+                    @params));
+        }
+
+        public Task<FetchResponse<Result<List<TextSearch>>>> TextSearch(
+            TextSearchRequest request)
+        {
+            var @params = new List<(string, object)>();
+
+            if (string.IsNullOrEmpty(config.Key))
+                throw new ArgumentNullException(nameof(config.Key));
+
+            if (!string.IsNullOrEmpty(request.query))
+                @params.Add(("query", request.query));
+
+            if (!string.IsNullOrEmpty(request.region))
+                @params.Add(("region", request.region));
+
+            if (!string.IsNullOrEmpty(request.location))
+                @params.Add(("location", request.location));
+
+            if (!string.IsNullOrEmpty(request.language))
+                @params.Add(("language", request.language));
+
+            if (request.radius.HasValue)
+                @params.Add(("radius", request.radius));
+
+            if (request.minprice.HasValue)
+                @params.Add(("minprice", request.minprice));
+
+            if (request.maxprice.HasValue)
+                @params.Add(("maxprice", request.maxprice));
+
+            if (!string.IsNullOrEmpty(request.opennow))
+                @params.Add(("opennow", request.opennow));
+
+            if (!string.IsNullOrEmpty(request.pagetoken))
+                @params.Add(("pagetoken", request.pagetoken));
+
+            if (!string.IsNullOrEmpty(request.type))
+                @params.Add(("type", request.type));
+
+            return this.httpClient.ExecuteGet<Result<List<TextSearch>>>(
+                Utils.GetApiUrl(
+                    TEXT_SEARCH_URL,
                     config.Key,
                     @params));
         }
