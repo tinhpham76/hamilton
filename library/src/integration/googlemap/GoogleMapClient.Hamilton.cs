@@ -54,7 +54,7 @@ namespace Core.Libs.Integration.GoogleMap
                             {
                                 origin = locations[i],
                                 destination = locations[j],
-                                waypoints = new string[] { locations[k] }
+                                waypoints = locations[k]
                             });
 
                         distanceCheck = GetDistance(checkDirections.Data);

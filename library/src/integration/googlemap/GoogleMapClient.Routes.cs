@@ -53,7 +53,7 @@ namespace Core.Libs.Integration.GoogleMap
 
             if (request.waypoints != null
                 && request.waypoints.Length > 0)
-                @params.Add(("waypoints", string.Join("|", request.waypoints.Select(a => a.ToString()))));
+                @params.Add(("waypoints", request.waypoints));
 
             if (request.alternatives.HasValue)
                 @params.Add(("alternatives", request.alternatives.Value));
@@ -91,13 +91,11 @@ namespace Core.Libs.Integration.GoogleMap
             if (string.IsNullOrEmpty(config.Key))
                 throw new ArgumentNullException(nameof(config.Key));
 
-            if (request.origins != null
-                && request.origins.Length > 0)
-                @params.Add(new("origins", string.Join("|", request.origins.Select(a => a.ToString()))));
+            if (!string.IsNullOrEmpty(request.origins))
+                @params.Add(("origins", request.origins));
 
-            if (request.destinations != null
-                && request.destinations.Length > 0)
-                @params.Add(new("destinations", string.Join("|", request.destinations.Select(a => a.ToString()))));
+            if (!string.IsNullOrEmpty(request.destinations))
+                @params.Add(("destinations", request.destinations));
 
             if (request.mode.HasValue)
                 @params.Add(("mode", Enum.GetName(typeof(TravelMode), (int)request.mode.Value).ToLower()));

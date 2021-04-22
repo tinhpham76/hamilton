@@ -23,8 +23,8 @@ namespace Core.Libs.Integration.Test.Manual
 
             var distanceMatrixRequest = new GoogleMap.Models.Routes.DistanceMatrix.DistanceMatrixRequest()
             {
-                origins = new string[] { "Bệnh viện Thủ Đức" },
-                destinations = new string[] { "Bệnh viện Quân Dân Y Miền Đông" },
+                origins = "Bệnh viện Thủ Đức",
+                destinations = "Bệnh viện Quân Dân Y Miền Đông",
                 language = "vi"
             };
 
@@ -33,7 +33,7 @@ namespace Core.Libs.Integration.Test.Manual
                 origin = "Thành phố Quảng Ngãi",
                 destination = "Thành phố Hồ Chí Minh",
                 language = "vi",
-                waypoints = new string[] { "Thành phố Đà Lạt", "Thành phố Vũng Tàu" },
+                waypoints = "Thành phố Đà Lạt|Thành phố Vũng Tàu",
                 mode = GoogleMap.Models.Enum.Routes.TravelMode.Driving,
                 units = GoogleMap.Models.Enum.Routes.Unit.Imperial
             };
@@ -182,7 +182,7 @@ namespace Core.Libs.Integration.Test.Manual
                                         {
                                             origin = cities[i],
                                             destination = cities[j],
-                                            waypoints = new string[] { cities[k] }
+                                            waypoints = cities[k]
                                         }).Result;
 
                         distanceCheck = GetDistance(checkDirections.Data);

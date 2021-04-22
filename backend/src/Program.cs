@@ -23,6 +23,6 @@ namespace Hamilton
 
         // Routes
         public const string ROUTES_DIRECTIONS = "routes/directions"; 
-
+        public const string ROUTES_DISTANCEMATRIX = "routes/distancematrix";
     }
 }

@@ -5,8 +5,8 @@ namespace Core.Libs.Integration.GoogleMap.Models.Routes.DistanceMatrix
 {
     public class DistanceMatrixRequest
     {
-        public string[] origins { get; set; }
-        public string[] destinations { get; set; }
+        public string origins { get; set; }
+        public string destinations { get; set; }
         public TravelMode? mode { get; set; }
         public string language  { get; set; } = "vi";
         public string region { get; set; }

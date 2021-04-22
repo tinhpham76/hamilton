@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\googlemap\Core.Libs.Integration.GoogleMap.csproj" />
-    <ProjectReference Include="..\..\hamilton\Core.Libs.Integration.Hamilton.csproj" />
   </ItemGroup>
 
 </Project>

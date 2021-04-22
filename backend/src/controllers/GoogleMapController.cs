@@ -28,7 +28,7 @@ namespace Hamilton.Controllers
             [FromQuery] string origin,
             [FromQuery] string destination,
             [FromQuery] string mode,
-            [FromQuery] string[] waypoints,
+            [FromQuery] string waypoints,
             [FromQuery] bool alternatives,
             [FromQuery] string avoid,
             [FromQuery] string language,
@@ -37,6 +37,23 @@ namespace Hamilton.Controllers
         {
             var response = await googleMap.Directions(
                 origin, destination, waypoints, mode, alternatives, avoid, language, units, region);
+
+            return ToResponse(response);
+        }
+
+        [HttpGet]
+        [Route(Program.ROUTES_DISTANCEMATRIX)]
+        public async Task<IActionResult> DistanceMatrix(
+            [FromQuery] string origins,
+            [FromQuery] string destinations,
+            [FromQuery] string mode,
+            [FromQuery] string language,
+            [FromQuery] string region,
+            [FromQuery] string avoid,
+            [FromQuery] string units)
+        {
+            var response = await googleMap.DistanceMatrix(
+                origins, destinations, mode, language, region, avoid, units);
 
             return ToResponse(response);
         }

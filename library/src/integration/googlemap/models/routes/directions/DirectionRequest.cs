@@ -8,7 +8,7 @@ namespace Core.Libs.Integration.GoogleMap.Models.Routes.Directions
         public string origin { get; set; }
         public string destination { get; set; }
         public TravelMode? mode { get; set; }
-        public string[] waypoints { get; set; }
+        public string waypoints { get; set; }
         public bool? alternatives { get; set; }
         public Avoid? avoid { get; set; }
         public string language { get; set; } = "vi";
