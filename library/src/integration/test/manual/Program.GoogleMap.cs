@@ -96,9 +96,22 @@ namespace Core.Libs.Integration.Test.Manual
 
             // var result = polyliner.Decode(polyline);
 
-            TestInitMatrixAsync(googleMapClient, cities);
+            // TestInitMatrixAsync(googleMapClient, cities);
 
             // TestPlaceSearch(googleMapClient);
+
+            TestNearbySearch(googleMapClient);
+        }
+
+        static void TestNearbySearch(
+            IGoogleMapClient googleMapClient)
+        {
+            var result = googleMapClient.Places
+                    .NearbySearch(new GoogleMap.Models.Places.NearbySearchRequest()
+                    {
+                        location = "10.8230989,106.6296638",
+                        radius = 150000
+                    }).Result;
         }
 
         static void TestPlaceSearch(

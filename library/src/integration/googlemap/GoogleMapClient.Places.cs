@@ -16,6 +16,9 @@ namespace Core.Libs.Integration.GoogleMap
         Task<FetchResponse<PlaceSearch>> PlaceSearch(
             PlaceSearchRequest request);
 
+        Task<FetchResponse<Result<List<NearbySearch>>>> NearbySearch(
+            NearbySearchRequest request);
+
         Task<FetchResponse<Result<List<AddressComponents>>>> GetGeocoding(
             GeocodingRequest request);
     }
@@ -25,6 +28,7 @@ namespace Core.Libs.Integration.GoogleMap
         private readonly HttpClient httpClient;
         private readonly GoogleMapConfig config;
         private const string PLACE_SEARCH_URL = "place/findplacefromtext";
+        private const string NEARBY_SEARCH_URL = "place/nearbysearch";
         private const string GECODING_URLS = "geocode";
         public GoogleMapPlaces(
             HttpClient httpClient,
@@ -96,6 +100,57 @@ namespace Core.Libs.Integration.GoogleMap
             return this.httpClient.ExecuteGet<Result<List<AddressComponents>>>(
                 Utils.GetApiUrl(
                     GECODING_URLS,
+                    config.Key,
+                    @params));
+        }
+
+        public Task<FetchResponse<Result<List<NearbySearch>>>> NearbySearch(
+            NearbySearchRequest request)
+        {
+            var @params = new List<(string, object)>();
+
+            if (string.IsNullOrEmpty(config.Key))
+                throw new ArgumentNullException(nameof(config.Key));
+
+            if (!string.IsNullOrEmpty(request.input))
+                @params.Add(("input", request.input));
+
+            if (!string.IsNullOrEmpty(request.location))
+                @params.Add(("location", request.location));
+
+            if (request.radius.HasValue)
+                @params.Add(("radius", request.radius));
+
+            if (!string.IsNullOrEmpty(request.keyword))
+                @params.Add(("keyword", request.keyword));
+
+            if (!string.IsNullOrEmpty(request.language))
+                @params.Add(("language", request.language));
+
+            if (request.minprice.HasValue)
+                @params.Add(("minprice", request.minprice));
+
+            if (request.maxprice.HasValue)
+                @params.Add(("maxprice", request.maxprice));
+
+            if (!string.IsNullOrEmpty(request.name))
+                @params.Add(("name", request.name));
+
+            if (!string.IsNullOrEmpty(request.opennow))
+                @params.Add(("opennow", request.opennow));
+
+            if (request.rankby.HasValue)
+                @params.Add(("rankby", Enum.GetName(typeof(Rankby), (int)request.rankby.Value).ToLower()));
+
+            if (!string.IsNullOrEmpty(request.type))
+                @params.Add(("type", request.type));
+
+            if (!string.IsNullOrEmpty(request.pagetoken))
+                @params.Add(("pagetoken", request.pagetoken));
+
+            return this.httpClient.ExecuteGet<Result<List<NearbySearch>>>(
+                Utils.GetApiUrl(
+                    NEARBY_SEARCH_URL,
                     config.Key,
                     @params));
         }
