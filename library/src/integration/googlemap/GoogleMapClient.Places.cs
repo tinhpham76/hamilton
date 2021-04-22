@@ -22,7 +22,7 @@ namespace Core.Libs.Integration.GoogleMap
         Task<FetchResponse<Result<List<TextSearch>>>> TextSearch(
             TextSearchRequest request);
 
-        Task<FetchResponse<Result<List<AddressComponents>>>> GetGeocoding(
+        Task<FetchResponse<Result<List<Geocoding>>>> GetGeocoding(
             GeocodingRequest request);
     }
 
@@ -76,7 +76,7 @@ namespace Core.Libs.Integration.GoogleMap
                     @params));
         }
 
-        public Task<FetchResponse<Result<List<AddressComponents>>>> GetGeocoding(
+        public Task<FetchResponse<Result<List<Geocoding>>>> GetGeocoding(
             GeocodingRequest request)
         {
             var @params = new List<(string, object)>();
@@ -87,13 +87,11 @@ namespace Core.Libs.Integration.GoogleMap
             if (!string.IsNullOrEmpty(request.address))
                 @params.Add(("address", request.address));
 
-            if (request.components != null
-                && request.components.Length > 0)
-                @params.Add(("components", string.Join("|", request.components.Select(a => a.ToString()))));
+            if (!string.IsNullOrEmpty(request.components))
+                @params.Add(("components", request.components));
 
-            if (request.bounds != null
-                && request.bounds.Length > 0)
-                @params.Add(("bounds", string.Join("|", request.bounds.Select(a => a.ToString()))));
+            if (!string.IsNullOrEmpty(request.bounds))
+                @params.Add(("bounds", request.bounds));
 
             if (!string.IsNullOrEmpty(request.language))
                 @params.Add(("language", request.language));
@@ -101,7 +99,7 @@ namespace Core.Libs.Integration.GoogleMap
             if (!string.IsNullOrEmpty(request.region))
                 @params.Add(("region", request.region));
 
-            return this.httpClient.ExecuteGet<Result<List<AddressComponents>>>(
+            return this.httpClient.ExecuteGet<Result<List<Geocoding>>>(
                 Utils.GetApiUrl(
                     GECODING_URLS,
                     config.Key,

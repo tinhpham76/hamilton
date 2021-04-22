@@ -102,8 +102,20 @@ namespace Core.Libs.Integration.Test.Manual
 
             // TestNearbySearch(googleMapClient);
 
-            TestTextSearch(googleMapClient);
+            // TestTextSearch(googleMapClient);
+
+            TestGetGeocoding(googleMapClient);
         }
+
+        static void TestGetGeocoding(
+            IGoogleMapClient googleMapClient)
+            {
+                var result = googleMapClient.Places
+                            .GetGeocoding(new GoogleMap.Models.Places.Geocoding.GeocodingRequest()
+                            {
+                                address = "Thành phố Hồ Chí Minh"
+                            }).Result;
+            }
 
         static void TestTextSearch(
             IGoogleMapClient googleMapClient)
