@@ -4,6 +4,6 @@ namespace Core.Libs.Integration.GoogleMap.Models.Places
     {
         public T results { get; set; }
         public string status { get; set; }
-        public object[] html_attributions { get; set; }
+        public string[] html_attributions { get; set; }
     }
 }
