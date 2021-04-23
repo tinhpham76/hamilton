@@ -43,6 +43,13 @@ namespace Hamilton.Business
             string fields = null,
             string locationbias = null);
 
+        Task<FetchResponse<Result<PlaceDetail>>> PlaceDetails(
+            string place_id,
+            string language = null,
+            string region = null,
+            string sessiontoken = null,
+            string fields = null);
+
         #endregion
     }
 
@@ -165,6 +172,33 @@ namespace Hamilton.Business
                 request.region = region;
 
             return client.Routes.GetDistanceMatrix(request);
+        }
+
+        public Task<FetchResponse<Result<PlaceDetail>>> PlaceDetails(
+            string place_id, 
+            string language = null, 
+            string region = null, 
+            string sessiontoken = null, 
+            string fields = null)
+        {
+            var request = new PlaceDetailRequest();
+
+            if(!string.IsNullOrEmpty(place_id))
+                request.place_id = place_id;
+
+            if(!string.IsNullOrEmpty(language))
+                request.language = language;
+
+            if(!string.IsNullOrEmpty(region))
+                request.region =region;
+
+            if(!string.IsNullOrEmpty(sessiontoken))
+                request.sessiontoken = sessiontoken;
+
+            if(!string.IsNullOrEmpty(fields))
+                request.fields = fields;
+
+            return client.Places.PlaceDetail(request);
         }
 
         public Task<FetchResponse<PlaceSearch>> PlaceSearch(

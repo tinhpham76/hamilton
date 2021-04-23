@@ -70,5 +70,39 @@ namespace Hamilton.Controllers
 
             return ToResponse(response.Data);
         }
+
+        [HttpGet]
+        [Route(Program.PLACES_NEARBY_SEARCH)]
+        public async Task<IActionResult> NearbySearch(
+          [FromQuery] string location,
+          [FromQuery] long radius,
+          [FromQuery] string keyword,
+          [FromQuery] string language,
+          [FromQuery] int minprice,
+          [FromQuery] int maxprice,
+          [FromQuery] string name,
+          [FromQuery] string opennow,
+          [FromQuery] string type)
+        {
+            var response = await googleMap.PlaceSearch(
+                input, inputtype, language, fields, locationbias);
+
+            return ToResponse(response.Data);
+        }
+
+        [HttpGet]
+        [Route(Program.PLACES_DETAIL)]
+        public async Task<IActionResult> PlaceDetails(
+           [FromQuery] string place_id,
+           [FromQuery] string language,
+           [FromQuery] string region,
+           [FromQuery] string sessiontoken,
+           [FromQuery] string fields)
+        {
+            var response = await googleMap.PlaceDetails(
+                place_id, language, region, sessiontoken, fields);
+
+            return ToResponse(response.Data.result);
+        }
     }
 }
