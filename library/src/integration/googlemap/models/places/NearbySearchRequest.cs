@@ -12,9 +12,9 @@ namespace Core.Libs.Integration.GoogleMap.Models.Places
         public int? minprice { get; set; }
         public int? maxprice { get; set; }
         public string name { get; set; }
-        public string opennow { get; set; }
-        public Rankby? rankby { get; set; }
+        // public string opennow { get; set; }
+        // public Rankby? rankby { get; set; }
         public string type { get; set; }
-        public string pagetoken { get; set; }
+        // public string pagetoken { get; set; }
     }
 }

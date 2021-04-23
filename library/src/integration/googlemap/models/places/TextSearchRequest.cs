@@ -9,8 +9,8 @@ namespace Core.Libs.Integration.GoogleMap.Models.Places
         public double? radius { get; set; }
         public int? minprice { get; set; }
         public int? maxprice { get; set; }
-        public string opennow { get; set; }
-        public string pagetoken { get; set; }
+        // public string opennow { get; set; }
+        // public string pagetoken { get; set; }
         public string type { get; set; }
     }
 }

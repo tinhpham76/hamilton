@@ -149,17 +149,17 @@ namespace Core.Libs.Integration.GoogleMap
             if (!string.IsNullOrEmpty(request.name))
                 @params.Add(("name", request.name));
 
-            if (!string.IsNullOrEmpty(request.opennow))
-                @params.Add(("opennow", request.opennow));
+            // if (!string.IsNullOrEmpty(request.opennow))
+            //     @params.Add(("opennow", request.opennow));
 
-            if (request.rankby.HasValue)
-                @params.Add(("rankby", Enum.GetName(typeof(Rankby), (int)request.rankby.Value).ToLower()));
+            // if (request.rankby.HasValue)
+            //     @params.Add(("rankby", Enum.GetName(typeof(Rankby), (int)request.rankby.Value).ToLower()));
 
             if (!string.IsNullOrEmpty(request.type))
                 @params.Add(("type", request.type));
 
-            if (!string.IsNullOrEmpty(request.pagetoken))
-                @params.Add(("pagetoken", request.pagetoken));
+            // if (!string.IsNullOrEmpty(request.pagetoken))
+            //     @params.Add(("pagetoken", request.pagetoken));
 
             return this.httpClient.ExecuteGet<Result<List<NearbySearch>>>(
                 Utils.GetApiUrl(
@@ -197,11 +197,11 @@ namespace Core.Libs.Integration.GoogleMap
             if (request.maxprice.HasValue)
                 @params.Add(("maxprice", request.maxprice.Value));
 
-            if (!string.IsNullOrEmpty(request.opennow))
-                @params.Add(("opennow", request.opennow));
+            // if (!string.IsNullOrEmpty(request.opennow))
+            //     @params.Add(("opennow", request.opennow));
 
-            if (!string.IsNullOrEmpty(request.pagetoken))
-                @params.Add(("pagetoken", request.pagetoken));
+            // if (!string.IsNullOrEmpty(request.pagetoken))
+            //     @params.Add(("pagetoken", request.pagetoken));
 
             if (!string.IsNullOrEmpty(request.type))
                 @params.Add(("type", request.type));
