@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace Core.Libs.Integration.GoogleMap.Models.Places
 {
     public class PlusCode

@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using Core.Libs.Integration.GoogleMap.Models.Places.Geocoding;
-
 namespace Core.Libs.Integration.GoogleMap.Models.Places
 {
     public class Candidate

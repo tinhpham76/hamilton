@@ -1,5 +1,4 @@
 using Core.Libs.Integration.GoogleMap.Models.Enum.Places;
-using Core.Libs.Integration.GoogleMap.Models.Places.Geocoding;
 
 namespace Core.Libs.Integration.GoogleMap.Models.Places
 {
