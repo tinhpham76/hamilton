@@ -28,6 +28,9 @@ namespace Core.Libs.Integration.GoogleMap
         Task<FetchResponse<Prediction<List<PlaceAutocomplete>>>> PlaceAutocomplete(
             PlaceAutocompleteRequest request);
 
+        Task<FetchResponse<Prediction<List<QueryAutocomplete>>>> QueryAutocomplete(
+            QueryAutocompleteRequest request);
+
         Task<FetchResponse<Result<List<Geocoding>>>> GetGeocoding(
             GeocodingRequest request);
     }
@@ -41,6 +44,7 @@ namespace Core.Libs.Integration.GoogleMap
         private const string TEXT_SEARCH_URL = "place/textsearch";
         private const string PLACE_DETAIL_URL = "place/details";
         private const string PLACE_AUTOCOMPLETE_URL = "place/autocomplete";
+        private const string QUERY_AUTOCOMPLETE_URL = "place/queryautocomplete";
         private const string GECODING_URLS = "geocode";
         public GoogleMapPlaces(
             HttpClient httpClient,
@@ -282,6 +286,36 @@ namespace Core.Libs.Integration.GoogleMap
             return this.httpClient.ExecuteGet<Prediction<List<PlaceAutocomplete>>>(
                 Utils.GetApiUrl(
                     PLACE_AUTOCOMPLETE_URL,
+                    config.Key,
+                    @params));
+        }
+
+        public Task<FetchResponse<Prediction<List<QueryAutocomplete>>>> QueryAutocomplete(
+            QueryAutocompleteRequest request)
+        {
+            var @params = new List<(string, object)>();
+
+            if (string.IsNullOrEmpty(config.Key))
+                throw new ArgumentNullException(nameof(config.Key));
+
+            if (!string.IsNullOrEmpty(request.input))
+                @params.Add(("input", request.input));
+
+            if (request.offset.HasValue)
+                @params.Add(("offset", request.offset.Value));
+
+            if (!string.IsNullOrEmpty(request.location))
+                @params.Add(("location", request.location));
+
+            if (request.radius.HasValue)
+                @params.Add(("radius", request.radius.Value));
+
+            if (!string.IsNullOrEmpty(request.language))
+                @params.Add(("language", request.language));
+
+            return this.httpClient.ExecuteGet<Prediction<List<QueryAutocomplete>>>(
+                Utils.GetApiUrl(
+                    QUERY_AUTOCOMPLETE_URL,
                     config.Key,
                     @params));
         }

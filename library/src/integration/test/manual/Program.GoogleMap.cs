@@ -108,7 +108,19 @@ namespace Core.Libs.Integration.Test.Manual
 
             // TestGetPlaceDetail(googleMapClient);
 
-            TestGetPlaceAutocomplete(googleMapClient);
+            // TestGetPlaceAutocomplete(googleMapClient);
+
+            TestGetQueryAutocomplete(googleMapClient);
+        }
+
+        static void TestGetQueryAutocomplete(
+            IGoogleMapClient googleMapClient)
+        {
+            var result = googleMapClient.Places
+                        .QueryAutocomplete(new GoogleMap.Models.Places.QueryAutocompleteRequest()
+                        {
+                            input = "Bến Thà"
+                        }).Result;
         }
 
         static void TestGetPlaceAutocomplete(
