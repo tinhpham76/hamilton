@@ -1,7 +1,5 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Core.Libs.Client;
-using Core.Libs.Client.Models.Json;
 using Hamilton.Business;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -38,7 +36,7 @@ namespace Hamilton.Controllers
             var response = await googleMap.Directions(
                 origin, destination, waypoints, mode, alternatives, avoid, language, units, region);
 
-            return ToResponse(response);
+            return ToResponse(response.Data);
         }
 
         [HttpGet]
@@ -55,7 +53,22 @@ namespace Hamilton.Controllers
             var response = await googleMap.DistanceMatrix(
                 origins, destinations, mode, language, region, avoid, units);
 
-            return ToResponse(response);
+            return ToResponse(response.Data);
+        }
+
+        [HttpGet]
+        [Route(Program.PLACES_FIND_PLACE_FROM_TEXT)]
+        public async Task<IActionResult> PlaceSearch(
+            [FromQuery] string input,
+            [FromQuery] string inputtype,
+            [FromQuery] string language,
+            [FromQuery] string fields,
+            [FromQuery] string locationbias)
+        {
+            var response = await googleMap.PlaceSearch(
+                input, inputtype, language, fields, locationbias);
+
+            return ToResponse(response.Data);
         }
     }
 }

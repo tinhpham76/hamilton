@@ -24,5 +24,8 @@ namespace Hamilton
         // Routes
         public const string ROUTES_DIRECTIONS = "routes/directions"; 
         public const string ROUTES_DISTANCEMATRIX = "routes/distancematrix";
+
+        // Places
+        public const string PLACES_FIND_PLACE_FROM_TEXT = "places/findplacefromtext";
     }
 }

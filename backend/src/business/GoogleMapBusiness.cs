@@ -1,16 +1,18 @@
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Core.Libs.Integration.GoogleMap;
+using Core.Libs.Integration.GoogleMap.Models.Enum.Places;
 using Core.Libs.Integration.GoogleMap.Models.Enum.Routes;
+using Core.Libs.Integration.GoogleMap.Models.Places;
 using Core.Libs.Integration.GoogleMap.Models.Routes.Directions;
 using Core.Libs.Integration.GoogleMap.Models.Routes.DistanceMatrix;
+using Core.Libs.Utils.Models;
 
 namespace Hamilton.Business
 {
     public interface IGoogleMapBusiness
     {
-        Task<Direction> Directions(
+        #region Google Map APIs Routes
+        Task<FetchResponse<Direction>> Directions(
             string origin,
             string destination,
             string waypoints = null,
@@ -21,7 +23,7 @@ namespace Hamilton.Business
             string units = null,
             string region = null);
 
-        Task<DistanceMatrix> DistanceMatrix(
+        Task<FetchResponse<DistanceMatrix>> DistanceMatrix(
             string origins,
             string destinations,
             string mode = null,
@@ -30,6 +32,18 @@ namespace Hamilton.Business
             string avoid = null,
             string units = null
           );
+
+        #endregion
+
+        #region Google Map APIs Places
+        Task<FetchResponse<PlaceSearch>> PlaceSearch(
+            string input,
+            string inputtype,
+            string language = null,
+            string fields = null,
+            string locationbias = null);
+
+        #endregion
     }
 
     public class GoogleMapBusiness : IGoogleMapBusiness
@@ -41,7 +55,7 @@ namespace Hamilton.Business
             this.client = client;
         }
 
-        public async Task<Direction> Directions(
+        public Task<FetchResponse<Direction>> Directions(
             string origin,
             string destination,
             string waypoints,
@@ -98,12 +112,10 @@ namespace Hamilton.Business
             if (!string.IsNullOrEmpty(region))
                 request.region = region;
 
-            var response = await client.Routes.GetDirection(request);
-
-            return response.Data;
+            return client.Routes.GetDirection(request);
         }
 
-        public async Task<DistanceMatrix> DistanceMatrix(
+        public Task<FetchResponse<DistanceMatrix>> DistanceMatrix(
             string origins,
             string destinations,
             string mode = null,
@@ -152,9 +164,37 @@ namespace Hamilton.Business
             if (!string.IsNullOrEmpty(region))
                 request.region = region;
 
-            var response = await client.Routes.GetDistanceMatrix(request);
+            return client.Routes.GetDistanceMatrix(request);
+        }
 
-            return response.Data;
+        public Task<FetchResponse<PlaceSearch>> PlaceSearch(
+            string input,
+            string inputtype,
+            string language = null,
+            string fields = null,
+            string locationbias = null)
+        {
+            var request = new PlaceSearchRequest();
+
+            if (!string.IsNullOrEmpty(input))
+                request.input = input;
+
+            if (!string.IsNullOrEmpty(inputtype))
+                if (inputtype == "textquery")
+                    request.inputtype = InputType.TextQuery;
+                else if (inputtype == "phonenumber")
+                    request.inputtype = InputType.PhoneNumber;
+
+            if (!string.IsNullOrEmpty(language))
+                request.language = language;
+
+            if (!string.IsNullOrEmpty(fields))
+                request.fields = fields;
+
+            if (!string.IsNullOrEmpty(locationbias))
+                request.locationbias = locationbias;
+
+            return client.Places.PlaceSearch(request);
         }
     }
 }
