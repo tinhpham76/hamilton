@@ -28,6 +28,10 @@ namespace Hamilton
         // Places
         public const string PLACES_FIND_PLACE_FROM_TEXT = "places/findplacefromtext";
         public const string PLACES_NEARBY_SEARCH = "places/nearbysearch";
+        public const string PLACES_TEXT_SEARCH = "places/textsearch";
         public const string PLACES_DETAIL = "places/details";
+        public const string PLACES_AUTO_COMPLETE = "places/autocomplete";
+        public const string PLACES_QUERY_AUTO_COMPLETE = "places/queryautocomplete";
+        public const string PLACES_GEOCODE= "geocode";
     }
 }

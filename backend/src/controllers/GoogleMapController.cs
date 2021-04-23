@@ -74,20 +74,37 @@ namespace Hamilton.Controllers
         [HttpGet]
         [Route(Program.PLACES_NEARBY_SEARCH)]
         public async Task<IActionResult> NearbySearch(
-          [FromQuery] string location,
-          [FromQuery] long radius,
-          [FromQuery] string keyword,
-          [FromQuery] string language,
-          [FromQuery] int minprice,
-          [FromQuery] int maxprice,
-          [FromQuery] string name,
-          [FromQuery] string opennow,
-          [FromQuery] string type)
+            [FromQuery] string location,
+            [FromQuery] long radius,
+            [FromQuery] string keyword,
+            [FromQuery] string language,
+            [FromQuery] int minprice,
+            [FromQuery] int maxprice,
+            [FromQuery] string name,
+            [FromQuery] string type)
         {
-            var response = await googleMap.PlaceSearch(
-                input, inputtype, language, fields, locationbias);
+            var response = await googleMap.NearbySearch(
+                location, radius, minprice, maxprice, keyword, language, type);
 
-            return ToResponse(response.Data);
+            return ToResponse(response.Data.results);
+        }
+
+        [HttpGet]
+        [Route(Program.PLACES_TEXT_SEARCH)]
+        public async Task<IActionResult> TextSearch(
+         [FromQuery] string query,
+         [FromQuery] long radius,
+         [FromQuery] int minprice,
+         [FromQuery] int maxprice,
+         [FromQuery] string region,
+         [FromQuery] string location,
+         [FromQuery] string language,
+         [FromQuery] string type)
+        {
+            var response = await googleMap.TextSearch(
+                query, radius, minprice, maxprice, region, location, language, type);
+
+            return ToResponse(response.Data.results);
         }
 
         [HttpGet]
@@ -103,6 +120,56 @@ namespace Hamilton.Controllers
                 place_id, language, region, sessiontoken, fields);
 
             return ToResponse(response.Data.result);
+        }
+
+        [HttpGet]
+        [Route(Program.PLACES_AUTO_COMPLETE)]
+        public async Task<IActionResult> AutoComplete(
+            [FromQuery] string input,
+            [FromQuery] int? offset,
+            [FromQuery] long? radius,
+            [FromQuery] string sessiontoken,
+            [FromQuery] string origin,
+            [FromQuery] string location,
+            [FromQuery] string language,
+            [FromQuery] string types,
+            [FromQuery] string components,
+            [FromQuery] string strictbounds)
+        {
+            var response = await googleMap.PlaceAutocomplete(
+                input, offset, radius, sessiontoken, origin, location, language, types, components, strictbounds);
+
+            return ToResponse(response.Data.predictions);
+        }
+
+        [HttpGet]
+        [Route(Program.PLACES_QUERY_AUTO_COMPLETE)]
+        public async Task<IActionResult> QueryAutoComplete(
+            [FromQuery] string input,
+            [FromQuery] int? offset,
+            [FromQuery] long? radius,
+            [FromQuery] string location,
+            [FromQuery] string language)
+        {
+            var response = await googleMap.QueryAutocomplete(
+                input, offset, radius, location, language);
+
+            return ToResponse(response.Data.predictions);
+        }
+
+        [HttpGet]
+        [Route(Program.PLACES_GEOCODE)]
+        public async Task<IActionResult> GeoCode(
+            [FromQuery] string address,
+            [FromQuery] string components,
+            [FromQuery] string bounds,
+            [FromQuery] string language,
+            [FromQuery] string region)
+        {
+            var response = await googleMap.GetGeocoding(
+                address, components, bounds, language, region);
+
+            return ToResponse(response.Data.results);
         }
     }
 }
