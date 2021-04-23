@@ -7,7 +7,7 @@ namespace Core.Libs.Integration.GoogleMap.Models.Places
         public string input { get; set; }
         public InputType? inputtype { get; set; }
         public string language  { get; set; }
-        public Field[] fields  { get; set; }
+        public string fields  { get; set; }
         public string locationbias  { get; set; }
     }
 }

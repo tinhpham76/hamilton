@@ -8,6 +8,6 @@ namespace Core.Libs.Integration.GoogleMap.Models.Places
         public string language { get; set; }
         public string region { get; set; }
         public string sessiontoken { get; set; }
-        public Field[] fields { get; set; }
+        public string fields { get; set; }
     }
 }

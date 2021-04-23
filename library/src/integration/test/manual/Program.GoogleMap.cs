@@ -98,7 +98,7 @@ namespace Core.Libs.Integration.Test.Manual
 
             // TestInitMatrixAsync(googleMapClient, cities);
 
-            // TestPlaceSearch(googleMapClient);
+            TestPlaceSearch(googleMapClient);
 
             // TestNearbySearch(googleMapClient);
 
@@ -182,11 +182,7 @@ namespace Core.Libs.Integration.Test.Manual
                         {
                             input = "Thành phố Hồ Chí Minh",
                             inputtype = GoogleMap.Models.Enum.Places.InputType.TextQuery,
-                            fields = new GoogleMap.Models.Enum.Places.Field[]
-                            {
-                                GoogleMap.Models.Enum.Places.Field.PHOTOS,
-                                GoogleMap.Models.Enum.Places.Field.NAME
-                            }
+                            fields = "photos,formatted_address"
                         }).Result;
         }
 

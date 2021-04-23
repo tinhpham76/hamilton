@@ -74,9 +74,8 @@ namespace Core.Libs.Integration.GoogleMap
             if (!string.IsNullOrEmpty(request.language))
                 @params.Add(("language", request.language));
 
-            if (request.fields != null
-                && request.fields.Length > 0)
-                @params.Add(("fields", string.Join(",", request.fields.Select(x => Enum.GetName(typeof(Field), x).ToLower()))));
+            if (!string.IsNullOrEmpty(request.fields))
+                @params.Add(("fields", request.fields));
 
             if (!string.IsNullOrEmpty(request.locationbias))
                 @params.Add(("locationbias", request.locationbias));
@@ -234,9 +233,8 @@ namespace Core.Libs.Integration.GoogleMap
             if (!string.IsNullOrEmpty(request.sessiontoken))
                 @params.Add(("sessiontoken", request.sessiontoken));
 
-            if (request.fields != null
-               && request.fields.Length > 0)
-                @params.Add(("fields", string.Join(",", request.fields.Select(x => Enum.GetName(typeof(Field), x).ToLower()))));
+            if (!string.IsNullOrEmpty(request.fields))
+                @params.Add(("fields", request.fields));
 
             return this.httpClient.ExecuteGet<Result<PlaceDetail>>(
                 Utils.GetApiUrl(
