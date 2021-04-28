@@ -97,7 +97,7 @@ namespace Core.Libs.Integration.GoogleMap
                         destination = arrHamiltonResponse[i + 1],
                         distance = new Distance()
                         {
-                            text = (distance[arrHamilton[i], arrHamilton[i + 1]] / 1000).ToString(),
+                            text = ((double)distance[arrHamilton[i], arrHamilton[i + 1]] / 1000).ToString(),
                             value = distance[arrHamilton[i], arrHamilton[i + 1]]
                         }
                     };
@@ -110,7 +110,7 @@ namespace Core.Libs.Integration.GoogleMap
                     hamiltons = arrHamiltonResponse,
                     distance = new Distance
                     {
-                        text = (distanceValue / 100).ToString(),
+                        text = ((double)distanceValue / 100).ToString(),
                         value = distanceValue
                     },
                     detail = hamiltonDetails
