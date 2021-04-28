@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Core.Libs.Integration.GoogleMap.Models.Hamilton;
 using Core.Libs.Integration.GoogleMap.Models.Routes.Directions;
 
 namespace Core.Libs.Integration.GoogleMap
@@ -9,7 +10,8 @@ namespace Core.Libs.Integration.GoogleMap
     {
         Task<List<Models.Hamilton.Hamilton>> Find(
             List<string> Locations,
-            long Range);
+            long Range,
+            string key);
     }
 
     public class GoogleMapHamilton : IGoogleMapHamilton
@@ -23,9 +25,12 @@ namespace Core.Libs.Integration.GoogleMap
 
         public async Task<List<Models.Hamilton.Hamilton>> Find(
             List<string> locations,
-            long range)
+            long range,
+            string key)
         {
             int[,] matrix = new int[locations.Count, locations.Count];
+
+            long[,] distance = new long[locations.Count, locations.Count];
 
             for (int i = 0; i < locations.Count; i++)
                 for (int j = 0; j < locations.Count; j++)
@@ -35,12 +40,15 @@ namespace Core.Libs.Integration.GoogleMap
                         {
                             origin = locations[i],
                             destination = locations[j]
-                        });
+                        }, key);
 
                     var distanceDefault = GetDistance(directions.Data);
 
                     if (distanceDefault > 0 || i == j)
+                    {
                         matrix[i, j] = 1;
+                        distance[i, j] = distanceDefault;
+                    }
 
                     for (int k = 0; k < locations.Count; k++)
                     {
@@ -55,7 +63,7 @@ namespace Core.Libs.Integration.GoogleMap
                                 origin = locations[i],
                                 destination = locations[j],
                                 waypoints = locations[k]
-                            });
+                            }, key);
 
                         distanceCheck = GetDistance(checkDirections.Data);
 
@@ -76,24 +84,36 @@ namespace Core.Libs.Integration.GoogleMap
             foreach (var arrHamilton in arrHamiltons)
             {
                 var arrHamiltonResponse = arrHamilton.Select(a => locations[a]).ToArray();
+                var distanceValue = 0L;
+                var hamiltonDetails = new List<HamiltonDetail>();
 
-                var directions = new List<Direction>();
-
-                for (int i = 0; i < arrHamiltonResponse.Length - 1; i++)
+                for (int i = 0; i < arrHamilton.Length - 1; i++)
                 {
-                    var Temp1 = await routes.GetDirection(new DirectionRequest()
+                    distanceValue += distance[arrHamilton[i], arrHamilton[i + 1]];
+
+                    var detail = new HamiltonDetail()
                     {
                         origin = arrHamiltonResponse[i],
-                        destination = arrHamiltonResponse[i + 1]
-                    });
+                        destination = arrHamiltonResponse[i + 1],
+                        distance = new Distance()
+                        {
+                            text = (distance[arrHamilton[i], arrHamilton[i + 1]] / 1000).ToString(),
+                            value = distance[arrHamilton[i], arrHamilton[i + 1]]
+                        }
+                    };
 
-                    directions.Add(Temp1.Data);
+                    hamiltonDetails.Add(detail);
                 }
 
                 var result = new Models.Hamilton.Hamilton()
                 {
                     hamiltons = arrHamiltonResponse,
-                    directions = directions
+                    distance = new Distance
+                    {
+                        text = (distanceValue / 100).ToString(),
+                        value = distanceValue
+                    },
+                    detail = hamiltonDetails
                 };
 
                 response.Add(result);

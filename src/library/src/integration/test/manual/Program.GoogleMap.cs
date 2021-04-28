@@ -17,9 +17,11 @@ namespace Core.Libs.Integration.Test.Manual
                 {
                     GoogleMap = new GoogleMapConfig()
                     {
-                        Key = "AIzaSyB0OTBpLqOJS0EfYaU-FN4u95OLVagi-ck"
+                        
                     }
                 });
+
+            var key = "AIzaSyB0OTBpLqOJS0EfYaU-FN4u95OLVagi-ck";
 
             var distanceMatrixRequest = new GoogleMap.Models.Routes.DistanceMatrix.DistanceMatrixRequest()
             {
@@ -98,7 +100,7 @@ namespace Core.Libs.Integration.Test.Manual
 
             // TestInitMatrixAsync(googleMapClient, cities);
 
-            TestPlaceSearch(googleMapClient);
+            // TestPlaceSearch(googleMapClient);
 
             // TestNearbySearch(googleMapClient);
 
@@ -110,72 +112,91 @@ namespace Core.Libs.Integration.Test.Manual
 
             // TestGetPlaceAutocomplete(googleMapClient);
 
-            TestGetQueryAutocomplete(googleMapClient);
+            // TestGetQueryAutocomplete(googleMapClient);
+
+            TestHamilton(googleMapClient, cities, key);
         }
 
+        static void TestHamilton(
+            IGoogleMapClient googleMapClient,
+            List<string> cities,
+            string key)
+            {
+                var result = googleMapClient.Hamilton
+                            .Find(cities, 10000, key)
+                            .Result;
+            }
+
         static void TestGetQueryAutocomplete(
-            IGoogleMapClient googleMapClient)
+            IGoogleMapClient googleMapClient,
+            string key)
         {
             var result = googleMapClient.Places
                         .QueryAutocomplete(new GoogleMap.Models.Places.QueryAutocompleteRequest()
                         {
                             input = "Bến Thà"
-                        }).Result;
+                        },key).Result;
         }
 
         static void TestGetPlaceAutocomplete(
-            IGoogleMapClient googleMapClient)
+            IGoogleMapClient googleMapClient,
+            string key)
         {
             var result = googleMapClient.Places
                         .PlaceAutocomplete(new GoogleMap.Models.Places.PlaceAutocompleteRequest()
                         {
                             input = "Bến Thành"
-                        }).Result;
+                        },key).Result;
         }
 
         static void TestGetPlaceDetail(
-            IGoogleMapClient googleMapClient)
+            IGoogleMapClient googleMapClient,
+            string key)
         {
             var result = googleMapClient.Places
                         .PlaceDetail(new GoogleMap.Models.Places.PlaceDetailRequest()
                         {
                             place_id = "ChIJN1t_tDeuEmsRUsoyG83frY4"
-                        }).Result;
+                        },key).Result;
         }
 
         static void TestGetGeocoding(
-            IGoogleMapClient googleMapClient)
+            IGoogleMapClient googleMapClient,
+            string key)
         {
             var result = googleMapClient.Places
                         .GetGeocoding(new GoogleMap.Models.Places.Geocoding.GeocodingRequest()
                         {
                             address = "Thành phố Hồ Chí Minh"
-                        }).Result;
+                        },key).Result;
         }
 
         static void TestTextSearch(
-            IGoogleMapClient googleMapClient)
+            IGoogleMapClient googleMapClient,
+            string key)
         {
             var result = googleMapClient.Places
                         .TextSearch(new GoogleMap.Models.Places.TextSearchRequest()
                         {
                             query = "Bến Thành"
-                        }).Result;
+                        },key).Result;
         }
 
         static void TestNearbySearch(
-            IGoogleMapClient googleMapClient)
+            IGoogleMapClient googleMapClient,
+            string key)
         {
             var result = googleMapClient.Places
                     .NearbySearch(new GoogleMap.Models.Places.NearbySearchRequest()
                     {
                         location = "10.8230989,106.6296638",
                         radius = 150000
-                    }).Result;
+                    },key).Result;
         }
 
         static void TestPlaceSearch(
-            IGoogleMapClient googleMapClient)
+            IGoogleMapClient googleMapClient,
+            string key)
         {
             var result = googleMapClient.Places
                         .PlaceSearch(new GoogleMap.Models.Places.PlaceSearchRequest()
@@ -183,23 +204,25 @@ namespace Core.Libs.Integration.Test.Manual
                             input = "Thành phố Hồ Chí Minh",
                             inputtype = GoogleMap.Models.Enum.Places.InputType.TextQuery,
                             fields = "photos,formatted_address"
-                        }).Result;
+                        },key).Result;
         }
 
         static void TestInitMatrixAsync(
            IGoogleMapClient googleMapClient,
-           List<string> locations)
+           List<string> locations,
+           string key)
         {
             var result = googleMapClient.Hamilton
-                .Find(locations, 10000).Result;
+                .Find(locations, 10000, key).Result;
         }
 
         static void TestGetDistanceMatrix(
             IGoogleMapClient googleMapClient,
-            GoogleMap.Models.Routes.DistanceMatrix.DistanceMatrixRequest request)
+            GoogleMap.Models.Routes.DistanceMatrix.DistanceMatrixRequest request,
+            string key)
         {
             var result = googleMapClient.Routes
-                        .GetDistanceMatrix(request)
+                        .GetDistanceMatrix(request, key)
                         .Result;
 
             var data = result.Data;
@@ -207,10 +230,11 @@ namespace Core.Libs.Integration.Test.Manual
 
         static void TestGetDirection(
             IGoogleMapClient googleMapClient,
-            DirectionRequest request)
+            DirectionRequest request,
+            string key)
         {
             var result = googleMapClient.Routes
-                        .GetDirection(request)
+                        .GetDirection(request, key)
                         .Result;
 
             var data = result.Data;
@@ -218,7 +242,8 @@ namespace Core.Libs.Integration.Test.Manual
 
         static void TestInitMatrix(
             IGoogleMapClient googleMapClient,
-            List<string> cities)
+            List<string> cities,
+            string key)
         {
             var range = 10000;
 
@@ -232,7 +257,7 @@ namespace Core.Libs.Integration.Test.Manual
                                 {
                                     origin = cities[i],
                                     destination = cities[j]
-                                }).Result;
+                                },key).Result;
 
                     var distanceDefault = GetDistance(directions.Data);
 
@@ -252,7 +277,7 @@ namespace Core.Libs.Integration.Test.Manual
                                             origin = cities[i],
                                             destination = cities[j],
                                             waypoints = cities[k]
-                                        }).Result;
+                                        },key).Result;
 
                         distanceCheck = GetDistance(checkDirections.Data);
 

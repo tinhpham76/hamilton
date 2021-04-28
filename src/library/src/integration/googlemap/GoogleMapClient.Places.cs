@@ -14,25 +14,32 @@ namespace Core.Libs.Integration.GoogleMap
     public interface IGoogleMapPlaces
     {
         Task<FetchResponse<PlaceSearch>> PlaceSearch(
-            PlaceSearchRequest request);
+            PlaceSearchRequest request,
+            string key);
 
         Task<FetchResponse<Result<List<NearbySearch>>>> NearbySearch(
-            NearbySearchRequest request);
+            NearbySearchRequest request,
+            string key);
 
         Task<FetchResponse<Result<List<TextSearch>>>> TextSearch(
-            TextSearchRequest request);
+            TextSearchRequest request,
+            string key);
 
         Task<FetchResponse<Result<PlaceDetail>>> PlaceDetail(
-            PlaceDetailRequest request);
+            PlaceDetailRequest request,
+            string key);
 
         Task<FetchResponse<Prediction<List<PlaceAutocomplete>>>> PlaceAutocomplete(
-            PlaceAutocompleteRequest request);
+            PlaceAutocompleteRequest request,
+            string key);
 
         Task<FetchResponse<Prediction<List<QueryAutocomplete>>>> QueryAutocomplete(
-            QueryAutocompleteRequest request);
+            QueryAutocompleteRequest request,
+            string key);
 
         Task<FetchResponse<Result<List<Geocoding>>>> GetGeocoding(
-            GeocodingRequest request);
+            GeocodingRequest request,
+            string key);
     }
 
     public class GoogleMapPlaces : IGoogleMapPlaces
@@ -55,10 +62,11 @@ namespace Core.Libs.Integration.GoogleMap
         }
 
         public Task<FetchResponse<PlaceSearch>> PlaceSearch(
-            PlaceSearchRequest request)
+            PlaceSearchRequest request,
+            string key)
         {
-            if (string.IsNullOrEmpty(config.Key))
-                throw new ArgumentNullException(nameof(config.Key));
+            if (string.IsNullOrEmpty(key))
+                throw new ArgumentNullException(nameof(key));
 
             var @params = new List<(string, object)>();
 
@@ -83,17 +91,18 @@ namespace Core.Libs.Integration.GoogleMap
             return this.httpClient.ExecuteGet<PlaceSearch>(
                 Utils.GetApiUrl(
                     PLACE_SEARCH_URL,
-                    config.Key,
+                    key,
                     @params));
         }
 
         public Task<FetchResponse<Result<List<Geocoding>>>> GetGeocoding(
-            GeocodingRequest request)
+            GeocodingRequest request,
+            string key)
         {
             var @params = new List<(string, object)>();
 
-            if (string.IsNullOrEmpty(config.Key))
-                throw new ArgumentNullException(nameof(config.Key));
+            if (string.IsNullOrEmpty(key))
+                throw new ArgumentNullException(nameof(key));
 
             if (!string.IsNullOrEmpty(request.address))
                 @params.Add(("address", request.address));
@@ -113,17 +122,18 @@ namespace Core.Libs.Integration.GoogleMap
             return this.httpClient.ExecuteGet<Result<List<Geocoding>>>(
                 Utils.GetApiUrl(
                     GECODING_URLS,
-                    config.Key,
+                    key,
                     @params));
         }
 
         public Task<FetchResponse<Result<List<NearbySearch>>>> NearbySearch(
-            NearbySearchRequest request)
+            NearbySearchRequest request,
+            string key)
         {
             var @params = new List<(string, object)>();
 
-            if (string.IsNullOrEmpty(config.Key))
-                throw new ArgumentNullException(nameof(config.Key));
+            if (string.IsNullOrEmpty(key))
+                throw new ArgumentNullException(nameof(key));
 
             if (!string.IsNullOrEmpty(request.input))
                 @params.Add(("input", request.input));
@@ -164,17 +174,18 @@ namespace Core.Libs.Integration.GoogleMap
             return this.httpClient.ExecuteGet<Result<List<NearbySearch>>>(
                 Utils.GetApiUrl(
                     NEARBY_SEARCH_URL,
-                    config.Key,
+                    key,
                     @params));
         }
 
         public Task<FetchResponse<Result<List<TextSearch>>>> TextSearch(
-            TextSearchRequest request)
+            TextSearchRequest request,
+            string key)
         {
             var @params = new List<(string, object)>();
 
-            if (string.IsNullOrEmpty(config.Key))
-                throw new ArgumentNullException(nameof(config.Key));
+            if (string.IsNullOrEmpty(key))
+                throw new ArgumentNullException(nameof(key));
 
             if (!string.IsNullOrEmpty(request.query))
                 @params.Add(("query", request.query));
@@ -209,17 +220,18 @@ namespace Core.Libs.Integration.GoogleMap
             return this.httpClient.ExecuteGet<Result<List<TextSearch>>>(
                 Utils.GetApiUrl(
                     TEXT_SEARCH_URL,
-                    config.Key,
+                    key,
                     @params));
         }
 
         public Task<FetchResponse<Result<PlaceDetail>>> PlaceDetail(
-            PlaceDetailRequest request)
+            PlaceDetailRequest request,
+            string key)
         {
             var @params = new List<(string, object)>();
 
-            if (string.IsNullOrEmpty(config.Key))
-                throw new ArgumentNullException(nameof(config.Key));
+            if (string.IsNullOrEmpty(key))
+                throw new ArgumentNullException(nameof(key));
 
             if (!string.IsNullOrEmpty(request.place_id))
                 @params.Add(("place_id", request.place_id));
@@ -239,17 +251,18 @@ namespace Core.Libs.Integration.GoogleMap
             return this.httpClient.ExecuteGet<Result<PlaceDetail>>(
                 Utils.GetApiUrl(
                     PLACE_DETAIL_URL,
-                    config.Key,
+                    key,
                     @params));
         }
 
         public Task<FetchResponse<Prediction<List<PlaceAutocomplete>>>> PlaceAutocomplete(
-            PlaceAutocompleteRequest request)
+            PlaceAutocompleteRequest request,
+            string key)
         {
             var @params = new List<(string, object)>();
 
-            if (string.IsNullOrEmpty(config.Key))
-                throw new ArgumentNullException(nameof(config.Key));
+            if (string.IsNullOrEmpty(key))
+                throw new ArgumentNullException(nameof(key));
 
             if (!string.IsNullOrEmpty(request.input))
                 @params.Add(("input", request.input));
@@ -284,17 +297,18 @@ namespace Core.Libs.Integration.GoogleMap
             return this.httpClient.ExecuteGet<Prediction<List<PlaceAutocomplete>>>(
                 Utils.GetApiUrl(
                     PLACE_AUTOCOMPLETE_URL,
-                    config.Key,
+                    key,
                     @params));
         }
 
         public Task<FetchResponse<Prediction<List<QueryAutocomplete>>>> QueryAutocomplete(
-            QueryAutocompleteRequest request)
+            QueryAutocompleteRequest request,
+            string key)
         {
             var @params = new List<(string, object)>();
 
-            if (string.IsNullOrEmpty(config.Key))
-                throw new ArgumentNullException(nameof(config.Key));
+            if (string.IsNullOrEmpty(key))
+                throw new ArgumentNullException(nameof(key));
 
             if (!string.IsNullOrEmpty(request.input))
                 @params.Add(("input", request.input));
@@ -314,7 +328,7 @@ namespace Core.Libs.Integration.GoogleMap
             return this.httpClient.ExecuteGet<Prediction<List<QueryAutocomplete>>>(
                 Utils.GetApiUrl(
                     QUERY_AUTOCOMPLETE_URL,
-                    config.Key,
+                    key,
                     @params));
         }
     }

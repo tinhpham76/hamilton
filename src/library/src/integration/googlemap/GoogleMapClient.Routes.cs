@@ -13,10 +13,12 @@ namespace Core.Libs.Integration.GoogleMap
     public interface IGoogleMapRoutes
     {
         Task<FetchResponse<Direction>> GetDirection(
-            DirectionRequest request);
+            DirectionRequest request,
+            string key);
 
         Task<FetchResponse<DistanceMatrix>> GetDistanceMatrix(
-            DistanceMatrixRequest request);
+            DistanceMatrixRequest request,
+            string key);
     }
 
     public class GoogleMapRoutes : IGoogleMapRoutes
@@ -34,12 +36,13 @@ namespace Core.Libs.Integration.GoogleMap
         }
 
         public Task<FetchResponse<Direction>> GetDirection(
-            DirectionRequest request)
+            DirectionRequest request,
+            string key)
         {
             var @params = new List<(string, object)>();
 
-            if (string.IsNullOrEmpty(config.Key))
-                throw new ArgumentNullException(nameof(config.Key));
+            if (string.IsNullOrEmpty(key))
+                throw new ArgumentNullException(nameof(key));
 
             if (!string.IsNullOrEmpty(request.origin))
                 @params.Add(("origin", request.origin));
@@ -78,17 +81,18 @@ namespace Core.Libs.Integration.GoogleMap
             return this.httpClient.ExecuteGet<Direction>(
                 Utils.GetApiUrl(
                     DIRECTION_URLS,
-                    config.Key,
+                    key,
                     @params));
         }
 
         public Task<FetchResponse<DistanceMatrix>> GetDistanceMatrix(
-            DistanceMatrixRequest request)
+            DistanceMatrixRequest request,
+            string key)
         {
             var @params = new List<(string, object)>();
 
-            if (string.IsNullOrEmpty(config.Key))
-                throw new ArgumentNullException(nameof(config.Key));
+            if (string.IsNullOrEmpty(key))
+                throw new ArgumentNullException(nameof(key));
 
             if (!string.IsNullOrEmpty(request.origins))
                 @params.Add(("origins", request.origins));
@@ -120,7 +124,7 @@ namespace Core.Libs.Integration.GoogleMap
             return this.httpClient.ExecuteGet<Models.Routes.DistanceMatrix.DistanceMatrix>(
                 Utils.GetApiUrl(
                     DISTANCEMATRIX_URLS,
-                    config.Key,
+                    key,
                     @params));
         }
     }
