@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Core.Libs.Integration.GoogleMap.Models.Enum.Places;
@@ -65,9 +64,6 @@ namespace Core.Libs.Integration.GoogleMap
             PlaceSearchRequest request,
             string key)
         {
-            if (string.IsNullOrEmpty(key))
-                throw new ArgumentNullException(nameof(key));
-
             var @params = new List<(string, object)>();
 
             if (!string.IsNullOrEmpty(request.input))
@@ -99,10 +95,7 @@ namespace Core.Libs.Integration.GoogleMap
             GeocodingRequest request,
             string key)
         {
-            var @params = new List<(string, object)>();
-
-            if (string.IsNullOrEmpty(key))
-                throw new ArgumentNullException(nameof(key));
+            var @params = new List<(string, object)>();       
 
             if (!string.IsNullOrEmpty(request.address))
                 @params.Add(("address", request.address));
@@ -132,8 +125,7 @@ namespace Core.Libs.Integration.GoogleMap
         {
             var @params = new List<(string, object)>();
 
-            if (string.IsNullOrEmpty(key))
-                throw new ArgumentNullException(nameof(key));
+            
 
             if (!string.IsNullOrEmpty(request.input))
                 @params.Add(("input", request.input));
@@ -184,9 +176,6 @@ namespace Core.Libs.Integration.GoogleMap
         {
             var @params = new List<(string, object)>();
 
-            if (string.IsNullOrEmpty(key))
-                throw new ArgumentNullException(nameof(key));
-
             if (!string.IsNullOrEmpty(request.query))
                 @params.Add(("query", request.query));
 
@@ -228,10 +217,7 @@ namespace Core.Libs.Integration.GoogleMap
             PlaceDetailRequest request,
             string key)
         {
-            var @params = new List<(string, object)>();
-
-            if (string.IsNullOrEmpty(key))
-                throw new ArgumentNullException(nameof(key));
+            var @params = new List<(string, object)>();           
 
             if (!string.IsNullOrEmpty(request.place_id))
                 @params.Add(("place_id", request.place_id));
@@ -259,10 +245,7 @@ namespace Core.Libs.Integration.GoogleMap
             PlaceAutocompleteRequest request,
             string key)
         {
-            var @params = new List<(string, object)>();
-
-            if (string.IsNullOrEmpty(key))
-                throw new ArgumentNullException(nameof(key));
+            var @params = new List<(string, object)>();      
 
             if (!string.IsNullOrEmpty(request.input))
                 @params.Add(("input", request.input));
@@ -305,10 +288,7 @@ namespace Core.Libs.Integration.GoogleMap
             QueryAutocompleteRequest request,
             string key)
         {
-            var @params = new List<(string, object)>();
-
-            if (string.IsNullOrEmpty(key))
-                throw new ArgumentNullException(nameof(key));
+            var @params = new List<(string, object)>();            
 
             if (!string.IsNullOrEmpty(request.input))
                 @params.Add(("input", request.input));

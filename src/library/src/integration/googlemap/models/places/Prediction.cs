@@ -4,5 +4,6 @@ namespace Core.Libs.Integration.GoogleMap.Models.Places
     {
         public T predictions { get; set; }
         public string status { get; set; }
+        public string error_message { get; set; }
     }
 }

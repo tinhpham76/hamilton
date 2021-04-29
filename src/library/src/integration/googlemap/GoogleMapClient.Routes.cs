@@ -41,8 +41,7 @@ namespace Core.Libs.Integration.GoogleMap
         {
             var @params = new List<(string, object)>();
 
-            if (string.IsNullOrEmpty(key))
-                throw new ArgumentNullException(nameof(key));
+            
 
             if (!string.IsNullOrEmpty(request.origin))
                 @params.Add(("origin", request.origin));
@@ -91,8 +90,7 @@ namespace Core.Libs.Integration.GoogleMap
         {
             var @params = new List<(string, object)>();
 
-            if (string.IsNullOrEmpty(key))
-                throw new ArgumentNullException(nameof(key));
+            
 
             if (!string.IsNullOrEmpty(request.origins))
                 @params.Add(("origins", request.origins));

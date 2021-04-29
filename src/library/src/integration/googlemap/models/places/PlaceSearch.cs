@@ -6,5 +6,6 @@ namespace Core.Libs.Integration.GoogleMap.Models.Places
     {
         public List<Candidate> candidates { get; set; }
         public string status { get; set; }
+        public string error_message { get; set; }
     }
 }

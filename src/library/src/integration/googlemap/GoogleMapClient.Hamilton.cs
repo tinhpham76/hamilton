@@ -28,6 +28,9 @@ namespace Core.Libs.Integration.GoogleMap
             long range,
             string key)
         {
+            if (string.IsNullOrEmpty(key))
+                throw new System.ArgumentNullException(nameof(key));
+
             int[,] matrix = new int[locations.Count, locations.Count];
 
             long[,] distance = new long[locations.Count, locations.Count];
