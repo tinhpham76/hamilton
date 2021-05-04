@@ -113,7 +113,7 @@ namespace Core.Libs.Integration.GoogleMap
                     hamiltons = arrHamiltonResponse,
                     distance = new Distance
                     {
-                        text = ((double)distanceValue / 100).ToString(),
+                        text = ((double)distanceValue / 1000).ToString(),
                         value = distanceValue
                     },
                     detail = hamiltonDetails
