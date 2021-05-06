@@ -7,6 +7,7 @@ using Core.Libs.Integration.GoogleMap.Models.Places;
 using Core.Libs.Integration.GoogleMap.Models.Places.Geocoding;
 using Core.Libs.Integration.GoogleMap.Models.Places.PlaceSearch.FindPlace;
 using Core.Libs.Integration.GoogleMap.Models.Places.PlaceSearch.NearbySearch;
+using Core.Libs.Integration.GoogleMap.Models.Places.PlaceSearch.TextSearch;
 using Core.Libs.Utils.Helpers;
 using Core.Libs.Utils.Models;
 
@@ -22,9 +23,9 @@ namespace Core.Libs.Integration.GoogleMap
             NearbySearchRequest request,
             string key);
 
-        // Task<FetchResponse<Result<List<TextSearch>>>> TextSearch(
-        //     TextSearchRequest request,
-        //     string key);
+        Task<FetchResponse<Results<TextSearch>>> TextSearch(
+            TextSearchRequest request,
+            string key);
 
         // Task<FetchResponse<Result<PlaceDetail>>> PlaceDetail(
         //     PlaceDetailRequest request,
@@ -164,48 +165,33 @@ namespace Core.Libs.Integration.GoogleMap
                 Utils.GetApiUrl(NEARBY_SEARCH_URL, key, @params));
         }
 
-        // public Task<FetchResponse<Result<List<TextSearch>>>> TextSearch(
-        //     TextSearchRequest request,
-        //     string key)
-        // {
-        //     var @params = new List<(string, object)>();
+        public Task<FetchResponse<Results<TextSearch>>> TextSearch(
+            TextSearchRequest request,
+            string key)
+        {
+            var @params = new List<(string, object)>();
 
-        //     if (!string.IsNullOrEmpty(request.query))
-        //         @params.Add(("query", request.query));
+            if (!string.IsNullOrEmpty(request.query))
+                @params.Add(("query", request.query));
 
-        //     if (!string.IsNullOrEmpty(request.region))
-        //         @params.Add(("region", request.region));
+            if (!string.IsNullOrEmpty(request.region))
+                @params.Add(("region", request.region));
 
-        //     if (!string.IsNullOrEmpty(request.location))
-        //         @params.Add(("location", request.location));
+            if (!string.IsNullOrEmpty(request.location))
+                @params.Add(("location", request.location));
 
-        //     if (!string.IsNullOrEmpty(request.language))
-        //         @params.Add(("language", request.language));
+            if (!string.IsNullOrEmpty(request.language))
+                @params.Add(("language", request.language));
 
-        //     if (request.radius.HasValue)
-        //         @params.Add(("radius", request.radius.Value));
+            if (request.radius.HasValue)
+                @params.Add(("radius", request.radius.Value));
 
-        //     if (request.minprice.HasValue)
-        //         @params.Add(("minprice", request.minprice.Value));
+            if (!string.IsNullOrEmpty(request.type))
+                @params.Add(("type", request.type));
 
-        //     if (request.maxprice.HasValue)
-        //         @params.Add(("maxprice", request.maxprice.Value));
-
-        //     // if (!string.IsNullOrEmpty(request.opennow))
-        //     //     @params.Add(("opennow", request.opennow));
-
-        //     // if (!string.IsNullOrEmpty(request.pagetoken))
-        //     //     @params.Add(("pagetoken", request.pagetoken));
-
-        //     if (!string.IsNullOrEmpty(request.type))
-        //         @params.Add(("type", request.type));
-
-        //     return this.httpClient.ExecuteGet<Result<List<TextSearch>>>(
-        //         Utils.GetApiUrl(
-        //             TEXT_SEARCH_URL,
-        //             key,
-        //             @params));
-        // }
+            return this.httpClient.ExecuteGet<Results<TextSearch>>(
+                Utils.GetApiUrl(TEXT_SEARCH_URL, key, @params));
+        }
 
         // public Task<FetchResponse<Result<PlaceDetail>>> PlaceDetail(
         //     PlaceDetailRequest request,

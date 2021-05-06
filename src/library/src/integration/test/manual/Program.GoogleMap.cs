@@ -102,9 +102,9 @@ namespace Core.Libs.Integration.Test.Manual
 
             // TestFindPlace(googleMapClient, key);
 
-            TestNearbySearch(googleMapClient, key);
+            // TestNearbySearch(googleMapClient, key);
 
-            // TestTextSearch(googleMapClient);
+            TestTextSearch(googleMapClient, key);
 
             // TestGetGeocoding(googleMapClient);
 
@@ -171,16 +171,16 @@ namespace Core.Libs.Integration.Test.Manual
         //                 }, key).Result;
         // }
 
-        // static void TestTextSearch(
-        //     IGoogleMapClient googleMapClient,
-        //     string key)
-        // {
-        //     var result = googleMapClient.Places
-        //                 .TextSearch(new GoogleMap.Models.Places.TextSearchRequest()
-        //                 {
-        //                     query = "Bến Thành"
-        //                 }, key).Result;
-        // }
+        static void TestTextSearch(
+            IGoogleMapClient googleMapClient,
+            string key)
+        {
+            var result = googleMapClient.Places
+                        .TextSearch(new GoogleMap.Models.Places.PlaceSearch.TextSearch.TextSearchRequest()
+                        {
+                            query = "Bến Thành"
+                        }, key).Result;
+        }
 
         static void TestNearbySearch(
             IGoogleMapClient googleMapClient,
