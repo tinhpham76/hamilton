@@ -106,13 +106,13 @@ namespace Core.Libs.Integration.Test.Manual
 
             // TestTextSearch(googleMapClient, key);
 
-            // TestGetGeocoding(googleMapClient);
+            TestGetGeocoding(googleMapClient, key);
 
             // TestGetPlaceDetail(googleMapClient, key);
 
             // TestGetPlaceAutocomplete(googleMapClient, key);
 
-            TestGetQueryAutocomplete(googleMapClient, key);
+            // TestGetQueryAutocomplete(googleMapClient, key);
 
             // TestHamilton(googleMapClient, cities, key);
         }
@@ -160,16 +160,16 @@ namespace Core.Libs.Integration.Test.Manual
                         }, key).Result;
         }
 
-        // static void TestGetGeocoding(
-        //     IGoogleMapClient googleMapClient,
-        //     string key)
-        // {
-        //     var result = googleMapClient.Places
-        //                 .GetGeocoding(new GoogleMap.Models.Places.Geocoding.GeocodingRequest()
-        //                 {
-        //                     address = "Thành phố Hồ Chí Minh"
-        //                 }, key).Result;
-        // }
+        static void TestGetGeocoding(
+            IGoogleMapClient googleMapClient,
+            string key)
+        {
+            var result = googleMapClient.Places
+                        .Geocoding(new GoogleMap.Models.Places.GeocodingRequest()
+                        {
+                            address = "Thành phố Hồ Chí Minh"
+                        }, key).Result;
+        }
 
         static void TestTextSearch(
             IGoogleMapClient googleMapClient,

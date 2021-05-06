@@ -1,9 +1,7 @@
-using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Core.Libs.Integration.GoogleMap.Models.Places;
-using Core.Libs.Integration.GoogleMap.Models.Places.Geocoding;
 using Core.Libs.Integration.GoogleMap.Models.Places.PlaceSearch;
 using Core.Libs.Utils.Helpers;
 using Core.Libs.Utils.Models;
@@ -36,9 +34,9 @@ namespace Core.Libs.Integration.GoogleMap
             QueryAutocompleteRequest request,
             string key);
 
-        // Task<FetchResponse<Result<List<Geocoding>>>> GetGeocoding(
-        //     GeocodingRequest request,
-        //     string key);
+        Task<FetchResponse<Results<Geocoding>>> Geocoding(
+            GeocodingRequest request,
+            string key);
     }
 
     public class GoogleMapPlaces : IGoogleMapPlaces
@@ -88,33 +86,30 @@ namespace Core.Libs.Integration.GoogleMap
                 Utils.GetApiUrl(FIND_PLACE_URL, key, @params));
         }
 
-        // public Task<FetchResponse<Result<List<Geocoding>>>> GetGeocoding(
-        //     GeocodingRequest request,
-        //     string key)
-        // {
-        //     var @params = new List<(string, object)>();
+        public Task<FetchResponse<Results<Geocoding>>> Geocoding(
+            GeocodingRequest request,
+            string key)
+        {
+            var @params = new List<(string, object)>();
 
-        //     if (!string.IsNullOrEmpty(request.address))
-        //         @params.Add(("address", request.address));
+            if (!string.IsNullOrEmpty(request.address))
+                @params.Add(("address", request.address));
 
-        //     if (!string.IsNullOrEmpty(request.components))
-        //         @params.Add(("components", request.components));
+            if (!string.IsNullOrEmpty(request.components))
+                @params.Add(("components", request.components));
 
-        //     if (!string.IsNullOrEmpty(request.bounds))
-        //         @params.Add(("bounds", request.bounds));
+            if (!string.IsNullOrEmpty(request.bounds))
+                @params.Add(("bounds", request.bounds));
 
-        //     if (!string.IsNullOrEmpty(request.language))
-        //         @params.Add(("language", request.language));
+            if (!string.IsNullOrEmpty(request.language))
+                @params.Add(("language", request.language));
 
-        //     if (!string.IsNullOrEmpty(request.region))
-        //         @params.Add(("region", request.region));
+            if (!string.IsNullOrEmpty(request.region))
+                @params.Add(("region", request.region));
 
-        //     return this.httpClient.ExecuteGet<Result<List<Geocoding>>>(
-        //         Utils.GetApiUrl(
-        //             GECODING_URLS,
-        //             key,
-        //             @params));
-        // }
+            return this.httpClient.ExecuteGet<Results<Geocoding>>(
+                Utils.GetApiUrl(GECODING_URLS, key, @params));
+        }
 
         public Task<FetchResponse<Results<NearbySearch>>> NearbySearch(
             NearbySearchRequest request,
