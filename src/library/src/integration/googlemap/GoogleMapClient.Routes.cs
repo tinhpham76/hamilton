@@ -41,8 +41,6 @@ namespace Core.Libs.Integration.GoogleMap
         {
             var @params = new List<(string, object)>();
 
-            
-
             if (!string.IsNullOrEmpty(request.origin))
                 @params.Add(("origin", request.origin));
 
@@ -78,10 +76,7 @@ namespace Core.Libs.Integration.GoogleMap
                 @params.Add(("departure_time", request.departure_time.Value));
 
             return this.httpClient.ExecuteGet<Direction>(
-                Utils.GetApiUrl(
-                    DIRECTION_URLS,
-                    key,
-                    @params));
+                Utils.GetApiUrl(DIRECTION_URLS, key, @params));
         }
 
         public Task<FetchResponse<DistanceMatrix>> GetDistanceMatrix(
@@ -89,8 +84,6 @@ namespace Core.Libs.Integration.GoogleMap
             string key)
         {
             var @params = new List<(string, object)>();
-
-            
 
             if (!string.IsNullOrEmpty(request.origins))
                 @params.Add(("origins", request.origins));
@@ -120,10 +113,7 @@ namespace Core.Libs.Integration.GoogleMap
                 @params.Add(("departure_time", request.departure_time));
 
             return this.httpClient.ExecuteGet<Models.Routes.DistanceMatrix.DistanceMatrix>(
-                Utils.GetApiUrl(
-                    DISTANCEMATRIX_URLS,
-                    key,
-                    @params));
+                Utils.GetApiUrl(DISTANCEMATRIX_URLS, key, @params));
         }
     }
 }
