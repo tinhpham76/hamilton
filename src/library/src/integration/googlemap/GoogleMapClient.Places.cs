@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Core.Libs.Integration.GoogleMap.Models.Enum.Places;
 using Core.Libs.Integration.GoogleMap.Models.Places;
 using Core.Libs.Integration.GoogleMap.Models.Places.Geocoding;
+using Core.Libs.Integration.GoogleMap.Models.Places.PlaceSearch.FindPlace;
 using Core.Libs.Utils.Helpers;
 using Core.Libs.Utils.Models;
 
@@ -12,8 +13,8 @@ namespace Core.Libs.Integration.GoogleMap
 {
     public interface IGoogleMapPlaces
     {
-        Task<FetchResponse<PlaceSearch>> PlaceSearch(
-            PlaceSearchRequest request,
+        Task<FetchResponse<Candidates<FindPlace>>> FindPlace(
+            FindPlaceRequest request,
             string key);
 
         Task<FetchResponse<Result<List<NearbySearch>>>> NearbySearch(
@@ -45,7 +46,7 @@ namespace Core.Libs.Integration.GoogleMap
     {
         private readonly HttpClient httpClient;
         private readonly GoogleMapConfig config;
-        private const string PLACE_SEARCH_URL = "place/findplacefromtext";
+        private const string FIND_PLACE_URL = "place/findplacefromtext";
         private const string NEARBY_SEARCH_URL = "place/nearbysearch";
         private const string TEXT_SEARCH_URL = "place/textsearch";
         private const string PLACE_DETAIL_URL = "place/details";
@@ -60,8 +61,8 @@ namespace Core.Libs.Integration.GoogleMap
             this.config = config;
         }
 
-        public Task<FetchResponse<PlaceSearch>> PlaceSearch(
-            PlaceSearchRequest request,
+        public Task<FetchResponse<Candidates<FindPlace>>> FindPlace(
+            FindPlaceRequest request,
             string key)
         {
             var @params = new List<(string, object)>();
@@ -69,8 +70,8 @@ namespace Core.Libs.Integration.GoogleMap
             if (!string.IsNullOrEmpty(request.input))
                 @params.Add(("input", request.input));
 
-            if (request.inputtype.HasValue)
-                @params.Add(("inputtype", Enum.GetName(typeof(InputType), (int)request.inputtype.Value).ToLower()));
+            if (!string.IsNullOrEmpty(request.inputtype))
+                @params.Add(("inputtype", request.inputtype));
 
             if (!string.IsNullOrEmpty(request.language))
                 @params.Add(("language", request.language));
@@ -84,18 +85,15 @@ namespace Core.Libs.Integration.GoogleMap
             if (!string.IsNullOrEmpty(request.locationbias))
                 @params.Add(("locationbias", request.locationbias));
 
-            return this.httpClient.ExecuteGet<PlaceSearch>(
-                Utils.GetApiUrl(
-                    PLACE_SEARCH_URL,
-                    key,
-                    @params));
+            return this.httpClient.ExecuteGet<Candidates<FindPlace>>(
+                Utils.GetApiUrl(FIND_PLACE_URL, key, @params));
         }
 
         public Task<FetchResponse<Result<List<Geocoding>>>> GetGeocoding(
             GeocodingRequest request,
             string key)
         {
-            var @params = new List<(string, object)>();       
+            var @params = new List<(string, object)>();
 
             if (!string.IsNullOrEmpty(request.address))
                 @params.Add(("address", request.address));
@@ -125,7 +123,7 @@ namespace Core.Libs.Integration.GoogleMap
         {
             var @params = new List<(string, object)>();
 
-            
+
 
             if (!string.IsNullOrEmpty(request.input))
                 @params.Add(("input", request.input));
@@ -217,7 +215,7 @@ namespace Core.Libs.Integration.GoogleMap
             PlaceDetailRequest request,
             string key)
         {
-            var @params = new List<(string, object)>();           
+            var @params = new List<(string, object)>();
 
             if (!string.IsNullOrEmpty(request.place_id))
                 @params.Add(("place_id", request.place_id));
@@ -245,7 +243,7 @@ namespace Core.Libs.Integration.GoogleMap
             PlaceAutocompleteRequest request,
             string key)
         {
-            var @params = new List<(string, object)>();      
+            var @params = new List<(string, object)>();
 
             if (!string.IsNullOrEmpty(request.input))
                 @params.Add(("input", request.input));
@@ -288,7 +286,7 @@ namespace Core.Libs.Integration.GoogleMap
             QueryAutocompleteRequest request,
             string key)
         {
-            var @params = new List<(string, object)>();            
+            var @params = new List<(string, object)>();
 
             if (!string.IsNullOrEmpty(request.input))
                 @params.Add(("input", request.input));

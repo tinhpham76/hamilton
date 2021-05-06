@@ -1,14 +1,10 @@
 using System.Collections.Generic;
 namespace Core.Libs.Integration.GoogleMap.Models.Places
 {
-    public class Candidate
+    public class Candidates<T>
     {
-        public string formatted_address { get; set; }
-        public Geometry geometry { get; set; }
-        public string name { get; set; }
-        public OpeningHours opening_hours { get; set; }
-        public List<Photo> photos { get; set; }
-        public double? rating { get; set; }
-        public string place_id { get; set; }
+        public List<T> candidates { get; set; }
+        public string status { get; set; }
+        public string error_message { get; set; }
     }
 }
