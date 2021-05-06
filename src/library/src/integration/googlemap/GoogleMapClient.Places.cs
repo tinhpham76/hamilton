@@ -6,6 +6,7 @@ using Core.Libs.Integration.GoogleMap.Models.Enum.Places;
 using Core.Libs.Integration.GoogleMap.Models.Places;
 using Core.Libs.Integration.GoogleMap.Models.Places.Geocoding;
 using Core.Libs.Integration.GoogleMap.Models.Places.PlaceSearch.FindPlace;
+using Core.Libs.Integration.GoogleMap.Models.Places.PlaceSearch.NearbySearch;
 using Core.Libs.Utils.Helpers;
 using Core.Libs.Utils.Models;
 
@@ -17,17 +18,17 @@ namespace Core.Libs.Integration.GoogleMap
             FindPlaceRequest request,
             string key);
 
-        Task<FetchResponse<Result<List<NearbySearch>>>> NearbySearch(
+        Task<FetchResponse<Results<NearbySearch>>> NearbySearch(
             NearbySearchRequest request,
             string key);
 
-        Task<FetchResponse<Result<List<TextSearch>>>> TextSearch(
-            TextSearchRequest request,
-            string key);
+        // Task<FetchResponse<Result<List<TextSearch>>>> TextSearch(
+        //     TextSearchRequest request,
+        //     string key);
 
-        Task<FetchResponse<Result<PlaceDetail>>> PlaceDetail(
-            PlaceDetailRequest request,
-            string key);
+        // Task<FetchResponse<Result<PlaceDetail>>> PlaceDetail(
+        //     PlaceDetailRequest request,
+        //     string key);
 
         Task<FetchResponse<Prediction<List<PlaceAutocomplete>>>> PlaceAutocomplete(
             PlaceAutocompleteRequest request,
@@ -37,9 +38,9 @@ namespace Core.Libs.Integration.GoogleMap
             QueryAutocompleteRequest request,
             string key);
 
-        Task<FetchResponse<Result<List<Geocoding>>>> GetGeocoding(
-            GeocodingRequest request,
-            string key);
+        // Task<FetchResponse<Result<List<Geocoding>>>> GetGeocoding(
+        //     GeocodingRequest request,
+        //     string key);
     }
 
     public class GoogleMapPlaces : IGoogleMapPlaces
@@ -89,41 +90,39 @@ namespace Core.Libs.Integration.GoogleMap
                 Utils.GetApiUrl(FIND_PLACE_URL, key, @params));
         }
 
-        public Task<FetchResponse<Result<List<Geocoding>>>> GetGeocoding(
-            GeocodingRequest request,
-            string key)
-        {
-            var @params = new List<(string, object)>();
+        // public Task<FetchResponse<Result<List<Geocoding>>>> GetGeocoding(
+        //     GeocodingRequest request,
+        //     string key)
+        // {
+        //     var @params = new List<(string, object)>();
 
-            if (!string.IsNullOrEmpty(request.address))
-                @params.Add(("address", request.address));
+        //     if (!string.IsNullOrEmpty(request.address))
+        //         @params.Add(("address", request.address));
 
-            if (!string.IsNullOrEmpty(request.components))
-                @params.Add(("components", request.components));
+        //     if (!string.IsNullOrEmpty(request.components))
+        //         @params.Add(("components", request.components));
 
-            if (!string.IsNullOrEmpty(request.bounds))
-                @params.Add(("bounds", request.bounds));
+        //     if (!string.IsNullOrEmpty(request.bounds))
+        //         @params.Add(("bounds", request.bounds));
 
-            if (!string.IsNullOrEmpty(request.language))
-                @params.Add(("language", request.language));
+        //     if (!string.IsNullOrEmpty(request.language))
+        //         @params.Add(("language", request.language));
 
-            if (!string.IsNullOrEmpty(request.region))
-                @params.Add(("region", request.region));
+        //     if (!string.IsNullOrEmpty(request.region))
+        //         @params.Add(("region", request.region));
 
-            return this.httpClient.ExecuteGet<Result<List<Geocoding>>>(
-                Utils.GetApiUrl(
-                    GECODING_URLS,
-                    key,
-                    @params));
-        }
+        //     return this.httpClient.ExecuteGet<Result<List<Geocoding>>>(
+        //         Utils.GetApiUrl(
+        //             GECODING_URLS,
+        //             key,
+        //             @params));
+        // }
 
-        public Task<FetchResponse<Result<List<NearbySearch>>>> NearbySearch(
+        public Task<FetchResponse<Results<NearbySearch>>> NearbySearch(
             NearbySearchRequest request,
             string key)
         {
             var @params = new List<(string, object)>();
-
-
 
             if (!string.IsNullOrEmpty(request.input))
                 @params.Add(("input", request.input));
@@ -161,83 +160,80 @@ namespace Core.Libs.Integration.GoogleMap
             // if (!string.IsNullOrEmpty(request.pagetoken))
             //     @params.Add(("pagetoken", request.pagetoken));
 
-            return this.httpClient.ExecuteGet<Result<List<NearbySearch>>>(
-                Utils.GetApiUrl(
-                    NEARBY_SEARCH_URL,
-                    key,
-                    @params));
+            return this.httpClient.ExecuteGet<Results<NearbySearch>>(
+                Utils.GetApiUrl(NEARBY_SEARCH_URL, key, @params));
         }
 
-        public Task<FetchResponse<Result<List<TextSearch>>>> TextSearch(
-            TextSearchRequest request,
-            string key)
-        {
-            var @params = new List<(string, object)>();
+        // public Task<FetchResponse<Result<List<TextSearch>>>> TextSearch(
+        //     TextSearchRequest request,
+        //     string key)
+        // {
+        //     var @params = new List<(string, object)>();
 
-            if (!string.IsNullOrEmpty(request.query))
-                @params.Add(("query", request.query));
+        //     if (!string.IsNullOrEmpty(request.query))
+        //         @params.Add(("query", request.query));
 
-            if (!string.IsNullOrEmpty(request.region))
-                @params.Add(("region", request.region));
+        //     if (!string.IsNullOrEmpty(request.region))
+        //         @params.Add(("region", request.region));
 
-            if (!string.IsNullOrEmpty(request.location))
-                @params.Add(("location", request.location));
+        //     if (!string.IsNullOrEmpty(request.location))
+        //         @params.Add(("location", request.location));
 
-            if (!string.IsNullOrEmpty(request.language))
-                @params.Add(("language", request.language));
+        //     if (!string.IsNullOrEmpty(request.language))
+        //         @params.Add(("language", request.language));
 
-            if (request.radius.HasValue)
-                @params.Add(("radius", request.radius.Value));
+        //     if (request.radius.HasValue)
+        //         @params.Add(("radius", request.radius.Value));
 
-            if (request.minprice.HasValue)
-                @params.Add(("minprice", request.minprice.Value));
+        //     if (request.minprice.HasValue)
+        //         @params.Add(("minprice", request.minprice.Value));
 
-            if (request.maxprice.HasValue)
-                @params.Add(("maxprice", request.maxprice.Value));
+        //     if (request.maxprice.HasValue)
+        //         @params.Add(("maxprice", request.maxprice.Value));
 
-            // if (!string.IsNullOrEmpty(request.opennow))
-            //     @params.Add(("opennow", request.opennow));
+        //     // if (!string.IsNullOrEmpty(request.opennow))
+        //     //     @params.Add(("opennow", request.opennow));
 
-            // if (!string.IsNullOrEmpty(request.pagetoken))
-            //     @params.Add(("pagetoken", request.pagetoken));
+        //     // if (!string.IsNullOrEmpty(request.pagetoken))
+        //     //     @params.Add(("pagetoken", request.pagetoken));
 
-            if (!string.IsNullOrEmpty(request.type))
-                @params.Add(("type", request.type));
+        //     if (!string.IsNullOrEmpty(request.type))
+        //         @params.Add(("type", request.type));
 
-            return this.httpClient.ExecuteGet<Result<List<TextSearch>>>(
-                Utils.GetApiUrl(
-                    TEXT_SEARCH_URL,
-                    key,
-                    @params));
-        }
+        //     return this.httpClient.ExecuteGet<Result<List<TextSearch>>>(
+        //         Utils.GetApiUrl(
+        //             TEXT_SEARCH_URL,
+        //             key,
+        //             @params));
+        // }
 
-        public Task<FetchResponse<Result<PlaceDetail>>> PlaceDetail(
-            PlaceDetailRequest request,
-            string key)
-        {
-            var @params = new List<(string, object)>();
+        // public Task<FetchResponse<Result<PlaceDetail>>> PlaceDetail(
+        //     PlaceDetailRequest request,
+        //     string key)
+        // {
+        //     var @params = new List<(string, object)>();
 
-            if (!string.IsNullOrEmpty(request.place_id))
-                @params.Add(("place_id", request.place_id));
+        //     if (!string.IsNullOrEmpty(request.place_id))
+        //         @params.Add(("place_id", request.place_id));
 
-            if (!string.IsNullOrEmpty(request.language))
-                @params.Add(("language", request.language));
+        //     if (!string.IsNullOrEmpty(request.language))
+        //         @params.Add(("language", request.language));
 
-            if (!string.IsNullOrEmpty(request.region))
-                @params.Add(("region", request.region));
+        //     if (!string.IsNullOrEmpty(request.region))
+        //         @params.Add(("region", request.region));
 
-            if (!string.IsNullOrEmpty(request.sessiontoken))
-                @params.Add(("sessiontoken", request.sessiontoken));
+        //     if (!string.IsNullOrEmpty(request.sessiontoken))
+        //         @params.Add(("sessiontoken", request.sessiontoken));
 
-            if (!string.IsNullOrEmpty(request.fields))
-                @params.Add(("fields", request.fields));
+        //     if (!string.IsNullOrEmpty(request.fields))
+        //         @params.Add(("fields", request.fields));
 
-            return this.httpClient.ExecuteGet<Result<PlaceDetail>>(
-                Utils.GetApiUrl(
-                    PLACE_DETAIL_URL,
-                    key,
-                    @params));
-        }
+        //     return this.httpClient.ExecuteGet<Result<PlaceDetail>>(
+        //         Utils.GetApiUrl(
+        //             PLACE_DETAIL_URL,
+        //             key,
+        //             @params));
+        // }
 
         public Task<FetchResponse<Prediction<List<PlaceAutocomplete>>>> PlaceAutocomplete(
             PlaceAutocompleteRequest request,

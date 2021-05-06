@@ -100,9 +100,9 @@ namespace Core.Libs.Integration.Test.Manual
 
             // TestInitMatrixAsync(googleMapClient, cities);
 
-            TestFindPlace(googleMapClient, key);
+            // TestFindPlace(googleMapClient, key);
 
-            // TestNearbySearch(googleMapClient);
+            TestNearbySearch(googleMapClient, key);
 
             // TestTextSearch(googleMapClient);
 
@@ -149,45 +149,45 @@ namespace Core.Libs.Integration.Test.Manual
                         }, key).Result;
         }
 
-        static void TestGetPlaceDetail(
-            IGoogleMapClient googleMapClient,
-            string key)
-        {
-            var result = googleMapClient.Places
-                        .PlaceDetail(new GoogleMap.Models.Places.PlaceDetailRequest()
-                        {
-                            place_id = "ChIJN1t_tDeuEmsRUsoyG83frY4"
-                        }, key).Result;
-        }
+        // static void TestGetPlaceDetail(
+        //     IGoogleMapClient googleMapClient,
+        //     string key)
+        // {
+        //     var result = googleMapClient.Places
+        //                 .PlaceDetail(new GoogleMap.Models.Places.PlaceDetailRequest()
+        //                 {
+        //                     place_id = "ChIJN1t_tDeuEmsRUsoyG83frY4"
+        //                 }, key).Result;
+        // }
 
-        static void TestGetGeocoding(
-            IGoogleMapClient googleMapClient,
-            string key)
-        {
-            var result = googleMapClient.Places
-                        .GetGeocoding(new GoogleMap.Models.Places.Geocoding.GeocodingRequest()
-                        {
-                            address = "Thành phố Hồ Chí Minh"
-                        }, key).Result;
-        }
+        // static void TestGetGeocoding(
+        //     IGoogleMapClient googleMapClient,
+        //     string key)
+        // {
+        //     var result = googleMapClient.Places
+        //                 .GetGeocoding(new GoogleMap.Models.Places.Geocoding.GeocodingRequest()
+        //                 {
+        //                     address = "Thành phố Hồ Chí Minh"
+        //                 }, key).Result;
+        // }
 
-        static void TestTextSearch(
-            IGoogleMapClient googleMapClient,
-            string key)
-        {
-            var result = googleMapClient.Places
-                        .TextSearch(new GoogleMap.Models.Places.TextSearchRequest()
-                        {
-                            query = "Bến Thành"
-                        }, key).Result;
-        }
+        // static void TestTextSearch(
+        //     IGoogleMapClient googleMapClient,
+        //     string key)
+        // {
+        //     var result = googleMapClient.Places
+        //                 .TextSearch(new GoogleMap.Models.Places.TextSearchRequest()
+        //                 {
+        //                     query = "Bến Thành"
+        //                 }, key).Result;
+        // }
 
         static void TestNearbySearch(
             IGoogleMapClient googleMapClient,
             string key)
         {
             var result = googleMapClient.Places
-                    .NearbySearch(new GoogleMap.Models.Places.NearbySearchRequest()
+                    .NearbySearch(new GoogleMap.Models.Places.PlaceSearch.NearbySearch.NearbySearchRequest()
                     {
                         location = "10.8230989,106.6296638",
                         radius = 150000

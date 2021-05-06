@@ -1,6 +1,4 @@
-using Core.Libs.Integration.GoogleMap.Models.Enum.Places;
-
-namespace Core.Libs.Integration.GoogleMap.Models.Places
+namespace Core.Libs.Integration.GoogleMap.Models.Places.PlaceSearch.NearbySearch
 {
     public class NearbySearchRequest
     {
