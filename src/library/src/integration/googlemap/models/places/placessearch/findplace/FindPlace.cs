@@ -13,7 +13,8 @@ namespace Core.Libs.Integration.GoogleMap.Models.Places.PlaceSearch
         public List<Photo> photos { get; set; }
         public string place_id { get; set; }
         public PlusCode plus_code { get; set; }
-        public string[] rating { get; set; }
+        public string[] types { get; set; }
+        public double? rating { get; set; }
         public double? user_ratings_total { get; set; }
     }
 }
