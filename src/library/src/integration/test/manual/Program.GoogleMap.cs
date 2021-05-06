@@ -108,9 +108,9 @@ namespace Core.Libs.Integration.Test.Manual
 
             // TestGetGeocoding(googleMapClient);
 
-            TestGetPlaceDetail(googleMapClient, key);
+            // TestGetPlaceDetail(googleMapClient, key);
 
-            // TestGetPlaceAutocomplete(googleMapClient);
+            TestGetPlaceAutocomplete(googleMapClient, key);
 
             // TestGetQueryAutocomplete(googleMapClient);
 

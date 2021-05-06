@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Core.Libs.Integration.GoogleMap.Models.Enum.Places;
 using Core.Libs.Integration.GoogleMap.Models.Places;
 using Core.Libs.Integration.GoogleMap.Models.Places.Geocoding;
 using Core.Libs.Integration.GoogleMap.Models.Places.PlaceSearch;
@@ -29,11 +28,11 @@ namespace Core.Libs.Integration.GoogleMap
             PlaceDetailRequest request,
             string key);
 
-        Task<FetchResponse<Prediction<List<PlaceAutocomplete>>>> PlaceAutocomplete(
+        Task<FetchResponse<Predictions<PlaceAutocomplete>>> PlaceAutocomplete(
             PlaceAutocompleteRequest request,
             string key);
 
-        Task<FetchResponse<Prediction<List<QueryAutocomplete>>>> QueryAutocomplete(
+        Task<FetchResponse<Predictions<QueryAutocomplete>>> QueryAutocomplete(
             QueryAutocompleteRequest request,
             string key);
 
@@ -216,7 +215,7 @@ namespace Core.Libs.Integration.GoogleMap
                 Utils.GetApiUrl(PLACE_DETAIL_URL, key, @params));
         }
 
-        public Task<FetchResponse<Prediction<List<PlaceAutocomplete>>>> PlaceAutocomplete(
+        public Task<FetchResponse<Predictions<PlaceAutocomplete>>> PlaceAutocomplete(
             PlaceAutocompleteRequest request,
             string key)
         {
@@ -252,14 +251,11 @@ namespace Core.Libs.Integration.GoogleMap
             if (!string.IsNullOrEmpty(request.strictbounds))
                 @params.Add(("strictbounds", request.strictbounds));
 
-            return this.httpClient.ExecuteGet<Prediction<List<PlaceAutocomplete>>>(
-                Utils.GetApiUrl(
-                    PLACE_AUTOCOMPLETE_URL,
-                    key,
-                    @params));
+            return this.httpClient.ExecuteGet<Predictions<PlaceAutocomplete>>(
+                Utils.GetApiUrl(PLACE_AUTOCOMPLETE_URL, key, @params));
         }
 
-        public Task<FetchResponse<Prediction<List<QueryAutocomplete>>>> QueryAutocomplete(
+        public Task<FetchResponse<Predictions<QueryAutocomplete>>> QueryAutocomplete(
             QueryAutocompleteRequest request,
             string key)
         {
@@ -280,7 +276,7 @@ namespace Core.Libs.Integration.GoogleMap
             if (!string.IsNullOrEmpty(request.language))
                 @params.Add(("language", request.language));
 
-            return this.httpClient.ExecuteGet<Prediction<List<QueryAutocomplete>>>(
+            return this.httpClient.ExecuteGet<Predictions<QueryAutocomplete>>(
                 Utils.GetApiUrl(
                     QUERY_AUTOCOMPLETE_URL,
                     key,
