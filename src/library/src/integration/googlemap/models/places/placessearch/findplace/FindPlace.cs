@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Core.Libs.Integration.GoogleMap.Models.Places.PlaceSearch.FindPlace
+namespace Core.Libs.Integration.GoogleMap.Models.Places.PlaceSearch
 {
     public class FindPlace
     {

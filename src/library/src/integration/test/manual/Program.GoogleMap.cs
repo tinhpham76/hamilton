@@ -104,11 +104,11 @@ namespace Core.Libs.Integration.Test.Manual
 
             // TestNearbySearch(googleMapClient, key);
 
-            TestTextSearch(googleMapClient, key);
+            // TestTextSearch(googleMapClient, key);
 
             // TestGetGeocoding(googleMapClient);
 
-            // TestGetPlaceDetail(googleMapClient);
+            TestGetPlaceDetail(googleMapClient, key);
 
             // TestGetPlaceAutocomplete(googleMapClient);
 
@@ -149,16 +149,16 @@ namespace Core.Libs.Integration.Test.Manual
                         }, key).Result;
         }
 
-        // static void TestGetPlaceDetail(
-        //     IGoogleMapClient googleMapClient,
-        //     string key)
-        // {
-        //     var result = googleMapClient.Places
-        //                 .PlaceDetail(new GoogleMap.Models.Places.PlaceDetailRequest()
-        //                 {
-        //                     place_id = "ChIJN1t_tDeuEmsRUsoyG83frY4"
-        //                 }, key).Result;
-        // }
+        static void TestGetPlaceDetail(
+            IGoogleMapClient googleMapClient,
+            string key)
+        {
+            var result = googleMapClient.Places
+                        .PlaceDetail(new GoogleMap.Models.Places.PlaceDetailRequest()
+                        {
+                            place_id = "ChIJN1t_tDeuEmsRUsoyG83frY4"
+                        }, key).Result;
+        }
 
         // static void TestGetGeocoding(
         //     IGoogleMapClient googleMapClient,
@@ -176,7 +176,7 @@ namespace Core.Libs.Integration.Test.Manual
             string key)
         {
             var result = googleMapClient.Places
-                        .TextSearch(new GoogleMap.Models.Places.PlaceSearch.TextSearch.TextSearchRequest()
+                        .TextSearch(new GoogleMap.Models.Places.PlaceSearch.TextSearchRequest()
                         {
                             query = "Bến Thành"
                         }, key).Result;
@@ -187,7 +187,7 @@ namespace Core.Libs.Integration.Test.Manual
             string key)
         {
             var result = googleMapClient.Places
-                    .NearbySearch(new GoogleMap.Models.Places.PlaceSearch.NearbySearch.NearbySearchRequest()
+                    .NearbySearch(new GoogleMap.Models.Places.PlaceSearch.NearbySearchRequest()
                     {
                         location = "10.8230989,106.6296638",
                         radius = 150000
@@ -199,7 +199,7 @@ namespace Core.Libs.Integration.Test.Manual
             string key)
         {
             var result = googleMapClient.Places
-                        .FindPlace(new GoogleMap.Models.Places.PlaceSearch.FindPlace.FindPlaceRequest()
+                        .FindPlace(new GoogleMap.Models.Places.PlaceSearch.FindPlaceRequest()
                         {
                             input = "Thành phố Hồ Chí Minh"
                         }, key).Result;

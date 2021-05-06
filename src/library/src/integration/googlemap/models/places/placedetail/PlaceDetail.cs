@@ -22,5 +22,9 @@ namespace Core.Libs.Integration.GoogleMap.Models.Places
         public long? utc_offset { get; set; }
         public string vicinity { get; set; }
         public string website { get; set; }
+        public OpeningHours opening_hours { get; set; }
+        public List<Photo> photos { get; set; }
+        public PlusCode plus_code { get; set; }
+        public double? user_ratings_total { get; set; }
     }
 }

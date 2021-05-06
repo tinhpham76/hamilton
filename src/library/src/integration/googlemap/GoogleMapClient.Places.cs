@@ -5,9 +5,7 @@ using System.Threading.Tasks;
 using Core.Libs.Integration.GoogleMap.Models.Enum.Places;
 using Core.Libs.Integration.GoogleMap.Models.Places;
 using Core.Libs.Integration.GoogleMap.Models.Places.Geocoding;
-using Core.Libs.Integration.GoogleMap.Models.Places.PlaceSearch.FindPlace;
-using Core.Libs.Integration.GoogleMap.Models.Places.PlaceSearch.NearbySearch;
-using Core.Libs.Integration.GoogleMap.Models.Places.PlaceSearch.TextSearch;
+using Core.Libs.Integration.GoogleMap.Models.Places.PlaceSearch;
 using Core.Libs.Utils.Helpers;
 using Core.Libs.Utils.Models;
 
@@ -27,9 +25,9 @@ namespace Core.Libs.Integration.GoogleMap
             TextSearchRequest request,
             string key);
 
-        // Task<FetchResponse<Result<PlaceDetail>>> PlaceDetail(
-        //     PlaceDetailRequest request,
-        //     string key);
+        Task<FetchResponse<Result<PlaceDetail>>> PlaceDetail(
+            PlaceDetailRequest request,
+            string key);
 
         Task<FetchResponse<Prediction<List<PlaceAutocomplete>>>> PlaceAutocomplete(
             PlaceAutocompleteRequest request,
@@ -193,33 +191,30 @@ namespace Core.Libs.Integration.GoogleMap
                 Utils.GetApiUrl(TEXT_SEARCH_URL, key, @params));
         }
 
-        // public Task<FetchResponse<Result<PlaceDetail>>> PlaceDetail(
-        //     PlaceDetailRequest request,
-        //     string key)
-        // {
-        //     var @params = new List<(string, object)>();
+        public Task<FetchResponse<Result<PlaceDetail>>> PlaceDetail(
+            PlaceDetailRequest request,
+            string key)
+        {
+            var @params = new List<(string, object)>();
 
-        //     if (!string.IsNullOrEmpty(request.place_id))
-        //         @params.Add(("place_id", request.place_id));
+            if (!string.IsNullOrEmpty(request.place_id))
+                @params.Add(("place_id", request.place_id));
 
-        //     if (!string.IsNullOrEmpty(request.language))
-        //         @params.Add(("language", request.language));
+            if (!string.IsNullOrEmpty(request.language))
+                @params.Add(("language", request.language));
 
-        //     if (!string.IsNullOrEmpty(request.region))
-        //         @params.Add(("region", request.region));
+            if (!string.IsNullOrEmpty(request.region))
+                @params.Add(("region", request.region));
 
-        //     if (!string.IsNullOrEmpty(request.sessiontoken))
-        //         @params.Add(("sessiontoken", request.sessiontoken));
+            if (!string.IsNullOrEmpty(request.sessiontoken))
+                @params.Add(("sessiontoken", request.sessiontoken));
 
-        //     if (!string.IsNullOrEmpty(request.fields))
-        //         @params.Add(("fields", request.fields));
+            if (!string.IsNullOrEmpty(request.fields))
+                @params.Add(("fields", request.fields));
 
-        //     return this.httpClient.ExecuteGet<Result<PlaceDetail>>(
-        //         Utils.GetApiUrl(
-        //             PLACE_DETAIL_URL,
-        //             key,
-        //             @params));
-        // }
+            return this.httpClient.ExecuteGet<Result<PlaceDetail>>(
+                Utils.GetApiUrl(PLACE_DETAIL_URL, key, @params));
+        }
 
         public Task<FetchResponse<Prediction<List<PlaceAutocomplete>>>> PlaceAutocomplete(
             PlaceAutocompleteRequest request,

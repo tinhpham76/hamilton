@@ -1,4 +1,4 @@
-namespace Core.Libs.Integration.GoogleMap.Models.Places.PlaceSearch.TextSearch
+namespace Core.Libs.Integration.GoogleMap.Models.Places.PlaceSearch
 {
     public class TextSearchRequest
     {
