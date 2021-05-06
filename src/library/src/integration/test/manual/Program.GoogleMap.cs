@@ -110,9 +110,9 @@ namespace Core.Libs.Integration.Test.Manual
 
             // TestGetPlaceDetail(googleMapClient, key);
 
-            TestGetPlaceAutocomplete(googleMapClient, key);
+            // TestGetPlaceAutocomplete(googleMapClient, key);
 
-            // TestGetQueryAutocomplete(googleMapClient);
+            TestGetQueryAutocomplete(googleMapClient, key);
 
             // TestHamilton(googleMapClient, cities, key);
         }

@@ -277,10 +277,7 @@ namespace Core.Libs.Integration.GoogleMap
                 @params.Add(("language", request.language));
 
             return this.httpClient.ExecuteGet<Predictions<QueryAutocomplete>>(
-                Utils.GetApiUrl(
-                    QUERY_AUTOCOMPLETE_URL,
-                    key,
-                    @params));
+                Utils.GetApiUrl(QUERY_AUTOCOMPLETE_URL, key, @params));
         }
     }
 }
