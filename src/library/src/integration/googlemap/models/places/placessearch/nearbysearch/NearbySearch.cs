@@ -5,7 +5,7 @@ namespace Core.Libs.Integration.GoogleMap.Models.Places.PlaceSearch
     public class NearbySearch
     {
         public string business_status { get; set; }
-        public Geometry status { get; set; }
+        public Geometry geometry { get; set; }
         public string icon { get; set; }
         public string name { get; set; }
         public OpeningHours opening_hours { get; set; }
