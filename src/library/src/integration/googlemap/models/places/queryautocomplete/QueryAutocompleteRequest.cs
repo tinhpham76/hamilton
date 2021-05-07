@@ -1,15 +1,11 @@
-using System.Collections.Generic;
-
 namespace Core.Libs.Integration.GoogleMap.Models.Places
 {
-    public class QueryAutocomplete
+    public class QueryAutocompleteRequest
     {
-        public string description { get; set; }
-        public List<MatchedSubstring> matched_substrings { get; set; }
-        public StructuredFormatting structured_formatting { get; set; }
-        public List<Term> terms { get; set; }
-        public string place_id  { get; set; }
-        public string reference { get; set; }
-        public string[] types { get; set; }
+        public string input { get; set; }
+        public int? offset { get; set; }
+        public string location { get; set; }
+        public long? radius { get; set; }
+        public string language { get; set; } = "vi";
     }
 }
