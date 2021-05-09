@@ -7,5 +7,6 @@ namespace Core.Libs.Integration.GoogleMap.Models.Hamilton
         public Distance distance { get; set; }
         public string origin { get; set; }
         public string destination  { get; set; }
+        public string summary { get; set; }
     }
 }

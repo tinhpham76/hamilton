@@ -35,6 +35,8 @@ namespace Core.Libs.Integration.GoogleMap
 
             long[,] distance = new long[locations.Count, locations.Count];
 
+            string[,] summary = new string[locations.Count, locations.Count];
+
             for (int i = 0; i < locations.Count; i++)
                 for (int j = 0; j < locations.Count; j++)
                 {
@@ -51,6 +53,7 @@ namespace Core.Libs.Integration.GoogleMap
                     {
                         matrix[i, j] = 1;
                         distance[i, j] = distanceDefault;
+                        summary[i, j] = directions.Data.routes[0].summary;
                     }
 
                     for (int k = 0; k < locations.Count; k++)
@@ -102,7 +105,8 @@ namespace Core.Libs.Integration.GoogleMap
                         {
                             text = ((double)distance[arrHamilton[i], arrHamilton[i + 1]] / 1000).ToString(),
                             value = distance[arrHamilton[i], arrHamilton[i + 1]]
-                        }
+                        },
+                        summary = summary[arrHamilton[i], arrHamilton[i + 1]]
                     };
 
                     hamiltonDetails.Add(detail);

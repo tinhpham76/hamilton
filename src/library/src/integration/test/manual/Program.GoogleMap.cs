@@ -106,7 +106,7 @@ namespace Core.Libs.Integration.Test.Manual
 
             // TestTextSearch(googleMapClient, key);
 
-            TestGetGeocoding(googleMapClient, key);
+            // TestGetGeocoding(googleMapClient, key);
 
             // TestGetPlaceDetail(googleMapClient, key);
 
@@ -114,7 +114,7 @@ namespace Core.Libs.Integration.Test.Manual
 
             // TestGetQueryAutocomplete(googleMapClient, key);
 
-            // TestHamilton(googleMapClient, cities, key);
+            TestHamilton(googleMapClient, cities, key);
         }
 
         static void TestHamilton(
