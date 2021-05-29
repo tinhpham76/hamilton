@@ -15,6 +15,6 @@ namespace Core.Libs.Client.Models.Json
 
     public class ResponseJsonModel<T> : ResponseJsonModel where T : class
     {
-        public T data { get; set; }
+        public T data { get; set; } = null;
     }
 }
