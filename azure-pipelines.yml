@@ -4,6 +4,7 @@
 
 trigger:
 - staging
+- master
 
 resources:
 - repo: self
@@ -24,17 +25,17 @@ stages:
       displayName: Login to ACR
       inputs:
         command: login
-        containerRegistry: googlemaps
+        containerRegistry: hamilton
     - task: Docker@2
       displayName: Login to Docker Hub
       inputs:
         command: login
-        containerRegistry: googlemaps
+        containerRegistry: hamilton
     - task: Docker@2
       displayName: Build and Push
       inputs:
         command: buildAndPush
-        repository: tinhpv98/googlemaps
+        repository: tinhpv98/hamilton
         dockerfile: '$(Build.SourcesDirectory)/src/frontend/Dockerfile'
         tags: |
           $(Build.SourceBranchName)
