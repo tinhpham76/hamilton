@@ -1,0 +1,287 @@
+<!--Banner-->
+<section class="banner">
+    <div class="banner-content">
+        <div class="banner-content-text">
+            <h1>DISCOVER THE WORLD TOGETHER!</h1>
+            <h3>Where would you like to go?</h3>
+        </div>
+    </div>
+</section>
+
+<!--Search-->
+<!--NgFor Add Input Search-->
+<section class="search">
+    <div class="search-main">
+        <div class="search-input-result">
+            <div class="row justify-content-md-center" *ngFor="let inputLocation of inputLocations; let i = index;">
+                <!--Input Search-->
+                <div class="col-md-auto">
+                    <div class="search-map">
+                        <input-search width='600px' id='typeahead_{{inputLocation.id}}' label='{{inputLocation.title}}'
+                            placeholder='Search on Google Maps' type='text' [states]='states'
+                            (newValueEvent)='inputSearchEvent($event, i)'>
+                        </input-search>
+                    </div>
+
+                    <div class="add-new-location">
+                        <div [style.display]="inputLocation.isAddButton? 'initial' : 'none'">
+                            <i class="fas fa-plus-circle icon-add" (click)="addInputSearch()"></i>
+                            <p class="text-add-location">Add new location</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col col-1 remove-button">
+                    <div [style.display]="inputLocation.isRemoveButton? 'initial' : 'none'"><i
+                            class="fas fa-minus-circle icon-remove" (click)="removeInputSearch(i)"></i>
+                    </div>
+                </div>
+            </div>
+            <!--Show result-->
+            <div [style.display]="showResult? 'initial' : 'none'">
+                <div class="result">
+                    <p><ngb-progressbar [value]="value"></ngb-progressbar></p>
+                    <p>{{message}}</p>
+                    <div *ngFor="let accordionResult of accordionResults">
+                        <accordion-result [accordionResult]="accordionResult" (newValueEvent)='directionEvent($event)'>
+                        </accordion-result>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="google-maps">
+            <app-google-maps [height]='height' [width]='width' [zoom]='zoom' [center]='center'
+                [markerPositions]='markerPositions' [directionsResults]='directionsResults'>
+            </app-google-maps>
+        </div>
+    </div>
+</section>
+
+<!--Google Maps-->
+<!-- <app-google-maps [height]='height' [width]='width' [zoom]='zoom' [center]='center' [markerPositions]='markerPositions'
+    [directionsResults]='directionsResults'></app-google-maps> -->
+
+<!--Content-->
+<section class="page-content">
+    <div class="container">
+        <div class="row">
+            <!-- CARD-LEFT-->
+            <div class="col-lg-3 col-md-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Search Hotels</h3>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <div class="div-input">
+                                <label for=""><i class="fas fa-map-marker-alt"></i>Destination</label>
+                                <input type="text" class="form-control" placeholder="Where are you going"
+                                    aria-label="Recipient's username" aria-describedby="basic-addon2">
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <label for=""><i class="fas fa-clock"></i>Check In - Out</label>
+                            <form class="form-inline">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input class="form-control input-date" placeholder="yyyy-mm-dd" name="dp"
+                                            ngbDatepicker #d="ngbDatepicker">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-secondary" (click)="d.toggle()"
+                                                type="button"><i class="far fa-calendar-alt"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </li>
+                        <li class="list-group-item">
+                            <label for=""><i class="fas fa-user-friends"></i>Guests</label>
+                            <form class="form-inline">
+                                <div class="form-group">
+                                    <div ngbDropdown class="d-inline-block">
+                                        <button class="btn btn-outline-secondary button-size" id="dropdownBasic2"
+                                            ngbDropdownToggle>Guests</button>
+                                        <div ngbDropdownMenu aria-labelledby="dropdownBasic2">
+                                            <button ngbDropdownItem>Action - 1</button>
+                                            <button ngbDropdownItem>Another Action</button>
+                                            <button ngbDropdownItem>Something else is here</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </li>
+                        <li class="list-group-item"><button class="btn btn-primary button-custom"
+                                type="submit">Search</button></li>
+                    </ul>
+                </div>
+                <div class="filter-by">
+                    <h3>FILTER BY</h3>
+                </div>
+                <form>
+                    <div class="card filter-bottom">
+                        <h3>Filter Price</h3>
+                        <div class="progress">
+                            <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50"
+                                aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <div class="price_slider_amount">
+                            <span class="price-tag tag-left" id="left">$0</span>
+                            <span class="price-tag tag-right" id="right">$4439</span>
+                        </div>
+                    </div>
+                    <div class="card filter-bottom">
+                        <h3>Review Score</h3>
+                        <ul class="list-star">
+                            <li class="list-star-item">
+                                <input type="checkbox" name="" id="5_star">
+                                <label for="5_star">
+                                    <div class="rating">
+                                        <i class="fa fa-star "></i>
+                                        <i class="fa fa-star "></i>
+                                        <i class="fa fa-star "></i>
+                                        <i class="fa fa-star "></i>
+                                        <i class="fa fa-star "></i>
+                                    </div>
+                                </label>
+                            </li>
+                            <li class="list-star-item">
+                                <input type="checkbox" name="" id="4_star">
+                                <label for="4_star">
+                                    <div class="rating">
+                                        <i class="fa fa-star "></i>
+                                        <i class="fa fa-star "></i>
+                                        <i class="fa fa-star "></i>
+                                        <i class="fa fa-star "></i>
+                                    </div>
+                                </label>
+                            </li>
+                            <li class="list-star-item">
+                                <input type="checkbox" name="" id="3_star">
+                                <label for="3_star">
+                                    <div class="rating">
+                                        <i class="fa fa-star "></i>
+                                        <i class="fa fa-star "></i>
+                                        <i class="fa fa-star "></i>
+                                    </div>
+                                </label>
+                            </li>
+                            <li class="list-star-item">
+                                <input type="checkbox" name="" id="2_star">
+                                <label for="2_star">
+                                    <div class="rating">
+                                        <i class="fa fa-star "></i>
+                                        <i class="fa fa-star "></i>
+                                    </div>
+                                </label>
+                            </li>
+                            <li class="list-star-item">
+                                <input type="checkbox" name="" id="1_star">
+                                <label for="1_star">
+                                    <div class="rating">
+                                        <i class="fa fa-star "></i>
+                                    </div>
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <button class="btn btn-primary button-apply" type="submit">APPLY</button>
+                    </div>
+                </form>
+            </div>
+            <!-- LIST TOURS -->
+            <div class="col-lg-9 col-md-9">
+                <h3 class="title">3 Tours Found</h3>
+                <ul class="filter-grid-section">
+                    <li class="filter-grid-item">
+                        <div class="single-package-item">
+                            <a href="https://travelxweb.in/tour/8/test"><img
+                                    src="https://travelxweb.in/images/upload/1611817449.jpeg" alt="package-place"></a>
+                            <div class="best-seller">
+                                <span>Featured</span>
+                            </div>
+                            <div class="fav-heart">
+                                <button type="button" data-toggle="modal" data-target="#loginModel">
+                                    <i class="fa fa-heart"></i>
+                                </button>
+                            </div>
+                            <div class="single-package-item-txt">
+                                <h3 title="Lila New Delhi">Lila New Delhi</h3>
+                                <p class="package-address"><i class="fas fa-map-marker-alt"></i>New Delhi</p>
+                                <div class="review">
+                                    <div class="rating">
+                                        <i class="fa fa-star "></i>
+                                        <i class="fa fa-star "></i>
+                                        <i class="fa fa-star "></i>
+                                        <i class="fa fa-star "></i>
+                                        <i class="fa fa-star "></i>
+                                    </div>
+                                    <span>0 Reviews </span>
+                                </div>
+                                <p class="package-price"><i class="fa fa-bolt"></i>From $35000.00/Night</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="filter-grid-item">
+                        <div class="single-package-item">
+                            <a href="https://travelxweb.in/tour/6/holidays-in-maldives"><img
+                                    src="https://travelxweb.in/images/upload/1600250518.jpg" alt="package-place"></a>
+                            <div class="best-seller">
+                                <span>Featured</span>
+                            </div>
+                            <div class="fav-heart">
+                                <button type="button" data-toggle="modal" data-target="#loginModel">
+                                    <i class="fa fa-heart"></i>
+                                </button>
+                            </div>
+                            <div class="single-package-item-txt">
+                                <h3 title="Lila New Delhi">Holidays In Maldives</h3>
+                                <p class="package-address"><i class="fas fa-map-marker-alt"></i>Maldives</p>
+                                <div class="review">
+                                    <div class="rating">
+                                        <i class="fa fa-star "></i>
+                                        <i class="fa fa-star "></i>
+                                        <i class="fa fa-star "></i>
+                                        <i class="fa fa-star "></i>
+                                        <i class="fa fa-star "></i>
+                                    </div>
+                                    <span>0 Reviews </span>
+                                </div>
+                                <p class="package-price"><i class="fa fa-bolt"></i>From $35000.00/Night</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="filter-grid-item">
+                        <div class="single-package-item">
+                            <a href="https://travelxweb.in/hotel/7/lila-new-delhi">
+                                <img src="https://travelxweb.in/images/upload/1612947585.jpg" alt="package-place">
+                            </a>
+                            <div class="best-seller">
+                                <span>Featured</span>
+                            </div>
+                            <div class="fav-heart">
+                                <button type="button" data-toggle="modal" data-target="#loginModel">
+                                    <i class="fa fa-heart"></i>
+                                </button>
+                            </div>
+                            <div class="single-package-item-txt">
+                                <h3 title="Lila New Delhi">Lila New Delhi</h3>
+                                <p class="package-address"><i class="fas fa-map-marker-alt"></i>New Delhi</p>
+                                <div class="review">
+                                    <div class="rating">
+                                        <i class="fa fa-star "></i>
+                                        <i class="fa fa-star "></i>
+                                        <i class="fa fa-star "></i>
+                                        <i class="fa fa-star "></i>
+                                        <i class="fa fa-star "></i>
+                                    </div>
+                                    <span>0 Reviews </span>
+                                </div>
+                                <p class="package-price"><i class="fa fa-bolt"></i>From $35000.00/Night</p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>

@@ -3,11 +3,13 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/docker
 
 trigger:
-- master
 - staging
 
 resources:
 - repo: self
+
+variables:
+  tag: '$(Build.BuildId)'
 
 stages:
 - stage: Build
@@ -22,26 +24,17 @@ stages:
       displayName: Login to ACR
       inputs:
         command: login
-        containerRegistry: Hamilton
+        containerRegistry: googlemaps
     - task: Docker@2
       displayName: Login to Docker Hub
       inputs:
         command: login
-        containerRegistry: Hamilton
+        containerRegistry: googlemaps
     - task: Docker@2
-      displayName: Build and Push Backend
+      displayName: Build and Push
       inputs:
         command: buildAndPush
-        repository: tinhpv98/Hamilton
-        dockerfile: '$(Build.SourcesDirectory)/src/backend/dockerfile'
-        tags: |
-          $(Build.SourceBranchName)
-          
-     - task: Docker@2
-      displayName: Build and Push Frontend
-      inputs:
-        command: buildAndPush
-        repository: tinhpv98/Hamilton
-        dockerfile: '$(Build.SourcesDirectory)/src/frontend/dockerfile'
+        repository: tinhpv98/googlemaps
+        dockerfile: '$(Build.SourcesDirectory)/src/frontend/Dockerfile'
         tags: |
           $(Build.SourceBranchName)

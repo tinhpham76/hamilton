@@ -1,0 +1,13 @@
+<div class="container-center" *ngIf="apiLoaded | async">
+    <google-map [height]="height" [width]="width" [center]="center" [zoom]="zoom" (mapClick)="moveMap($event)"
+        (mapMousemove)="move($event)">
+
+        <map-marker *ngFor="let markerPosition of markerPositions" [position]="markerPosition"
+            [options]="markerOptions">
+        </map-marker>
+
+        <map-directions-renderer *ngIf="(directionsResults | async) as directionsResults"
+            [directions]="directionsResults">
+        </map-directions-renderer>
+    </google-map>
+</div>

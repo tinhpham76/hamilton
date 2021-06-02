@@ -1,0 +1,163 @@
+footer{
+    height: 530px;
+    background: url(https://travelxweb.in/frontend/images/footer.png) no-repeat center;
+    background-size: cover;
+    position: relative;
+}
+footer::before{
+    content: "";
+    height: 530px;
+    width: 100%;
+    background-color: #050404;
+    opacity: 0.4;
+    position: absolute;
+}
+div.footer-content-text{
+    height: 450px;
+    position: relative;
+}
+div.ft-content-aboutUs{
+    position: absolute;
+    left: 0px;
+    top: 40%;
+    transform: translateY(-40%);
+    width: 250px;
+    height: 310px;
+    color: #ffffff;
+    border-right: 1px solid #fff;
+}
+div.ft-content-aboutUs h2{
+    font-size: 24px;
+    
+}
+div.ft-content-aboutUs p{
+    padding-bottom: 20px;
+    font-size: 16px;
+}
+div.ft-content-aboutUs i{
+    font-size: 16px;
+    padding-bottom: 10px;
+}
+/*--contact--*/
+div.ft-content-contact{
+    position: absolute;
+    left: 30%;
+    top: 40%;
+    transform: translate(-30%, -40%);
+    width: 175px;
+    height: 310px;
+    color: #ffffff;
+    border-right: 1px solid #fff;
+}
+div.ft-content-contact h2{
+    padding-bottom: 20px;
+    padding-left: 20px;
+    font-size: 24px;
+}
+div.ft-content-contact li{
+    list-style: none;
+    padding-bottom: 10px;
+}
+div.ft-content-contact a{
+    padding-left: 20px;
+    color: #ffffff;
+    text-decoration: none;
+}
+div.ft-content-contact a:hover{
+    text-decoration: underline;
+}
+/*---OurService*/
+div.ft-content-ourService{
+    position: absolute;
+    right: 28%;
+    top: 40%;
+    transform: translate(-28%, -40%);
+    width: 215px;
+    height: 310px;
+    color: #ffffff;
+    border-right: 1px solid #fff;
+}
+div.ft-content-ourService h2{
+    padding-bottom: 20px;
+    padding-right: 6px;
+    font-size: 24px;
+}
+div.ft-content-ourService li{
+    list-style: none;
+    padding-bottom: 10px;
+}
+div.ft-content-ourService a{
+    color: #ffffff;
+    text-decoration: none;
+}
+div.ft-content-ourService a:hover{
+    text-decoration: underline;
+}
+/*--Letter--*/
+div.ft-content-letter{
+    position: absolute;
+    right: 3%;
+    top: 40%;
+    transform: translate(-3%, -40%);
+    width: 250px;
+    height: 310px;
+    color: #ffffff;
+}
+div.ft-content-letter i{
+    color: #ffffff;
+}
+div.ft-content-letter h2{
+    padding-bottom: 20px;
+    font-size: 24px;
+}
+div.ft-content-letter p{
+    font-size: 16px;
+    text-align: justify;
+    padding-bottom: 20px;
+}
+div.mail{
+    position: relative;
+    height: 35px;
+    width: 250px;
+    padding-bottom: 20px;
+}
+div.mail input{
+    position: absolute;
+    height: 35px;
+    width: 185px;
+    border: none;
+    padding-left: 10px;
+}
+div.btnSendMail{
+    position: absolute;
+    right: 0;
+    height: 35px;
+    width: 65px;
+    line-height: 35px;
+    background-color: #1766b6;
+    text-align: center;
+}
+div.btnSendMail a{
+    text-decoration: none;
+    color: #ffffff;
+    display: block;
+}
+div.btnSendMail a:hover{
+    background-color: #377191;
+}
+div.ft-content-letter li{
+    display: inline;
+    padding-right: 20px;
+}
+.footer-content-text h4{
+    position: absolute;
+    bottom: -10%;
+    left: 50%;
+    color: #ffffff;
+    transform: translate(-50%, 10%);
+    font-size: 1rem;
+}
+.fa-icon{
+    font-size: 25px;
+    padding-top: 25px;
+}

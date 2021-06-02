@@ -21,7 +21,7 @@ namespace Core.Libs.Integration.Test.Manual
                     }
                 });
 
-            var key = "AIzaSyB0OTBpLqOJS0EfYaU-FN4u95OLVagi-ck";
+            var key = "AIzaSyCkGRsiXZWjOPLKDLgBbE8GEtzm0eRR-t8";
 
             var distanceMatrixRequest = new GoogleMap.Models.Routes.DistanceMatrix.DistanceMatrixRequest()
             {
@@ -42,12 +42,12 @@ namespace Core.Libs.Integration.Test.Manual
 
             var cities = new List<string>
             {
-                "Thành phố Hồ Chí Minh",
-                "Thành phố Vũng Tàu",
-                "Thành phố Biên Hòa",
-                "Thành phố Phan Thiết",
-                "Thành phố Bảo Lộc",
-                "Thành phố Đà Lạt",
+                "1 Lê Văn Việt, Hiệp Phú, Quận 9, Thành phố Hồ Chí Minh, Việt Nam",
+                "141 Lê Văn Việt, Hiệp Phú, Quận 9, Thành phố Hồ Chí Minh, Việt Nam",
+                "211 Lê Văn Việt, Quận 9, Thành phố Hồ Chí Minh, Việt Nam",
+                "441 Lê Văn Việt, Tăng Nhơn Phú A, Quận 9, Thành phố Hồ Chí Minh, Việt Nam",
+                // "Thành phố Bảo Lộc",
+                // "Thành phố Đà Lạt",
             };
 
             var locations = new List<Location>()
@@ -123,7 +123,7 @@ namespace Core.Libs.Integration.Test.Manual
             string key)
         {
             var result = googleMapClient.Hamilton
-                        .Find(cities, 10000, key)
+                        .Find(cities, 100, key)
                         .Result;
         }
 

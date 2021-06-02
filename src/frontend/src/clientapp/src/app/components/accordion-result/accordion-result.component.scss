@@ -1,0 +1,87 @@
+.result-header{
+    display: flex;
+    justify-content: space-between;
+    
+}
+.result-header i{
+    font-size: 24px;
+    padding-right: 10px;
+}
+.title-result{
+    display: flex;
+}
+.title-text{
+    // display: flex;
+    // flex-direction: column;
+    color: #3C4043;
+    font-size: 14px;
+}
+.btn-detail {
+    display: contents;
+    text-decoration: none;
+    margin-top: -8px;
+    padding-left: 10px;
+}
+.icon-car{
+    padding-right: 10px;
+    font-size: 18px;
+}
+
+//
+
+.detail-lv3{
+    display: flex;
+}
+.detail-lv3 i{
+    padding: 5px 20px;
+    font-size: 14px;
+}
+.detail-lv3-text p{
+    font-size: 14px;
+}
+.line{
+    position: relative;
+    font-size: 12px;
+}
+.line::before{
+    content: '';
+    position: absolute;
+    bottom: 5px;
+    left: 65px;
+    width: 230px;
+    height: 2px;
+    background-color: #e6e6e6;
+}
+.line-2{
+    position: relative;
+    font-size: 12px;
+}
+.line-2::before{
+    content: '';
+    position: absolute;
+    bottom: 5px;
+    left: 48px;
+    width: 230px;
+    height: 2px;
+    background-color: #e6e6e6;
+}
+
+
+///Scroll
+.scroll-card{
+    max-height: 500px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+///
+
+.custom-margin-bt{
+    width: 650px;
+    margin-bottom: 20px;
+}
+
+.custom-margin{
+    margin-bottom: 20px;
+    width: 600px;
+}
