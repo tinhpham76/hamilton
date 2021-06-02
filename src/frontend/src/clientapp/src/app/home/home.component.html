@@ -1,0 +1,209 @@
+<!--Banner-->
+<section class="banner">
+  <div class="banner-content">
+    <div class="banner-content-text">
+      <h1>DISCOVER THE WORLD TOGETHER!</h1>
+      <h3>Where would you like to go?</h3>
+    </div>
+  </div>
+</section>
+<!--Search-->
+<section class="search">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3 col-md-3 filter-groups">
+        <div class="input-search">
+          <input-search label='Place' placeholder='Search on Google Maps' type='text' [states]='states'
+            width='240px' (newValueEvent)='inputSearchEvent($event)'>
+          </input-search>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 filter-groups">
+        <div class="input-date">
+          <date-picker title='Check In - Out'></date-picker>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 filter-groups">
+        <div class="input-guests">
+          <dropdown-select width='240px' label='Guests'></dropdown-select>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3">
+        <div class="btn-search">
+          <button class="btn btn-primary" type="submit">Search</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--Google Maps-->
+<app-google-maps [height]='height' [width]='width' [zoom]='zoom' [center]='center' [markerPositions]='markerPositions'
+  [directionsResults]='directionsResults'></app-google-maps>
+
+<section class="destination">
+  <div class="container">
+    <h2 class="destination-heading">Top Destinations</h2>
+    <div class="row">
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="destination-item">
+          <a href="#">
+            <img class="destination-image"
+              src="https://images.unsplash.com/photo-1603852452440-b383ac720729?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=401&q=80"
+              alt="">
+            <div class="overly-mask"></div>
+          </a>
+          <div class="destination-title"><a href="#">Ho Chi Minh City</a></div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="destination-item">
+          <a href="#">
+            <img class="destination-image "
+              src="https://images.unsplash.com/photo-1440694997168-8ae4033554c7?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=889&q=80"
+              alt="">
+            <div class="overly-mask"></div>
+          </a>
+          <div class="destination-title"><a href="#">Da Nang City</a></div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="destination-item">
+          <a href="#">
+            <img class="destination-image"
+              src="https://images.unsplash.com/photo-1528127269322-539801943592?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80"
+              alt="">
+            <div class="overly-mask"></div>
+          </a>
+          <div class="destination-title"><a href="#">Ha Long Bay</a></div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="destination-item">
+          <a href="#">
+            <img class="destination-image"
+              src="https://images.unsplash.com/photo-1570366583862-f91883984fde?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=751&q=80"
+              alt="">
+            <div class="overly-mask"></div>
+          </a>
+          <div class="destination-title"><a href="#">Ha Giang</a></div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="destination-item">
+          <a href="#">
+            <img class="destination-image"
+              src="https://images.unsplash.com/photo-1578458329607-534298aebc4d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=344&q=80"
+              alt="">
+            <div class="overly-mask"></div>
+          </a>
+          <div class="destination-title"><a href="#">Nha Trang</a></div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="destination-item">
+          <a href="#">
+            <img class="destination-image"
+              src="https://images.unsplash.com/photo-1617176190442-38f12a81045d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=667&q=80"
+              alt="">
+            <div class="overly-mask"></div>
+          </a>
+          <div class="destination-title"><a href="#">Ho Chi Minh City</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="trending-hotel">
+  <div class="container">
+    <h2 class="trending-hotel-heading">Trending Hotel</h2>
+    <div class="row">
+      <div class="col-md-3 col-sm-6">
+        <div class="single-package-item">
+          <a href="https://travelxweb.in/hotel/7/lila-new-delhi">
+            <img src="https://travelxweb.in/images/upload/1612947585.jpg" alt="package-place">
+          </a>
+          <div class="best-seller">
+            <span>best Seller</span>
+          </div>
+          <div class="fav-heart">
+            <button type="button" data-toggle="modal" data-target="#loginModel">
+              <i class="fa fa-heart"></i>
+            </button>
+          </div>
+          <div class="single-package-item-txt">
+            <h3 title="Lila New Delhi">Lila New Delhi</h3>
+            <p class="package-address"><i class="fas fa-map-marker-alt"></i>New Delhi</p>
+            <p class="package-review"><span>0/5 Very Good </span> 0 Reviews</p>
+            <p class="package-price"><i class="fa fa-bolt"></i>From $35000.00/Night</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6">
+        <div class="single-package-item">
+          <a href="https://travelxweb.in/hotel/7/lila-new-delhi">
+            <img src="https://travelxweb.in/images/upload/1612947585.jpg" alt="package-place">
+          </a>
+          <div class="best-seller">
+            <span>best Seller</span>
+          </div>
+          <div class="fav-heart">
+            <button type="button" data-toggle="modal" data-target="#loginModel">
+              <i class="fa fa-heart"></i>
+            </button>
+          </div>
+          <div class="single-package-item-txt">
+            <h3 title="Lila New Delhi">Lila New Delhi</h3>
+            <p class="package-address"><i class="fas fa-map-marker-alt"></i>New Delhi</p>
+            <p class="package-review"><span>0/5 Very Good </span> 0 Reviews</p>
+            <p class="package-price"><i class="fa fa-bolt"></i>From $35000.00/Night</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6">
+        <div class="single-package-item">
+          <a href="https://travelxweb.in/hotel/7/lila-new-delhi">
+            <img src="https://travelxweb.in/images/upload/1612947585.jpg" alt="package-place">
+          </a>
+          <div class="best-seller">
+            <span>best Seller</span>
+          </div>
+          <div class="fav-heart">
+            <button type="button" data-toggle="modal" data-target="#loginModel">
+              <i class="fa fa-heart"></i>
+            </button>
+          </div>
+          <div class="single-package-item-txt">
+            <h3 title="Lila New Delhi">Lila New Delhi</h3>
+            <p class="package-address"><i class="fas fa-map-marker-alt"></i>New Delhi</p>
+            <p class="package-review"><span>0/5 Very Good </span> 0 Reviews</p>
+            <p class="package-price"><i class="fa fa-bolt"></i>From $35000.00/Night</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6">
+        <div class="single-package-item">
+          <a href="https://travelxweb.in/hotel/7/lila-new-delhi">
+            <img src="https://travelxweb.in/images/upload/1612947585.jpg" alt="package-place">
+          </a>
+          <div class="best-seller">
+            <span>best Seller</span>
+          </div>
+          <div class="fav-heart">
+            <button type="button" data-toggle="modal" data-target="#loginModel">
+              <i class="fa fa-heart"></i>
+            </button>
+          </div>
+          <div class="single-package-item-txt">
+            <h3 title="Lila New Delhi">Lila New Delhi</h3>
+            <p class="package-address"><i class="fas fa-map-marker-alt"></i>New Delhi</p>
+            <p class="package-review"><span>0/5 Very Good </span> 0 Reviews</p>
+            <p class="package-price"><i class="fa fa-bolt"></i>From $35000.00/Night</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
