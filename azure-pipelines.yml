@@ -36,6 +36,6 @@ stages:
       inputs:
         command: buildAndPush
         repository: tinhpv98/hamilton
-        dockerfile: '$(Build.SourcesDirectory)/src/frontend/Dockerfile'
+        dockerfile: '$(Build.SourcesDirectory)/src/frontend/dockerfile'
         tags: |
           $(Build.SourceBranchName)
