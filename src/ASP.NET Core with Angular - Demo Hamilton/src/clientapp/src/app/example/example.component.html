@@ -1,1 +1,48 @@
-<p>app-example-works</p>
+<section class="main">
+    <div class="row justify-content-center input-groups">
+        <div class="col input-groups">
+            <div class="row justify-content-center" *ngFor="let inputLocation of inputLocations; let i = index;">
+                <!--Input Search-->
+                <div class="col-md-auto">
+                    <div class="input-search">
+                        <input-search width="575px" id='typeahead_{{inputLocation.id}}' label='{{inputLocation.title}}'
+                            placeholder='Search on Google Maps' type='text' [states]='states'
+                            (newValueEvent)='inputSearchEvent($event, i)'>
+                        </input-search>
+                    </div>
+
+                    <div class="add-new-location">
+                        <div [style.display]="inputLocation.isAddButton? 'initial' : 'none'">
+                            <i class="fas fa-plus-circle icon-add" (click)="addInputSearch()"></i>
+                            <p class="text-add-location">Add new location</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col col-1 remove-button">
+                    <div [style.display]="inputLocation.isRemoveButton? 'initial' : 'none'"><i
+                            class="fas fa-minus-circle icon-remove" (click)="removeInputSearch(i)"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div [style.display]="showResult? 'initial' : 'none'">
+                <div class="result">
+                    <p>
+                        <ngb-progressbar [value]="value"></ngb-progressbar>
+                    </p>
+                    <p>{{message}}</p>
+                    <div *ngFor="let accordionResult of accordionResults">
+                        <accordion-result [accordionResult]="accordionResult" (newValueEvent)='directionEvent($event)'>
+                        </accordion-result>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col google-maps">
+            <app-google-maps [height]='height' [width]='width' [zoom]='zoom' [center]='center'
+                [markerPositions]='markerPositions' [directionsResults]='directionsResults'>
+            </app-google-maps>
+        </div>
+    </div>
+</section>

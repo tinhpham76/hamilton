@@ -11,7 +11,7 @@
               <span class="line">{{accordionResult.shotDescription}}</span>
             </div>
           </div>
-          <button ngbPanelToggle class="btn btn-link p-0 btn-detail">Detail</button>
+          <button ngbPanelToggle class="btn btn-link p-0 btn-detail" data-toggle="tooltip" data-placement="top" [title]='accordionResult.description' >Detail</button>
         </div>
       </ng-template>
       <ng-template ngbPanelContent>

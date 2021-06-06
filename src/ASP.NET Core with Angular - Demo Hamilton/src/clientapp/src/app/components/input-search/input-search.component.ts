@@ -14,7 +14,7 @@ export class InputSearchComponent {
   @Input() label: string = ''
   @Input() placeholder: string = ''
   @Input() type: string = ''
-  @Input() width: string = '200px'
+  @Input() width: string = '650px'
 
   @Input() states: string[] = []
   @Output() newValueEvent = new EventEmitter<string>();

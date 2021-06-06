@@ -1,0 +1,9 @@
+.main{
+    min-height: 550px;
+}
+
+@media (min-height: 700px) {
+    .main{
+        min-height: 900px;
+    }
+}
