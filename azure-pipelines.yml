@@ -36,6 +36,6 @@ stages:
       inputs:
         command: buildAndPush
         repository: tinhpv98/hamilton
-        dockerfile: '$(Build.SourcesDirectory)/src/frontend/dockerfile'
+        dockerfile: '$(Build.SourcesDirectory)/src/ASP.NET Core with Angular - Demo Hamilton/dockerfile'
         tags: |
           $(Build.SourceBranchName)
