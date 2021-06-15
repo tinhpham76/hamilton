@@ -5,8 +5,9 @@
                 <!--Input Search-->
                 <div class="col-md-auto">
                     <div class="input-search">
-                        <input-search width="575px" id='typeahead_{{inputLocation.id}}' label='{{inputLocation.title}}'
-                            placeholder='Search on Google Maps' type='text' [states]='states'
+                        <input-search width="575px" id='typeahead_{{inputLocation.id}}'
+                            [label]="inputLocation.title == Origin ? 'Điểm xuất phát' : 'Điểm đến'"
+                            placeholder='Tìm kiếm trên Google Maps' type='text' [states]='states'
                             (newValueEvent)='inputSearchEvent($event, i)'>
                         </input-search>
                     </div>
@@ -14,7 +15,7 @@
                     <div class="add-new-location">
                         <div [style.display]="inputLocation.isAddButton? 'initial' : 'none'">
                             <i class="fas fa-plus-circle icon-add" (click)="addInputSearch()"></i>
-                            <p class="text-add-location">Add new location</p>
+                            <p class="text-add-location">Thêm</p>
                         </div>
                     </div>
                 </div>
@@ -24,19 +25,22 @@
                     </div>
                 </div>
             </div>
-
             <div [style.display]="showResult? 'initial' : 'none'">
-                <div class="result">
-                    <p>
-                        <ngb-progressbar [value]="value"></ngb-progressbar>
-                    </p>
-                    <p>{{message}}</p>
-                    <div *ngFor="let accordionResult of accordionResults">
-                        <accordion-result [accordionResult]="accordionResult" (newValueEvent)='directionEvent($event)'>
-                        </accordion-result>
+                <div class="d-flex justify-content-center">
+                    <div class="result">
+                        <p>
+                            <ngb-progressbar [value]="value"></ngb-progressbar>
+                        </p>
+                        <p>{{message}}</p>
+                        <div *ngFor="let accordionResult of accordionResults">
+                            <accordion-result [accordionResult]="accordionResult"
+                                (newValueEvent)='directionEvent($event)'>
+                            </accordion-result>
+                        </div>
                     </div>
                 </div>
             </div>
+
         </div>
 
         <div class="col google-maps">

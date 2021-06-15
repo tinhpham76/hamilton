@@ -1,3 +1,186 @@
 <div class="container">
-    <p>app-docs-work</p>
+    <h2>Thuật toán về tìm đường đi và chu trình Hamilton cài đặt bằng C/C++</h2>
+    <p>Để xem lý thuyết đồ thị và các định nghĩa về đường đi, chu trình, đồ thị liên thông bạn có thể xem ở đây:</p>
+    <ul>
+        <li><a href='https://vi.wikipedia.org/wiki/Lý_thuyết_đồ_thị' target="blank">>>>Lý thuyết đồ thị</a></li>
+        <li><a href='https://vi.wikipedia.org/wiki/Đường_đi_(Lý_thuyết_đồ_thị)' target="blank">>>>Đường đi(Lý thuyết đồ
+                thị)</a></li>
+        <li><a href='https://vi.wikipedia.org/wiki/Chu_trình_(Lý_thuyết_đồ_thị)' target="blank">>>>Chu trình(Lý thuyết
+                đồ thị)</a></li>
+        <li><a href='https://vi.wikipedia.org/wiki/Đồ_thị_liên_thông' target="blank">>>>Đồ thị liên thông</a></li>
+    </ul>
+    <div class="text">
+        <p>Với <a href='https://vi.wikipedia.org/wiki/Đồ_thị_Euler' target="blank">đồ thị Euler</a>, chúng ta quan tâm
+            tới việc duyệt các cạnh của đồ thị mỗi cạnh đúng một lần, thì trong mục này, chúng ta xét đến một bài toán
+            tương tự nhưng chỉ khác nhau là ta chỉ quan tâm tới các đỉnh của đồ thị, mỗi đỉnh đúng một lần. Sự thay đổi
+            này tưởng như không đáng kể, nhưng thực tế có nhiều sự khác biệt trong khi giải quyết bài toán.</p>
+    </div>
+
+    <ul class="text">
+        <li><strong>Định nghĩa</strong>. Đường đi qua tất cả các đỉnh của đồ thị mỗi đỉnh đúng một lần được gọi là
+            <strong>Đường đi Hamilton</strong>. Chu trình bắt đầu tại một đỉnh <strong>v</strong> nào đó qua tất cả các
+            đỉnh còn lại mỗi đỉnh đúng một lần sau đó quay trở lại <strong>v</strong> được gọi là <strong>chu trình
+                Hamilton</strong>. Đồ thị được gọi là <strong>đồ thị Hamilton</strong> nếu nó chứa chu trình Hamilton.
+            Đồ thị chứa đường
+            đi Hamilton được gọi là đồ thị nửa Hamilton.
+        </li>
+        <br>
+        <li>Như vậy, một đồ thị Hamilton bao giờ cũng là đồ thị nửa Hamilton nhưng điều ngược lại không luôn luôn đúng.
+            Ví dụ sau sẽ minh họa cho nhận xét này.</li>
+        <br>
+        <li><strong>Ví dụ</strong>. Đồ thị hamilton G1, G3, nửa Hamilton G2.</li>
+        <li>
+            <img src="../../assets/duong_di_va_chu_trinh_hamilton.jpg" alt="">
+        </li>
+        <li>
+            Cho đến nay, việc tìm ra một tiêu chuẩn để nhận biết đồ thị Hamilton vẫn còn mở, mặc dù đây là vấn đề trung
+            tâm của lý thuyết đồ thị. Hơn thế nữa, cho đến nay cũng vẫn chưa có thuật toán hiệu quả để kiểm tra một đồ
+            thị có phải là đồ thị Hamilton hay không.
+        </li>
+        <br>
+        <li>
+            Để liệt kê tất cả các chu trình Hamilton của đồ thị, chúng ta có thể sử dụng thuật toán sau:
+        </li>
+        <li class="code">
+            <pre>
+            void Hamilton( int k) {{ '{' }}
+
+            /* Liệt kê các chu trình Hamilton của đồ thị bằng cách phát triển dãy đỉnh 
+                       
+            (X[1], X[2],..., X[k-1] ) của đồ thị G = (V, E) */
+                       
+                for y∈Ke(X[k-1]) {{ '{' }} 
+                       
+                    if (k==n+1) and (y == v0) then 
+                       
+                        Ghinhan(X[1], X[2],..., X[n], v0); 
+                       
+                    else {{ '{' }}
+                       
+                        X[k]=y; chuaxet[y] = false; 
+                       
+                    Hamilton(k+1); 
+                       
+                    chuaxet[y] = true; 
+                       
+                    } 
+                       
+                } 
+                   
+            }
+            </pre>
+        </li>
+        <br>
+        <li>
+            <p><strong>Chương trình chính được thể hiện như sau:</strong></p>
+        </li>
+        <li class="code">
+            <pre>
+            for (v∈V ) chuaxet[v] = true; /*thiết lập trạng thái các đỉnh*/
+
+            X[1] = v0; (*v0 là một đỉnh nào đó của đồ thị*) 
+
+            chuaxet[v0] = false; 
+
+            Hamilton(2);
+            </pre>
+        </li>
+        <br>
+        <li>
+            <p><strong>Cây tìm kiếm chu trình Hamilton thể hiện thuật toán trên được mô tả như sau:</strong></p>
+        </li>
+        <li>
+            <img src="../../assets/thuat_toan_tim_chu_trinh_hamition.jpg" alt="">
+        </li>
+        <br>
+        <li>
+            <p><strong>Chương trình liệt kê các chu trình Hamilton được thể hiện như sau:</strong></p>
+        </li>
+        <li class="code">
+            <pre>
+            #include &lt;iostream&gt;
+            #include &lt;conio.h&gt;
+            #define max 20
+                
+            int a[max][max];
+            int b[max], c[max];
+            int n;
+                
+            void init(){{ '{' }}
+                FILE *f = fopen("CCHMTON.IN", "r");
+                fscanf(f, "%d", &n);
+                for (int k = 0; k &lt; n; k++)
+                    for (int j = 0; j &lt; n; j++)
+                        fscanf(f, "%d", &a[k][j]);
+                for (int k = 0; k &lt; n; k++)
+                    b[k] = 0;
+                c[0] = 0;
+                b[0] = 1; // Xuất phát từ đỉnh 0
+            }
+            
+            void showpath(){{ '{' }}
+                for (int k = 0; k &lt; n; k++)
+                    printf("%4d", c[k] + 1); //In ra số hiệu đỉnh+1
+                printf("%4d\n", c[0] + 1);
+            }
+            void Hamilton(int j){{ '{' }}
+                for (int k = 0; k &lt; n; k++)
+                    if (b[k] == 0 && a[c[j - 1]][k]){{ '{' }}
+                        b[k] = 1;
+                        c[j] = k;
+                        if (j == n - 1){{ '{' }}
+                            if (a[c[j]][c[0]])
+                                showpath();
+                        }
+                        else
+                            Hamilton(j + 1);
+                        b[k] = 0;
+                    }
+            }
+            
+            int main(){{ '{' }}
+                init();
+                Hamilton(3);
+                return 1;
+            }
+            </pre>
+        </li>
+        <li>
+            <p><strong>Ma trận liền kề của đồ thị:</strong></p>
+        </li>
+        <li>
+            <pre>
+            5
+
+            0   1   0   1   0
+
+            1   0   1   0   1
+
+            0   1   0   1   1
+
+            1   0   1   0   1
+
+            0   1   1   1   0
+            </pre>
+        </li>
+        <li>
+            <p><strong>Output của chương trình:</strong></p>
+            <ul>
+                <li>
+                    <p>Chu trinh Hamilton: 1 4 5 3 2 1</p>
+                </li>
+                <li>
+                    <p>Chu trinh Hamilton: 1 4 3 5 2 1</p>
+                </li>
+                <li>
+                    <p>Chu trinh Hamilton: 1 2 5 3 4 1</p>
+                </li>
+                <li>
+                    <p>Chu trinh Hamilton: 1 2 3 5 4 1</p>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <hr>
+    <p>Nguồn: https://expressmagazine.net/development/4013/thuat-toan-ve-tim-duong-di-va-chu-trinh-hamilton-cai-dat-bang-cc</p>
 </div>

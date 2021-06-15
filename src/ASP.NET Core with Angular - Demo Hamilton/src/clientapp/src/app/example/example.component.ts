@@ -155,7 +155,7 @@ export class ExampleComponent {
   showAccordionResult(result: Base<Hamilton[]>, time: number): void {
     if (result.error && result.error.message) {
       this.showResult = true
-      this.message = result.error.message
+      this.message = 'Phân tích lộ trình đường đi cần ít nhất 2 địa điểm'
       this.accordionResults = []
     }
 
@@ -163,12 +163,12 @@ export class ExampleComponent {
       var accordionResultsTemp: AccordionResult[] = []
       this.showResult = true
 
-      this.message = 'Find ' + result.data.length + ' directions' + ' (' + time + ' seconds)'
+      this.message = 'Phân tích được ' + result.data.length + ' kết quả chỉ đường' + ' (' + time + ' giây)'
 
       for (let i = 0; i < result.data.length; i++) {
         var accordionResultTemp: AccordionResult = {
           id: i,
-          title: 'Direction ' + (i + 1),
+          title: 'Lộ trình đường đi ' + (i + 1),
           shotDescription: result.data[i].distance.text,
           description: result.data[i].hamiltons.toString().replace(',', '|'),
           childAccordionResults: []
