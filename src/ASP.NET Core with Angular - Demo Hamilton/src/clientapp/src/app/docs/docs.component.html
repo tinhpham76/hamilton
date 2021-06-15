@@ -41,33 +41,31 @@
         <li>
             Để liệt kê tất cả các chu trình Hamilton của đồ thị, chúng ta có thể sử dụng thuật toán sau:
         </li>
+        <br>
         <li class="code">
             <pre>
-            void Hamilton( int k) {{ '{' }}
-
-            /* Liệt kê các chu trình Hamilton của đồ thị bằng cách phát triển dãy đỉnh 
-                       
-            (X[1], X[2],..., X[k-1] ) của đồ thị G = (V, E) */
-                       
-                for y∈Ke(X[k-1]) {{ '{' }} 
-                       
-                    if (k==n+1) and (y == v0) then 
-                       
-                        Ghinhan(X[1], X[2],..., X[n], v0); 
-                       
-                    else {{ '{' }}
-                       
-                        X[k]=y; chuaxet[y] = false; 
-                       
-                    Hamilton(k+1); 
-                       
-                    chuaxet[y] = true; 
-                       
-                    } 
-                       
-                } 
-                   
-            }
+void Hamilton( int k) {{ '{' }}
+/* Liệt kê các chu trình Hamilton của đồ thị bằng cách phát triển dãy đỉnh 
+           
+(X[1], X[2],..., X[k-1] ) của đồ thị G = (V, E) */
+           
+    for y∈Ke(X[k-1]) {{ '{' }} 
+           
+        if (k==n+1) and (y == v0) then 
+           
+            Ghinhan(X[1], X[2],..., X[n], v0); 
+           
+        else {{ '{' }}
+           
+            X[k]=y; chuaxet[y] = false; 
+           
+        Hamilton(k+1); 
+           
+        chuaxet[y] = true; 
+           
+        }      
+    } 
+}
             </pre>
         </li>
         <br>
@@ -76,13 +74,13 @@
         </li>
         <li class="code">
             <pre>
-            for (v∈V ) chuaxet[v] = true; /*thiết lập trạng thái các đỉnh*/
+for (v∈V ) chuaxet[v] = true; /*thiết lập trạng thái các đỉnh*/
 
-            X[1] = v0; (*v0 là một đỉnh nào đó của đồ thị*) 
+X[1] = v0; (*v0 là một đỉnh nào đó của đồ thị*) 
 
-            chuaxet[v0] = false; 
+chuaxet[v0] = false; 
 
-            Hamilton(2);
+Hamilton(2);
             </pre>
         </li>
         <br>
@@ -98,51 +96,51 @@
         </li>
         <li class="code">
             <pre>
-            #include &lt;iostream&gt;
-            #include &lt;conio.h&gt;
-            #define max 20
-                
-            int a[max][max];
-            int b[max], c[max];
-            int n;
-                
-            void init(){{ '{' }}
-                FILE *f = fopen("CCHMTON.IN", "r");
-                fscanf(f, "%d", &n);
-                for (int k = 0; k &lt; n; k++)
-                    for (int j = 0; j &lt; n; j++)
-                        fscanf(f, "%d", &a[k][j]);
-                for (int k = 0; k &lt; n; k++)
-                    b[k] = 0;
-                c[0] = 0;
-                b[0] = 1; // Xuất phát từ đỉnh 0
+#include &lt;iostream&gt;
+#include &lt;conio.h&gt;
+#define max 20
+    
+int a[max][max];
+int b[max], c[max];
+int n;
+    
+void init(){{ '{' }}
+    FILE *f = fopen("CCHMTON.IN", "r");
+    fscanf(f, "%d", &n);
+    for (int k = 0; k &lt; n; k++)
+        for (int j = 0; j &lt; n; j++)
+            fscanf(f, "%d", &a[k][j]);
+    for (int k = 0; k &lt; n; k++)
+        b[k] = 0;
+    c[0] = 0;
+    b[0] = 1; // Xuất phát từ đỉnh 0
+}
+
+void showpath(){{ '{' }}
+    for (int k = 0; k &lt; n; k++)
+        printf("%4d", c[k] + 1); //In ra số hiệu đỉnh+1
+    printf("%4d\n", c[0] + 1);
+}
+void Hamilton(int j){{ '{' }}
+    for (int k = 0; k &lt; n; k++)
+        if (b[k] == 0 && a[c[j - 1]][k]){{ '{' }}
+            b[k] = 1;
+            c[j] = k;
+            if (j == n - 1){{ '{' }}
+                if (a[c[j]][c[0]])
+                    showpath();
             }
-            
-            void showpath(){{ '{' }}
-                for (int k = 0; k &lt; n; k++)
-                    printf("%4d", c[k] + 1); //In ra số hiệu đỉnh+1
-                printf("%4d\n", c[0] + 1);
-            }
-            void Hamilton(int j){{ '{' }}
-                for (int k = 0; k &lt; n; k++)
-                    if (b[k] == 0 && a[c[j - 1]][k]){{ '{' }}
-                        b[k] = 1;
-                        c[j] = k;
-                        if (j == n - 1){{ '{' }}
-                            if (a[c[j]][c[0]])
-                                showpath();
-                        }
-                        else
-                            Hamilton(j + 1);
-                        b[k] = 0;
-                    }
-            }
-            
-            int main(){{ '{' }}
-                init();
-                Hamilton(3);
-                return 1;
-            }
+            else
+                Hamilton(j + 1);
+            b[k] = 0;
+        }
+}
+
+int main(){{ '{' }}
+    init();
+    Hamilton(3);
+    return 1;
+}
             </pre>
         </li>
         <li>
@@ -150,18 +148,18 @@
         </li>
         <li>
             <pre>
-            5
+5
 
-            0   1   0   1   0
+0   1   0   1   0
 
-            1   0   1   0   1
+1   0   1   0   1
 
-            0   1   0   1   1
+0   1   0   1   1
 
-            1   0   1   0   1
+1   0   1   0   1
 
-            0   1   1   1   0
-            </pre>
+0   1   1   1   0
+    </pre>
         </li>
         <li>
             <p><strong>Output của chương trình:</strong></p>
