@@ -166,11 +166,18 @@ export class ExampleComponent {
       this.message = 'Phân tích được ' + result.data.length + ' kết quả chỉ đường' + ' (' + time + ' giây)'
 
       for (let i = 0; i < result.data.length; i++) {
+
+        var description: string = ""
+
+        result.data[i].hamiltons.forEach(element => {
+          description += element + " | "
+        });
+
         var accordionResultTemp: AccordionResult = {
           id: i,
           title: 'Lộ trình đường đi ' + (i + 1),
           shotDescription: result.data[i].distance.text,
-          description: result.data[i].hamiltons.toString().replace(',', '|'),
+          description: description,
           childAccordionResults: []
         }
 
