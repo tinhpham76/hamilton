@@ -95,6 +95,9 @@ export class ExampleComponent {
           });
           this.states = statesTemp
         }
+
+        if(response.error)
+          console.log(response)
       })
   }
 
@@ -116,6 +119,9 @@ export class ExampleComponent {
             }
             this.zoom = 10
           }
+
+          if (response.error)
+            console.log(response)
         });
     });
 
@@ -220,6 +226,10 @@ export class ExampleComponent {
               }
             }
           }
+
+
+        if (response.error)
+          console.log(response)
       })
 
     const request: google.maps.DirectionsRequest = {
