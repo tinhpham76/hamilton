@@ -130,7 +130,7 @@ export class ExampleComponent {
     this.hamilton()
   }
 
-  hamilton(range: number = 100): void {
+  hamilton(range: number = 10000): void {
     this.value = 0
     var hamiltonRequestTemp: string[] = []
 
