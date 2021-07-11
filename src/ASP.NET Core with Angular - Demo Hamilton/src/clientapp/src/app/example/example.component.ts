@@ -3,6 +3,7 @@ import { MapDirectionsService } from '@angular/google-maps';
 import { NgbProgressbarConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { AccordionResult, AccordionResultValueEvent, ChildAccordionResult } from '../components/accordion-result/accordion-result.component';
 import { Base } from '../shared/models/base.model';
 import { Hamilton } from '../shared/models/hamilton/hamilton.model';
@@ -130,7 +131,7 @@ export class ExampleComponent {
     this.hamilton()
   }
 
-  hamilton(range: number = 10000): void {
+  hamilton(): void {
     this.value = 0
     var hamiltonRequestTemp: string[] = []
 
@@ -144,7 +145,7 @@ export class ExampleComponent {
           hamiltonRequestTemp.push(this.inputLocations[i].value)
       }
       var start = new Date().getTime();
-      this.hamiltonService.FindHamiltonWithAddress(hamiltonRequestTemp, range)
+      this.hamiltonService.FindHamiltonWithAddress(hamiltonRequestTemp, environment.RANGE)
         .subscribe(response => {
           var end = new Date().getTime();
           var total_time = (end - start) / 1000;
