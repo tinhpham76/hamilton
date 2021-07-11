@@ -145,7 +145,7 @@ export class ExampleComponent {
           hamiltonRequestTemp.push(this.inputLocations[i].value)
       }
       var start = new Date().getTime();
-      this.hamiltonService.FindHamiltonWithAddress(hamiltonRequestTemp, environment.RANGE)
+      this.hamiltonService.FindHamiltonWithAddress(hamiltonRequestTemp, 0)
         .subscribe(response => {
           var end = new Date().getTime();
           var total_time = (end - start) / 1000;

@@ -4,6 +4,7 @@ using Core.Libs.Client;
 using Core.Libs.Client.Models.Json;
 using Hamilton.Business;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 namespace Hamilton.Controllers
@@ -14,12 +15,15 @@ namespace Hamilton.Controllers
     public class HamiltonController : BaseController
     {
         private readonly IHamiltonBusiness hamilton;
+        private readonly IConfiguration configuration;
 
         public HamiltonController(
             ILogger<HamiltonController> logger,
+            IConfiguration configuration,
             IHamiltonBusiness hamilton) : base(logger)
         {
             this.hamilton = hamilton;
+            this.configuration = configuration;
         }
 
         [HttpGet]
@@ -47,6 +51,7 @@ namespace Hamilton.Controllers
                     message = "Invalid request. Missing the 'key' parameter."
                 });
 
+
             var arrayLocations = locations.Split("|");
 
             var input = new List<string>();
@@ -62,6 +67,11 @@ namespace Hamilton.Controllers
                     message = "Invalid request. The 'locations' parameter must be more than 2 location.",
                     code = "404",
                 });
+
+            if (range.Value == 0)
+                range = long.Parse(configuration["Hamilton:Range"]);
+            else
+                range = 100;
 
             var response = await hamilton.Check(input, range.Value, key);
 
