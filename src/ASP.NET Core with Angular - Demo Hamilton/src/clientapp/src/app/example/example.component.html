@@ -6,7 +6,7 @@
                 <div class="col-md-auto">
                     <div class="input-search">
                         <input-search width="575px" id='typeahead_{{inputLocation.id}}'
-                            [label]="inputLocation.title == Origin ? 'Điểm xuất phát' : 'Điểm đến'"
+                            [label]="inputLocation.title === 'Origin' ? 'Điểm xuất phát' : 'Điểm đến'"
                             placeholder='Tìm kiếm trên Google Maps' type='text' [states]='states'
                             (newValueEvent)='inputSearchEvent($event, i)'>
                         </input-search>
